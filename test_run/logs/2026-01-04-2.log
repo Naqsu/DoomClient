@@ -1,0 +1,1115 @@
+[20:02:35] [Client thread/INFO]: Setting user: Jupa22
+[20:02:35] [Client thread/INFO]: (Session ID is token:0:Jupa22)
+[20:02:35] [Client thread/INFO]: LWJGL Version: 2.9.4
+[20:02:35] [Client thread/INFO]: Reloading ResourceManager: Default, ! §2Sammyfault §a[16x].zip
+[20:02:35] [Client thread/ERROR]: Couldn't initialize twitch stream
+[20:02:35] [Sound Library Loader/INFO]: Starting up SoundSystem...
+[20:02:36] [Thread-6/INFO]: Initializing LWJGL OpenAL
+[20:02:36] [Thread-6/INFO]: (The LWJGL binding of OpenAL.  For more information, see http://www.lwjgl.org)
+[20:02:36] [Thread-6/INFO]: OpenAL initialized.
+[20:02:36] [Client thread/INFO]: Created: 512x512 textures-atlas
+[20:02:36] [Client thread/ERROR]: Realms module missing
+java.lang.ClassNotFoundException: com.mojang.realmsclient.gui.screens.RealmsNotificationsScreen
+	at java.net.URLClassLoader.findClass(URLClassLoader.java:387) ~[?:1.8.0_462]
+	at java.lang.ClassLoader.loadClass(ClassLoader.java:418) ~[?:1.8.0_462]
+	at sun.misc.Launcher$AppClassLoader.loadClass(Launcher.java:352) ~[?:1.8.0_462]
+	at java.lang.ClassLoader.loadClass(ClassLoader.java:351) ~[?:1.8.0_462]
+	at java.lang.Class.forName0(Native Method) ~[?:1.8.0_462]
+	at java.lang.Class.forName(Class.java:264) ~[?:1.8.0_462]
+	at net.minecraft.realms.RealmsBridge.getNotificationScreen(RealmsBridge.java:38) [classes/:?]
+	at net.minecraft.client.gui.GuiMainMenu.initGui(GuiMainMenu.java:243) [classes/:?]
+	at net.minecraft.client.gui.GuiScreen.setWorldAndResolution(GuiScreen.java:556) [classes/:?]
+	at net.minecraft.client.Minecraft.displayGuiScreen(Minecraft.java:1020) [classes/:?]
+	at net.minecraft.client.Minecraft.startGame(Minecraft.java:580) [classes/:?]
+	at net.minecraft.client.Minecraft.run(Minecraft.java:409) [classes/:?]
+	at net.minecraft.client.main.Main.main(Main.java:113) [classes/:?]
+	at Start.main(Start.java:22) [test-classes/:?]
+[20:02:36] [Sound Library Loader/INFO]: Sound engine started
+[20:30:09] [Client thread/INFO]: Setting user: Jupa22
+[20:30:09] [Client thread/INFO]: (Session ID is token:0:Jupa22)
+[20:30:10] [Client thread/INFO]: LWJGL Version: 2.9.4
+[20:30:10] [Client thread/INFO]: Reloading ResourceManager: Default, ! §2Sammyfault §a[16x].zip
+[20:30:10] [Client thread/ERROR]: Couldn't initialize twitch stream
+[20:30:10] [Sound Library Loader/INFO]: Starting up SoundSystem...
+[20:30:10] [Thread-5/INFO]: Initializing LWJGL OpenAL
+[20:30:10] [Thread-5/INFO]: (The LWJGL binding of OpenAL.  For more information, see http://www.lwjgl.org)
+[20:30:10] [Thread-5/INFO]: OpenAL initialized.
+[20:30:10] [Client thread/INFO]: Created: 512x512 textures-atlas
+[20:30:10] [Sound Library Loader/INFO]: Sound engine started
+[20:30:10] [Client thread/ERROR]: Realms module missing
+java.lang.ClassNotFoundException: com.mojang.realmsclient.gui.screens.RealmsNotificationsScreen
+	at java.net.URLClassLoader.findClass(URLClassLoader.java:387) ~[?:1.8.0_452]
+	at java.lang.ClassLoader.loadClass(ClassLoader.java:418) ~[?:1.8.0_452]
+	at sun.misc.Launcher$AppClassLoader.loadClass(Launcher.java:352) ~[?:1.8.0_452]
+	at java.lang.ClassLoader.loadClass(ClassLoader.java:351) ~[?:1.8.0_452]
+	at java.lang.Class.forName0(Native Method) ~[?:1.8.0_452]
+	at java.lang.Class.forName(Class.java:264) ~[?:1.8.0_452]
+	at net.minecraft.realms.RealmsBridge.getNotificationScreen(RealmsBridge.java:38) [classes/:?]
+	at net.minecraft.client.gui.GuiMainMenu.initGui(GuiMainMenu.java:243) [classes/:?]
+	at net.minecraft.client.gui.GuiScreen.setWorldAndResolution(GuiScreen.java:556) [classes/:?]
+	at net.minecraft.client.Minecraft.displayGuiScreen(Minecraft.java:1020) [classes/:?]
+	at net.minecraft.client.Minecraft.startGame(Minecraft.java:580) [classes/:?]
+	at net.minecraft.client.Minecraft.run(Minecraft.java:409) [classes/:?]
+	at net.minecraft.client.main.Main.main(Main.java:113) [classes/:?]
+	at Start.main(Start.java:22) [test-classes/:?]
+[20:31:47] [Client Shutdown Thread/INFO]: Stopping server
+[20:31:53] [Client thread/INFO]: Setting user: Jupa22
+[20:31:53] [Client thread/INFO]: (Session ID is token:0:Jupa22)
+[20:31:53] [Client thread/INFO]: LWJGL Version: 2.9.4
+[20:31:53] [Client thread/INFO]: Reloading ResourceManager: Default, ! §2Sammyfault §a[16x].zip
+[20:31:53] [Client thread/ERROR]: Couldn't initialize twitch stream
+[20:31:53] [Sound Library Loader/INFO]: Starting up SoundSystem...
+[20:31:54] [Thread-5/INFO]: Initializing LWJGL OpenAL
+[20:31:54] [Thread-5/INFO]: (The LWJGL binding of OpenAL.  For more information, see http://www.lwjgl.org)
+[20:31:54] [Thread-5/INFO]: OpenAL initialized.
+[20:31:54] [Client thread/INFO]: Created: 512x512 textures-atlas
+[20:31:54] [Sound Library Loader/INFO]: Sound engine started
+[20:31:54] [Client thread/ERROR]: Realms module missing
+java.lang.ClassNotFoundException: com.mojang.realmsclient.gui.screens.RealmsNotificationsScreen
+	at java.net.URLClassLoader.findClass(URLClassLoader.java:387) ~[?:1.8.0_452]
+	at java.lang.ClassLoader.loadClass(ClassLoader.java:418) ~[?:1.8.0_452]
+	at sun.misc.Launcher$AppClassLoader.loadClass(Launcher.java:352) ~[?:1.8.0_452]
+	at java.lang.ClassLoader.loadClass(ClassLoader.java:351) ~[?:1.8.0_452]
+	at java.lang.Class.forName0(Native Method) ~[?:1.8.0_452]
+	at java.lang.Class.forName(Class.java:264) ~[?:1.8.0_452]
+	at net.minecraft.realms.RealmsBridge.getNotificationScreen(RealmsBridge.java:38) [classes/:?]
+	at net.minecraft.client.gui.GuiMainMenu.initGui(GuiMainMenu.java:243) [classes/:?]
+	at net.minecraft.client.gui.GuiScreen.setWorldAndResolution(GuiScreen.java:556) [classes/:?]
+	at net.minecraft.client.Minecraft.displayGuiScreen(Minecraft.java:1020) [classes/:?]
+	at net.minecraft.client.Minecraft.startGame(Minecraft.java:580) [classes/:?]
+	at net.minecraft.client.Minecraft.run(Minecraft.java:409) [classes/:?]
+	at net.minecraft.client.main.Main.main(Main.java:113) [classes/:?]
+	at Start.main(Start.java:22) [test-classes/:?]
+[20:32:29] [Client thread/INFO]: Connecting to proxy.craftplay.pl., 25541
+[20:32:30] [Client thread/INFO]: [CHAT] 
+[20:32:30] [Client thread/INFO]: [CHAT] 
+[20:32:30] [Client thread/INFO]: [CHAT] 
+[20:32:30] [Client thread/INFO]: [CHAT] 
+[20:32:30] [Client thread/INFO]: [CHAT] 
+[20:32:30] [Client thread/INFO]: [CHAT] 
+[20:32:30] [Client thread/INFO]: [CHAT] 
+[20:32:30] [Client thread/INFO]: [CHAT] 
+[20:32:30] [Client thread/INFO]: [CHAT] 
+[20:32:30] [Client thread/INFO]: [CHAT] 
+[20:32:30] [Client thread/INFO]: [CHAT] 
+[20:32:30] [Client thread/INFO]: [CHAT] 
+[20:32:30] [Client thread/INFO]: [CHAT] 
+[20:32:30] [Client thread/INFO]: [CHAT] 
+[20:32:30] [Client thread/INFO]: [CHAT] 
+[20:32:30] [Client thread/INFO]: [CHAT] 
+[20:32:30] [Client thread/INFO]: [CHAT] 
+[20:32:30] [Client thread/INFO]: [CHAT] 
+[20:32:30] [Client thread/INFO]: [CHAT] 
+[20:32:30] [Client thread/INFO]: [CHAT] 
+[20:32:30] [Client thread/INFO]: [CHAT] 
+[20:32:30] [Client thread/INFO]: [CHAT] 
+[20:32:30] [Client thread/INFO]: [CHAT] 
+[20:32:30] [Client thread/INFO]: [CHAT] 
+[20:32:30] [Client thread/INFO]: [CHAT] 
+[20:32:30] [Client thread/INFO]: [CHAT] 
+[20:32:30] [Client thread/INFO]: [CHAT] 
+[20:32:30] [Client thread/INFO]: [CHAT] 
+[20:32:30] [Client thread/INFO]: [CHAT] 
+[20:32:30] [Client thread/INFO]: [CHAT] 
+[20:32:30] [Client thread/INFO]: [CHAT] 
+[20:32:30] [Client thread/INFO]: [CHAT] 
+[20:32:30] [Client thread/INFO]: [CHAT] 
+[20:32:30] [Client thread/INFO]: [CHAT] 
+[20:32:30] [Client thread/INFO]: [CHAT] 
+[20:32:30] [Client thread/INFO]: [CHAT] 
+[20:32:30] [Client thread/INFO]: [CHAT] 
+[20:32:30] [Client thread/INFO]: [CHAT] 
+[20:32:30] [Client thread/INFO]: [CHAT] 
+[20:32:30] [Client thread/INFO]: [CHAT] 
+[20:32:30] [Client thread/INFO]: [CHAT] 
+[20:32:30] [Client thread/INFO]: [CHAT] 
+[20:32:30] [Client thread/INFO]: [CHAT] 
+[20:32:30] [Client thread/INFO]: [CHAT] 
+[20:32:30] [Client thread/INFO]: [CHAT] 
+[20:32:30] [Client thread/INFO]: [CHAT] 
+[20:32:30] [Client thread/INFO]: [CHAT] 
+[20:32:30] [Client thread/INFO]: [CHAT] 
+[20:32:30] [Client thread/INFO]: [CHAT] 
+[20:32:30] [Client thread/INFO]: [CHAT] 
+[20:32:30] [Client thread/INFO]: [CHAT] 
+[20:32:30] [Client thread/INFO]: [CHAT] 
+[20:32:30] [Client thread/INFO]: [CHAT] 
+[20:32:30] [Client thread/INFO]: [CHAT] 
+[20:32:30] [Client thread/INFO]: [CHAT] 
+[20:32:30] [Client thread/INFO]: [CHAT] 
+[20:32:30] [Client thread/INFO]: [CHAT] 
+[20:32:30] [Client thread/INFO]: [CHAT] 
+[20:32:30] [Client thread/INFO]: [CHAT] 
+[20:32:30] [Client thread/INFO]: [CHAT] 
+[20:32:30] [Client thread/INFO]: [CHAT] 
+[20:32:30] [Client thread/INFO]: [CHAT] 
+[20:32:30] [Client thread/INFO]: [CHAT] 
+[20:32:30] [Client thread/INFO]: [CHAT] 
+[20:32:30] [Client thread/INFO]: [CHAT] 
+[20:32:30] [Client thread/INFO]: [CHAT] 
+[20:32:30] [Client thread/INFO]: [CHAT] 
+[20:32:30] [Client thread/INFO]: [CHAT] 
+[20:32:30] [Client thread/INFO]: [CHAT] 
+[20:32:30] [Client thread/INFO]: [CHAT] 
+[20:32:30] [Client thread/INFO]: [CHAT] 
+[20:32:30] [Client thread/INFO]: [CHAT] 
+[20:32:30] [Client thread/INFO]: [CHAT] 
+[20:32:30] [Client thread/INFO]: [CHAT] 
+[20:32:30] [Client thread/INFO]: [CHAT] 
+[20:32:30] [Client thread/INFO]: [CHAT] 
+[20:32:30] [Client thread/INFO]: [CHAT] 
+[20:32:30] [Client thread/INFO]: [CHAT] 
+[20:32:30] [Client thread/INFO]: [CHAT] 
+[20:32:30] [Client thread/INFO]: [CHAT] 
+[20:32:30] [Client thread/INFO]: [CHAT] 
+[20:32:30] [Client thread/INFO]: [CHAT] 
+[20:32:30] [Client thread/INFO]: [CHAT] 
+[20:32:30] [Client thread/INFO]: [CHAT] 
+[20:32:30] [Client thread/INFO]: [CHAT] 
+[20:32:30] [Client thread/INFO]: [CHAT] 
+[20:32:30] [Client thread/INFO]: [CHAT] 
+[20:32:30] [Client thread/INFO]: [CHAT] 
+[20:32:30] [Client thread/INFO]: [CHAT] 
+[20:32:30] [Client thread/INFO]: [CHAT] 
+[20:32:30] [Client thread/INFO]: [CHAT] 
+[20:32:30] [Client thread/INFO]: [CHAT] 
+[20:32:30] [Client thread/INFO]: [CHAT] 
+[20:32:30] [Client thread/INFO]: [CHAT] 
+[20:32:30] [Client thread/INFO]: [CHAT] 
+[20:32:30] [Client thread/INFO]: [CHAT] 
+[20:32:30] [Client thread/INFO]: [CHAT] 
+[20:32:30] [Client thread/INFO]: [CHAT] 
+[20:32:30] [Client thread/INFO]: [CHAT] 
+[20:32:30] [Client thread/INFO]: [CHAT] 
+[20:32:30] [Client thread/INFO]: [CHAT]  Witaj na CraftPlay.pl (1.8 - 1.21)
+[20:32:30] [Client thread/INFO]: [CHAT] 
+[20:32:30] [Client thread/INFO]: [CHAT]  Sklep → www.CraftPlay.pl
+[20:32:30] [Client thread/INFO]: [CHAT]  Discord → discord.gg/craftplaypl
+[20:32:30] [Client thread/INFO]: [CHAT]  Nagrody → Uzyj /nagrody na trybach!
+[20:32:30] [Client thread/INFO]: [CHAT] 
+[20:32:30] [Client thread/INFO]: [CHAT]  Zyczymy milej gry na naszym serwerze!
+[20:32:30] [Client thread/INFO]: [CHAT] 
+[20:32:30] [Client thread/INFO]: [CHAT]  Logowanie » Zaloguj sie: /login haslo
+[20:32:49] [Client thread/INFO]: Connecting to test.ccbluex.net, 25565
+[20:32:50] [Client thread/INFO]: [CHAT]        
+[20:32:50] [Client thread/INFO]: [CHAT] You are on the legacy(1.8.8) server!
+[20:32:50] [Client thread/INFO]: [CHAT] For the latest server, type /server latest!
+[20:32:50] [Client thread/INFO]: [CHAT] [+] Naqsu_
+[20:32:50] [Client thread/INFO]: [CHAT] CCBlueX >> Your client brand is vanilla
+[20:32:52] [Client thread/INFO]: [CHAT] CCBlueX >> Hi! it has been 120 days since your last login!
+[20:32:52] [Client thread/INFO]: [CHAT] 4bps: kys shitty trannie
+[20:32:54] [Client thread/INFO]: [CHAT] CCBlueX >> Welcome back!
+[20:32:54] [Client thread/INFO]: [CHAT] trans aureliameows: mad
+[20:33:09] [Client thread/INFO]: [CHAT] 4bps: imagine being a male transfem ahahahahahaha
+[20:33:17] [Client thread/INFO]: [CHAT] [Vulcan] Naqsu_ failed Bad Packets (I) (vl:1/3): Sent EntityAction while attacking.
+[20:33:23] [Client thread/INFO]: [CHAT] 4bps: imagine believing you are a fucking girl
+[20:33:26] [Client thread/INFO]: [CHAT] 4bps: you looser
+[20:33:36] [Client thread/INFO]: [CHAT] trans aureliameows: where have i stated i believe anything brotato chip
+[20:33:38] [Client thread/INFO]: [CHAT] [Vulcan] Naqsu_ failed Bad Packets (I) (vl:2/3): Sent EntityAction while attacking.
+[20:33:43] [Client thread/INFO]: [CHAT] CCBlueX >> You selected: NoCheatPlus
+[20:33:44] [Client thread/INFO]: [CHAT] trans aureliameows: nice misinformation you sell
+[20:33:45] [Client thread/INFO]: [CHAT] trans aureliameows: ?
+[20:33:48] [Client thread/INFO]: [CHAT] You were kicked from legacy: §3§lCCBlueX§8 >> §6To ensure anticheat(s) works properly, reconnecting to the server...
+[20:33:48] [Client thread/INFO]: [CHAT]        
+[20:33:48] [Client thread/INFO]: [CHAT] You are on the legacy(1.8.8) server!
+[20:33:48] [Client thread/INFO]: [CHAT] For the latest server, type /server latest!
+[20:33:48] [Client thread/INFO]: [CHAT] [+] Naqsu_
+[20:33:48] [Client thread/INFO]: [CHAT] CCBlueX >> Your client brand is vanilla
+[20:33:55] [Client thread/INFO]: [CHAT] [+] t1um
+[20:33:55] [Client thread/INFO]: [CHAT] [GrimAC] Naqsu_ failed Simulation (vl:0.0): .030001 /gl 8
+[20:33:55] [Client thread/INFO]: [CHAT] [GrimAC] Naqsu_ failed Simulation (vl:1.0): .046323 /gl 8
+[20:33:55] [Client thread/INFO]: [CHAT] [GrimAC] Naqsu_ failed Simulation (vl:2.0): .051902 /gl 8
+[20:33:55] [Client thread/INFO]: [CHAT] [GrimAC] Naqsu_ failed BadPacketsF (vl:0.0): state=false
+[20:33:55] [Client thread/INFO]: [CHAT] [GrimAC] Naqsu_ failed Simulation (vl:3.0): .057473 /gl 8
+[20:33:55] [Client thread/INFO]: [CHAT] [GrimAC] Naqsu_ failed BadPacketsF (vl:1.0): state=false
+[20:33:55] [Client thread/INFO]: [CHAT] [GrimAC] Naqsu_ failed Simulation (vl:4.0): .060779 /gl 8
+[20:33:55] [Client thread/INFO]: [CHAT] [GrimAC] Naqsu_ failed BadPacketsF (vl:2.0): state=false
+[20:33:55] [Client thread/INFO]: [CHAT] [GrimAC] Naqsu_ failed Simulation (vl:5.0): .013873 /gl 8
+[20:33:55] [Client thread/INFO]: [CHAT] [GrimAC] Naqsu_ failed Simulation (vl:6.0): .007575 /gl 8
+[20:33:55] [Client thread/INFO]: [CHAT] [GrimAC] Naqsu_ failed Simulation (vl:7.0): .004136 /gl 8
+[20:33:59] [Client thread/INFO]: [CHAT] 4bps: bro sto doing trans propaganda with your skinn
+[20:34:03] [Client thread/INFO]: [CHAT] 4bps: fucking retard
+[20:34:04] [Client thread/INFO]: [CHAT] [GrimAC] Naqsu_ failed BadPacketsF (vl:3.0): state=false
+[20:34:04] [Client thread/INFO]: [CHAT] [GrimAC] Naqsu_ failed BadPacketsX (vl:0.0)
+[20:34:05] [Client thread/INFO]: [CHAT] [GrimAC] Naqsu_ failed Simulation (vl:8.0): .030000 /gl 8
+[20:34:05] [Client thread/INFO]: [CHAT] [GrimAC] Naqsu_ failed BadPacketsF (vl:4.0): state=false
+[20:34:05] [Client thread/INFO]: [CHAT] [GrimAC] Naqsu_ failed PacketOrderF (vl:0.0): action=interact, sprinting=true, sneaking=false
+[20:34:05] [Client thread/INFO]: [CHAT] [GrimAC] Naqsu_ failed Simulation (vl:9.0): .046322 /gl 8
+[20:34:06] [Client thread/INFO]: [CHAT] [GrimAC] Naqsu_ failed Simulation (vl:10.0): .055153 /gl 8
+[20:34:06] [Client thread/INFO]: [CHAT] [GrimAC] Naqsu_ failed BadPacketsF (vl:5.0): state=false
+[20:34:06] [Client thread/INFO]: [CHAT] [GrimAC] Naqsu_ failed BadPacketsF (vl:6.0): state=false
+[20:34:06] [Client thread/INFO]: [CHAT] [GrimAC] Naqsu_ failed BadPacketsX (vl:1.0)
+[20:34:06] [Client thread/INFO]: [CHAT] [GrimAC] Naqsu_ failed Simulation (vl:11.0): .030114 /gl 8
+[20:34:06] [Client thread/INFO]: [CHAT] [GrimAC] Naqsu_ failed Simulation (vl:12.0): .016442 /gl 8
+[20:34:06] [Client thread/INFO]: [CHAT] [GrimAC] Naqsu_ failed Simulation (vl:13.0): .008981 /gl 8
+[20:34:06] [Client thread/INFO]: [CHAT] [GrimAC] Naqsu_ failed Simulation (vl:14.0): .004907 /gl 8
+[20:34:09] [Client thread/INFO]: [CHAT] [GrimAC] Naqsu_ failed PacketOrderF (vl:1.0): action=interact, sprinting=true, sneaking=false
+[20:34:09] [Client thread/INFO]: [CHAT] [GrimAC] Naqsu_ failed BadPacketsF (vl:7.0): state=false
+[20:34:09] [Client thread/INFO]: [CHAT] [GrimAC] Naqsu_ failed BadPacketsX (vl:2.0)
+[20:34:09] [Client thread/INFO]: [CHAT] [GrimAC] Naqsu_ failed BadPacketsF (vl:8.0): state=false
+[20:34:10] [Client thread/INFO]: [CHAT] [GrimAC] Naqsu_ failed Simulation (vl:15.0): .004203 /gl 8
+[20:34:10] [Client thread/INFO]: [CHAT] [GrimAC] Naqsu_ failed Simulation (vl:16.0): .003824 /gl 8
+[20:34:10] [Client thread/INFO]: [CHAT] [GrimAC] Naqsu_ failed Simulation (vl:17.0): .003480 /gl 8
+[20:34:10] [Client thread/INFO]: [CHAT] [GrimAC] Naqsu_ failed Simulation (vl:18.0): .017957 /gl 8
+[20:34:10] [Client thread/INFO]: [CHAT] trans aureliameows: trans propaganda
+[20:34:10] [Client thread/INFO]: [CHAT] [GrimAC] Naqsu_ failed Simulation (vl:19.0): .009801 /gl 8
+[20:34:10] [Client thread/INFO]: [CHAT] [GrimAC] Naqsu_ failed Simulation (vl:20.0): .005345 /gl 8
+[20:34:10] [Client thread/INFO]: [CHAT] [GrimAC] Naqsu_ failed Simulation (vl:21.0): .002917 /gl 8
+[20:34:10] [Client thread/INFO]: [CHAT] [GrimAC] Naqsu_ failed Simulation (vl:22.0): .001589 /gl 8
+[20:34:10] [Client thread/INFO]: [CHAT] [GrimAC] Naqsu_ failed Simulation (vl:23.0): .001234 /gl 8
+[20:34:11] [Client thread/INFO]: [CHAT] [GrimAC] Naqsu_ failed Simulation (vl:24.0): .015148 /gl 8
+[20:34:11] [Client thread/INFO]: [CHAT] [GrimAC] Naqsu_ failed Simulation (vl:25.0): .012145 /gl 8
+[20:34:11] [Client thread/INFO]: [CHAT] [GrimAC] Naqsu_ failed BadPacketsF (vl:9.0): state=false
+[20:34:11] [Client thread/INFO]: [CHAT] [GrimAC] Naqsu_ failed PacketOrderF (vl:2.0): action=interact, sprinting=true, sneaking=false
+[20:34:11] [Client thread/INFO]: [CHAT] [GrimAC] Naqsu_ failed BadPacketsF (vl:10.0): state=false
+[20:34:11] [Client thread/INFO]: [CHAT] [GrimAC] Naqsu_ failed BadPacketsX (vl:3.0)
+[20:34:11] [Client thread/INFO]: [CHAT] [GrimAC] Naqsu_ failed Simulation (vl:26.0): .014746 /gl 8
+[20:34:11] [Client thread/INFO]: [CHAT] [GrimAC] Naqsu_ failed Simulation (vl:27.0): .013420 /gl 8
+[20:34:11] [Client thread/INFO]: [CHAT] [GrimAC] Naqsu_ failed Simulation (vl:28.0): .012212 /gl 8
+[20:34:11] [Client thread/INFO]: [CHAT] [GrimAC] Naqsu_ failed Simulation (vl:29.0): .011113 /gl 8
+[20:34:11] [Client thread/INFO]: [CHAT] [GrimAC] Naqsu_ failed Simulation (vl:30.0): .028872 /gl 8
+[20:34:11] [Client thread/INFO]: [CHAT] [GrimAC] Naqsu_ failed Simulation (vl:31.0): .024278 /gl 8
+[20:34:11] [Client thread/INFO]: [CHAT] [GrimAC] Naqsu_ failed BadPacketsF (vl:11.0): state=false
+[20:34:11] [Client thread/INFO]: [CHAT] [GrimAC] Naqsu_ failed Simulation (vl:32.0): .027944 /gl 8
+[20:34:11] [Client thread/INFO]: [CHAT] [GrimAC] Naqsu_ failed Simulation (vl:33.0): .031263 /gl 8
+[20:34:11] [Client thread/INFO]: [CHAT] [GrimAC] Naqsu_ failed BadPacketsF (vl:12.0): state=false
+[20:34:11] [Client thread/INFO]: [CHAT] [GrimAC] Naqsu_ failed Simulation (vl:34.0): .060240 /gl 8
+[20:34:11] [Client thread/INFO]: [CHAT] trans aureliameows: right
+[20:34:11] [Client thread/INFO]: [CHAT] [GrimAC] Naqsu_ failed BadPacketsF (vl:13.0): state=false
+[20:34:11] [Client thread/INFO]: [CHAT] [GrimAC] Naqsu_ failed BadPacketsF (vl:14.0): state=false
+[20:34:11] [Client thread/INFO]: [CHAT] [GrimAC] Naqsu_ failed BadPacketsX (vl:4.0)
+[20:34:11] [Client thread/INFO]: [CHAT] [GrimAC] Naqsu_ failed Simulation (vl:35.0): .032891 /gl 8
+[20:34:12] [Client thread/INFO]: [CHAT] [GrimAC] Naqsu_ failed Simulation (vl:36.0): .017961 /gl 8
+[20:34:12] [Client thread/INFO]: [CHAT] [GrimAC] Naqsu_ failed Simulation (vl:37.0): .009808 /gl 8
+[20:34:12] [Client thread/INFO]: [CHAT] [GrimAC] Naqsu_ failed Simulation (vl:38.0): .005358 /gl 8
+[20:34:12] [Client thread/INFO]: [CHAT] [GrimAC] Naqsu_ failed Simulation (vl:39.0): .002925 /gl 8
+[20:34:12] [Client thread/INFO]: [CHAT] [GrimAC] Naqsu_ failed Simulation (vl:40.0): .001592 /gl 8
+[20:34:13] [Client thread/INFO]: [CHAT] [GrimAC] Naqsu_ failed Simulation (vl:41.0): .123736 /gl 8
+[20:34:13] [Client thread/INFO]: [CHAT] [GrimAC] Naqsu_ failed Simulation (vl:42.0): .029997 /gl 8
+[20:34:13] [Client thread/INFO]: [CHAT] [GrimAC] Naqsu_ failed BadPacketsF (vl:15.0): state=false
+[20:34:13] [Client thread/INFO]: [CHAT] [GrimAC] Naqsu_ failed Simulation (vl:43.0): .046318 /gl 8
+[20:34:14] [Client thread/INFO]: [CHAT] [GrimAC] Naqsu_ failed Simulation (vl:44.0): .055151 /gl 8
+[20:34:14] [Client thread/INFO]: [CHAT] [GrimAC] Naqsu_ failed BadPacketsF (vl:16.0): state=false
+[20:34:14] [Client thread/INFO]: [CHAT] [GrimAC] Naqsu_ failed BadPacketsF (vl:17.0): state=false
+[20:34:14] [Client thread/INFO]: [CHAT] [GrimAC] Naqsu_ failed Simulation (vl:45.0): .109985 /gl 8
+[20:34:14] [Client thread/INFO]: [CHAT] [GrimAC] Naqsu_ failed BadPacketsF (vl:18.0): state=false
+[20:34:14] [Client thread/INFO]: [CHAT] [GrimAC] Naqsu_ failed Simulation (vl:46.0): .029983 /gl 8
+[20:34:14] [Client thread/INFO]: [CHAT] [GrimAC] Naqsu_ failed BadPacketsF (vl:19.0): state=false
+[20:34:14] [Client thread/INFO]: [CHAT] [GrimAC] Naqsu_ failed Simulation (vl:47.0): .079265 /gl 8
+[20:34:14] [Client thread/INFO]: [CHAT] [GrimAC] Naqsu_ failed Simulation (vl:48.0): .005954 /gl 8
+[20:34:14] [Client thread/INFO]: [CHAT] [GrimAC] Naqsu_ failed Simulation (vl:49.0): .029999 /gl 8
+[20:34:14] [Client thread/INFO]: [CHAT] [GrimAC] Naqsu_ failed Simulation (vl:50.0): .116289 /gl 8
+[20:34:14] [Client thread/INFO]: [CHAT] [GrimAC] Naqsu_ failed Simulation (vl:51.0): .029999 /gl 8
+[20:34:14] [Client thread/INFO]: [CHAT] [GrimAC] Naqsu_ failed Simulation (vl:52.0): .005942 /gl 8
+[20:34:14] [Client thread/INFO]: [CHAT] [GrimAC] Naqsu_ failed Simulation (vl:53.0): .029263 /gl 8
+[20:34:15] [Client thread/INFO]: [CHAT] [GrimAC] Naqsu_ failed Simulation (vl:54.0): .137542 /gl 8
+[20:34:15] [Client thread/INFO]: [CHAT] [GrimAC] Naqsu_ failed BadPacketsF (vl:20.0): state=false
+[20:34:20] [Client thread/INFO]: [CHAT] CCBlueX >> You selected: Spartan
+[20:34:22] [Client thread/INFO]: [CHAT] 4bps: I am going beat you up to death
+[20:34:27] [Client thread/INFO]: [CHAT] trans aureliameows: Ok
+[20:34:31] [Client thread/INFO]: [CHAT] trans aureliameows: do it
+[20:34:38] [Client thread/INFO]: [CHAT] 4bps: fucking trannie
+[20:34:38] [Client thread/INFO]: [CHAT] CCBlueX >> You selected: Verus
+[20:34:41] [Client thread/INFO]: [CHAT] 4bps: you are nothing
+[20:34:41] [Client thread/INFO]: [CHAT] trans aureliameows: wise fold
+[20:34:52] [Client thread/INFO]: [CHAT] CCBlueX >> CCBlueX's Discord: https://discord.gg/68GgEGTRr9
+[20:35:00] [Client thread/INFO]: [CHAT] Nessli: how do u get ragebaited on an anticheat test server
+[20:35:03] [Client thread/INFO]: [CHAT] Nessli: thats incredible
+[20:35:03] [Client thread/INFO]: [CHAT] [Verus] Naqsu_ failed KillAura (F) (vl:1)
+[20:35:04] [Client thread/INFO]: [CHAT] [Verus] Naqsu_ failed KillAura (F) (vl:2)
+[20:35:04] [Client thread/INFO]: [CHAT] [Verus] Naqsu_ failed KillAura (F) (vl:3)
+[20:35:04] [Client thread/INFO]: [CHAT] [Verus] Naqsu_ failed KillAura (F) (vl:4)
+[20:35:04] [Client thread/INFO]: [CHAT] [Verus] Naqsu_ failed KillAura (F) (vl:5)
+[20:35:04] [Client thread/INFO]: [CHAT] [Verus] Naqsu_ failed KillAura (F) (vl:6)
+[20:35:04] [Client thread/INFO]: [CHAT] [Verus] Naqsu_ failed KillAura (F) (vl:7)
+[20:35:04] [Client thread/INFO]: [CHAT] [Verus] Naqsu_ failed KillAura (F) (vl:8)
+[20:35:04] [Client thread/INFO]: [CHAT] [Verus] Naqsu_ failed KillAura (F) (vl:9)
+[20:35:04] [Client thread/INFO]: [CHAT] [Verus] Naqsu_ failed KillAura (F) (vl:10)
+[20:35:04] [Client thread/INFO]: [CHAT] [Verus] Naqsu_ failed KillAura (F) (vl:11)
+[20:35:04] [Client thread/INFO]: [CHAT] [Verus] Naqsu_ failed KillAura (F) (vl:12)
+[20:35:05] [Client thread/INFO]: [CHAT] [Verus] Naqsu_ failed KillAura (F) (vl:13)
+[20:35:05] [Client thread/INFO]: [CHAT] [Verus] Naqsu_ failed KillAura (F) (vl:14)
+[20:35:05] [Client thread/INFO]: [CHAT] [Verus] Naqsu_ failed KillAura (F) (vl:15)
+[20:35:05] [Client thread/INFO]: [CHAT] [Verus] Naqsu_ failed KillAura (F) (vl:16)
+[20:35:05] [Client thread/INFO]: [CHAT] [Verus] Naqsu_ failed KillAura (F) (vl:17)
+[20:35:05] [Client thread/INFO]: [CHAT] [Verus] Naqsu_ failed KillAura (F) (vl:18)
+[20:35:05] [Client thread/INFO]: [CHAT] [Verus] Naqsu_ failed KillAura (F) (vl:19)
+[20:35:05] [Client thread/INFO]: [CHAT] [Verus] Naqsu_ failed KillAura (F) (vl:20)
+[20:35:06] [Client thread/INFO]: [CHAT] [+] RokyYTR
+[20:35:08] [Client thread/INFO]: [CHAT] [Verus] Naqsu_ failed KillAura (F) (vl:21)
+[20:35:08] [Client thread/INFO]: [CHAT] [Verus] Naqsu_ failed KillAura (F) (vl:22)
+[20:35:08] [Client thread/INFO]: [CHAT] [Verus] Naqsu_ failed KillAura (F) (vl:23)
+[20:35:08] [Client thread/INFO]: [CHAT] [Verus] Naqsu_ failed KillAura (F) (vl:24)
+[20:35:08] [Client thread/INFO]: [CHAT] [Verus] Naqsu_ failed KillAura (F) (vl:25)
+[20:35:08] [Client thread/INFO]: [CHAT] [Verus] Naqsu_ failed KillAura (F) (vl:26)
+[20:35:08] [Client thread/INFO]: [CHAT] [Verus] Naqsu_ failed KillAura (F) (vl:27)
+[20:35:09] [Client thread/INFO]: [CHAT] [Verus] Naqsu_ failed KillAura (F) (vl:28)
+[20:35:09] [Client thread/INFO]: [CHAT] [Verus] Naqsu_ failed KillAura (F) (vl:29)
+[20:35:09] [Client thread/INFO]: [CHAT] [Verus] Naqsu_ failed KillAura (F) (vl:30)
+[20:35:09] [Client thread/INFO]: [CHAT] [Verus] Naqsu_ failed KillAura (F) (vl:31)
+[20:35:09] [Client thread/INFO]: [CHAT] [Verus] Naqsu_ failed KillAura (F) (vl:32)
+[20:35:09] [Client thread/INFO]: [CHAT] [Verus] Naqsu_ failed KillAura (F) (vl:33)
+[20:35:09] [Client thread/INFO]: [CHAT] [Verus] Naqsu_ failed KillAura (F) (vl:34)
+[20:35:11] [Client thread/INFO]: [CHAT] 4bps: being trans is an illness
+[20:35:14] [Client thread/INFO]: [CHAT] trans aureliameows: 4bps when r u coming to beat me to death
+[20:35:15] [Client thread/INFO]: [CHAT] CCBlueX >> All items on the ground will be cleaned in 60 seconds!
+[20:35:18] [Client thread/INFO]: [CHAT] Nessli: why do u care
+[20:35:19] [Client thread/INFO]: [CHAT] [Verus] Naqsu_ failed BadPackets (E) (vl:1)
+[20:35:23] [Client thread/INFO]: [CHAT] [Verus] Naqsu_ failed BadPackets (E) (vl:2)
+[20:35:25] [Client thread/INFO]: [CHAT] [Verus] Naqsu_ failed BadPackets (E) (vl:3)
+[20:35:26] [Client thread/INFO]: [CHAT] trans aureliameows: he's upset that people exist
+[20:35:36] [Client thread/INFO]: [CHAT] trans aureliameows: average 12 year old
+[20:35:45] [Client thread/INFO]: [CHAT] CCBlueX >> All items on the ground will be cleaned in 30 seconds!
+[20:35:56] [Client thread/INFO]: [CHAT] CCBlueX >> You can use /i command to get items!
+[20:36:04] [Client thread/INFO]: [CHAT] [Verus] Naqsu_ failed KillAura (F) (vl:35)
+[20:36:05] [Client thread/INFO]: [CHAT] 4bps: I am 18, almost 19
+[20:36:10] [Client thread/INFO]: [CHAT] CCBlueX >> All items on the ground will be cleaned in 5 seconds!
+[20:36:11] [Client thread/INFO]: [CHAT] trans aureliameows: you should be mature then
+[20:36:11] [Client thread/INFO]: [CHAT] Nessli: mentally 122
+[20:36:13] [Client thread/INFO]: [CHAT] [+] Dervi69
+[20:36:13] [Client thread/INFO]: [CHAT] Nessli: 12
+[20:36:15] [Client thread/INFO]: [CHAT] CCBlueX >> 6 items have been cleaned!
+[20:36:17] [Client thread/INFO]: [CHAT] trans aureliameows: act like it
+[20:36:21] [Client thread/INFO]: [CHAT] [-] Dervi69
+[20:36:21] [Client thread/INFO]: [CHAT] [+] Dervi69
+[20:36:21] [Client thread/INFO]: [CHAT] [-] RokyYTR
+[20:36:23] [Client thread/INFO]: [CHAT] [-] Dervi69
+[20:36:23] [Client thread/INFO]: [CHAT] [+] Dervi69
+[20:36:34] [Client thread/INFO]: [CHAT] Unknown command. Type "/help" for help.
+[20:36:34] [Client thread/INFO]: [CHAT] 4bps: aureliameows you are transgender you are a fucking retard and a fucking bitch
+[20:36:34] [Client thread/INFO]: [CHAT] [-] 140_
+[20:36:36] [Client thread/INFO]: [CHAT] [+] 140_
+[20:36:37] [Client thread/INFO]: [CHAT] trans aureliameows: Ok
+[20:36:39] [Client thread/INFO]: [CHAT] CCBlueX >> You selected: Intave
+[20:36:40] [Client thread/INFO]: [CHAT] [Intave12] Naqsu_ failed MOVING / Knockback (vl:-2/0): applied suspicious change of direction
+[20:36:41] [Client thread/INFO]: [CHAT] trans aureliameows: when
+[20:36:42] [Client thread/INFO]: [CHAT] [Intave12] Naqsu_ failed COMBAT / KillAura (vl:-4/0): attacked entitiy killaura-like (crypta engine)
+[20:36:47] [Client thread/INFO]: [CHAT] [Intave12] Naqsu_ failed MOVING / Celerity (vl:-3/0): moved faster than expected (0.4691 b/t | 0.4596 b/t | 0.4200 b/t)
+[20:36:48] [Client thread/INFO]: [CHAT] 4bps: nobody loves you
+[20:36:48] [Client thread/INFO]: [CHAT] [Intave12] Naqsu_ failed COMBAT / KillAura (vl:-4/4): attacked entitiy killaura-like (crypta engine)
+[20:36:50] [Client thread/INFO]: [CHAT] [Intave12] Naqsu_ failed COMBAT / KillAura (vl:-4/8): attacked entitiy killaura-like (crypta engine)
+[20:36:50] [Client thread/INFO]: [CHAT] [Intave12] Naqsu_ failed COMBAT / KillAura (vl:-4/12): attacked entitiy killaura-like (crypta engine)
+[20:36:50] [Client thread/INFO]: [CHAT] [Intave12] Naqsu_ failed COMBAT / KillAura (vl:-4/16): attacked entitiy killaura-like (crypta engine)
+[20:36:51] [Client thread/INFO]: [CHAT] [Intave12] Naqsu_ failed MOVING / Knockback (vl:-2/0): applied suspicious change of direction
+[20:36:56] [Client thread/INFO]: [CHAT] trans aureliameows: proof?
+[20:36:59] [Client thread/INFO]: [CHAT] trans aureliameows: i'd argue my gf loves me
+[20:37:00] [Client thread/INFO]: [CHAT] CCBlueX >> Loyisa's Discord: https://discord.gg/fdmkfts
+[20:37:04] [Client thread/INFO]: [CHAT] [Intave12] Naqsu_ failed MOVING / Celerity (vl:-50/0): moved faster than expected (2.0975 b/t | 0.3760 b/t | 0.0000 b/t)
+[20:37:05] [Client thread/INFO]: [CHAT] [Intave12] Naqsu_ failed MOVING / Celerity (vl:-50/50): moved faster than expected (2.1271 b/t | 0.3760 b/t | 0.0000 b/t)
+[20:37:05] [Client thread/INFO]: [CHAT] [Intave12] Naqsu_ failed MOVING / Celerity (vl:-50/100): moved faster than expected (2.0255 b/t | 0.3670 b/t | 0.0000 b/t)
+[20:37:05] [Client thread/INFO]: [CHAT] [Intave12] Naqsu_ failed MOVING / Celerity (vl:-50/150): moved faster than expected (2.0255 b/t | 0.3670 b/t | 0.0000 b/t)
+[20:37:05] [Client thread/INFO]: [CHAT] [Intave12] Naqsu_ failed MOVING / Celerity (vl:-50/200): moved faster than expected (2.1274 b/t | 0.3670 b/t | 0.0000 b/t)
+[20:37:05] [Client thread/INFO]: [CHAT] [Intave12] Naqsu_ failed NETWORK / Move (vl:-1/0): is sending too many packets (balance 10.04)
+[20:37:05] [Client thread/INFO]: [CHAT] [Intave12] Naqsu_ failed MOVING / Celerity (vl:-50/250): moved faster than expected (2.0255 b/t | 0.3670 b/t | 0.0000 b/t)
+[20:37:06] [Client thread/INFO]: [CHAT] [Intave12] Naqsu_ failed MOVING / Celerity (vl:-50/300): moved faster than expected (2.0255 b/t | 0.3670 b/t | 0.0000 b/t)
+[20:37:07] [Client thread/INFO]: [CHAT] [Intave12] Naqsu_ failed MOVING / Celerity (vl:-50/350): moved faster than expected (2.0255 b/t | 0.8000 b/t | 0.3332 b/t)
+[20:37:07] [Client thread/INFO]: [CHAT] [Intave12] Naqsu_ failed MOVING / Celerity (vl:-50/400): moved faster than expected (2.0510 b/t | 0.8000 b/t | -0.0784 b/t)
+[20:37:07] [Client thread/INFO]: [CHAT] [Intave12] Naqsu_ failed MOVING / Flight (vl:-22/0): sent unexpected position (0.3332 -> -0.0784, but expected 0.2481) 
+[20:37:07] [Client thread/INFO]: [CHAT] [Intave12] Naqsu_ failed MOVING / Celerity (vl:-50/450): moved faster than expected (2.0510 b/t | 0.8000 b/t | -0.0784 b/t)
+[20:37:13] [Client thread/INFO]: [CHAT] CCBlueX >> Teleport complete!
+[20:37:14] [Client thread/INFO]: [CHAT] 4bps: imagine loving transgenders
+[20:37:17] [Client thread/INFO]: [CHAT] [Intave12] Naqsu_ failed MOVING / Celerity (vl:-17/0): moved faster than expected (0.2557 b/t | 0.2340 b/t | 0.0000 b/t)
+[20:37:17] [Client thread/INFO]: [CHAT] [Intave12] Naqsu_ failed MOVING / Celerity (vl:-8/17): moved faster than expected (0.2670 b/t | 0.2340 b/t | 0.0000 b/t)
+[20:37:17] [Client thread/INFO]: [CHAT] [Intave12] Naqsu_ failed MOVING / Celerity (vl:-9/25): moved faster than expected (0.2732 b/t | 0.2340 b/t | 0.0000 b/t)
+[20:37:17] [Client thread/INFO]: [CHAT] [Intave12] Naqsu_ failed MOVING / Celerity (vl:-10/34): moved faster than expected (0.2765 b/t | 0.2340 b/t | 0.0000 b/t)
+[20:37:17] [Client thread/INFO]: [CHAT] [Intave12] Naqsu_ failed MOVING / Celerity (vl:-25/44): moved faster than expected (0.2442 b/t | 0.2340 b/t | 0.0000 b/t)
+[20:37:19] [Client thread/INFO]: [CHAT] [Intave12] Naqsu_ failed WORLD / MachineBlock (vl:-1/0): tried to place a block suspiciously.
+[20:37:20] [Client thread/INFO]: [CHAT] [Intave12] Naqsu_ failed WORLD / MachineBlock (vl:-1/1): tried to place a block suspiciously.
+[20:37:20] [Client thread/INFO]: [CHAT] [Intave12] Naqsu_ failed WORLD / MachineBlock (vl:-1/2): tried to place a block suspiciously.
+[20:37:20] [Client thread/INFO]: [CHAT] [Intave12] Naqsu_ failed WORLD / MachineBlock (vl:-1/3): tried to place a block suspiciously.
+[20:37:20] [Client thread/INFO]: [CHAT] [Intave12] Naqsu_ failed WORLD / MachineBlock (vl:-1/4): tried to place a block suspiciously.
+[20:37:20] [Client thread/INFO]: [CHAT] [Intave12] Naqsu_ failed WORLD / MachineBlock (vl:-1/5): tried to place a block suspiciously.
+[20:37:20] [Client thread/INFO]: [CHAT] 4bps: so bad
+[20:37:20] [Client thread/INFO]: [CHAT] [Intave12] Naqsu_ failed WORLD / MachineBlock (vl:-1/6): tried to place a block suspiciously.
+[20:37:20] [Client thread/INFO]: [CHAT] [Intave12] Naqsu_ failed WORLD / MachineBlock (vl:-1/7): tried to place a block suspiciously.
+[20:37:20] [Client thread/INFO]: [CHAT] [Intave12] Naqsu_ failed WORLD / MachineBlock (vl:-1/8): tried to place a block suspiciously.
+[20:37:20] [Client thread/INFO]: [CHAT] [Intave12] Naqsu_ failed WORLD / MachineBlock (vl:-1/9): tried to place a block suspiciously.
+[20:37:27] [Client thread/INFO]: [CHAT] trans aureliameows: do you have any arguments of value or are you just gonna keep hating and trying to ragebait
+[20:37:34] [Client thread/INFO]: [CHAT] trans aureliameows: and failing miserably
+[20:37:38] [Client thread/INFO]: [CHAT] 4bps: I am not hating
+[20:37:40] [Client thread/INFO]: [CHAT] Nessli: ragebaited by a transgender on a minecraft anticheat test server
+[20:37:40] [Client thread/INFO]: [CHAT] CCBlueX >> All scaffold areas will be cleaned in 60 seconds!
+[20:37:43] [Client thread/INFO]: [CHAT] Nessli: oh my word
+[20:37:44] [Client thread/INFO]: [CHAT] [-] t1um
+[20:37:44] [Client thread/INFO]: [CHAT] [+] t1um
+[20:37:55] [Client thread/INFO]: [CHAT] [-] Dervi69
+[20:38:00] [Client thread/INFO]: [CHAT] 4bps: Nessli shut up if you don't want to get doxxed
+[20:38:01] [Client thread/INFO]: [CHAT] Jor9daN: Lol who's the person hating on trans gеոders?
+[20:38:03] [Client thread/INFO]: [CHAT] Nessli: dox me
+[20:38:04] [Client thread/INFO]: [CHAT] CCBlueX >> You can use /i command to get items!
+[20:38:10] [Client thread/INFO]: [CHAT] CCBlueX >> All scaffold areas will be cleaned in 30 seconds!
+[20:38:35] [Client thread/INFO]: [CHAT] CCBlueX >> All scaffold areas will be cleaned in 5 seconds!
+[20:38:39] [Client thread/INFO]: [CHAT] [-] Nessli
+[20:38:50] [Client thread/INFO]: [CHAT] Jor9daN: 4bps are you against trans people?
+[20:38:59] [Client thread/INFO]: [CHAT] [+] deviousmarisa
+[20:39:00] [Client thread/INFO]: [CHAT] [+] Nessli
+[20:39:02] [Client thread/INFO]: [CHAT] Jor9daN: If so, how come?
+[20:39:08] [Client thread/INFO]: [CHAT] CCBlueX >> Loyisa's Discord: https://discord.gg/fdmkfts
+[20:39:11] [Client thread/INFO]: [CHAT] [Intave12] Naqsu_ failed MOVING / Knockback (vl:-2/0): manipulated his knockback. (-0.0025 0.0399 -0.0996 expected 0.4439  0.0399  -0.6676)
+[20:39:12] [Client thread/INFO]: [CHAT] [Intave12] Naqsu_ failed MOVING / Knockback (vl:-2/2): manipulated his knockback. (0.0072 -0.0393 -0.1315 expected 0.4439  -0.0393  -0.6676)
+[20:39:13] [Client thread/INFO]: [CHAT] [Intave12] Naqsu_ failed MOVING / Knockback (vl:-2/4): manipulated his knockback. (0.0905 0.0005 -0.0170 expected 0.3233  0.0005  -0.6346)
+[20:39:14] [Client thread/INFO]: [CHAT] 4bps: Jor9daN I am against being retard and ill
+[20:39:17] [Client thread/INFO]: [CHAT] [Intave12] Naqsu_ failed MOVING / Knockback (vl:0/6): manipulated his knockback. (-0.0012 -0.5169 -0.0068 expected -0.1401  -0.5169  -0.3049)
+[20:39:20] [Client thread/INFO]: [CHAT] [Intave12] Naqsu_ failed MOVING / Knockback (vl:-2/6): manipulated his knockback. (0.0071 -0.4429 0.0399 expected 0.2890  -0.4429  0.3450)
+[20:39:20] [Client thread/INFO]: [CHAT] [Intave12] Naqsu_ failed MOVING / Knockback (vl:-2/8): manipulated his knockback. (0.0085 -0.4871 0.0244 expected 0.2691  -0.4871  0.3212)
+[20:39:20] [Client thread/INFO]: [CHAT] [Intave12] Naqsu_ failed MOVING / Knockback (vl:-6/10): did not respond on given knockback (0.88 ticks behind) (expected 0.6774  0.4856  0.8086)
+[20:39:20] [Client thread/INFO]: [CHAT] [Intave12] Naqsu_ failed NETWORK / Move (vl:-1/0): is sending too many packets (balance 10.05)
+[20:39:21] [Client thread/INFO]: [CHAT] [Intave12] Naqsu_ failed MOVING / Knockback (vl:-2/16): manipulated his knockback. (0.0125 -0.4628 0.0243 expected 0.3094  -0.4628  0.3694)
+[20:39:21] [Client thread/INFO]: [CHAT] [Intave12] Naqsu_ failed MOVING / Knockback (vl:-6/18): did not respond on given knockback (0.84 ticks behind) (expected 0.7789  0.5584  0.9299)
+[20:39:21] [Client thread/INFO]: [CHAT] [Intave12] Naqsu_ failed MOVING / Knockback (vl:-6/24): did not respond on given knockback (0.28 ticks behind) (expected 0.6774  0.4856  0.8086)
+[20:39:21] [Client thread/INFO]: [CHAT] [Intave12] Naqsu_ failed MOVING / Flight (vl:-40/0): sent unexpected position (-0.4628 -> 0.4856, but expected -0.5320) 
+[20:39:22] [Client thread/INFO]: [CHAT] [Intave12] Naqsu_ failed MOVING / Knockback (vl:-6/30): did not respond on given knockback (0.86 ticks behind) (expected 0.6774  0.4856  0.8086)
+[20:39:23] [Client thread/INFO]: [CHAT] [Intave12] Naqsu_ failed MOVING / Knockback (vl:-6/0): did not respond on given knockback (0.78 ticks behind) (expected 0.6774  0.4856  0.8086)
+[20:39:29] [Client thread/INFO]: [CHAT] [Intave12] Naqsu_ failed MOVING / Knockback (vl:-4/6): did not respond on given knockback (0.76 ticks behind) (expected 0.3860  0.3608  0.0884)
+[20:39:29] [Client thread/INFO]: [CHAT] [Intave12] Naqsu_ failed MOVING / Knockback (vl:-6/10): did not respond on given knockback (0.80 ticks behind) (expected 0.3860  0.3608  0.0884)
+[20:39:30] [Client thread/INFO]: [CHAT] [Intave12] Naqsu_ failed MOVING / Knockback (vl:-2/16): manipulated his knockback. (0.0930 -0.0505 0.0237 expected 0.3860  -0.0505  0.0884)
+[20:39:30] [Client thread/INFO]: [CHAT] [Intave12] Naqsu_ failed MOVING / Knockback (vl:-6/18): did not respond on given knockback (0.76 ticks behind) (expected 0.3860  0.3608  0.0884)
+[20:39:31] [Client thread/INFO]: [CHAT] [Intave12] Naqsu_ failed MOVING / Knockback (vl:-6/24): did not respond on given knockback (0.94 ticks behind) (expected 0.3860  0.3608  0.0884)
+[20:39:32] [Client thread/INFO]: [CHAT] [Intave12] Naqsu_ failed MOVING / Knockback (vl:-6/30): did not respond on given knockback (0.90 ticks behind) (expected 0.3860  0.3608  0.0884)
+[20:39:32] [Client thread/INFO]: [CHAT] CCBlueX >> All items on the ground will be cleaned in 60 seconds!
+[20:39:33] [Client thread/INFO]: [CHAT] [Intave12] Naqsu_ failed MOVING / Knockback (vl:-6/0): did not respond on given knockback (0.88 ticks behind) (expected 0.3860  0.3608  0.0884)
+[20:39:38] [Client thread/INFO]: [CHAT] Nessli: are you also against using proper grammar
+[20:39:38] [Client thread/INFO]: [CHAT] [Intave12] Naqsu_ failed MOVING / Knockback (vl:-4/6): did not respond on given knockback (0.90 ticks behind) (expected -0.3331  0.3608  -0.2213)
+[20:39:38] [Client thread/INFO]: [CHAT] [Intave12] Naqsu_ failed NETWORK / Move (vl:-1/0): is sending too many packets (balance 10.09)
+[20:39:39] [Client thread/INFO]: [CHAT] [Intave12] Naqsu_ failed MOVING / Knockback (vl:-6/10): did not respond on given knockback (0.88 ticks behind) (expected -0.3331  0.3608  -0.2213)
+[20:39:39] [Client thread/INFO]: [CHAT] [Intave12] Naqsu_ failed NETWORK / Move (vl:-1/1): is sending too many packets (balance 10.11)
+[20:39:40] [Client thread/INFO]: [CHAT] Nessli: ?
+[20:39:40] [Client thread/INFO]: [CHAT] [Intave12] Naqsu_ failed MOVING / Knockback (vl:-6/16): did not respond on given knockback (0.86 ticks behind) (expected -0.3331  0.3608  -0.2213)
+[20:39:41] [Client thread/INFO]: [CHAT] [Intave12] Naqsu_ failed MOVING / Knockback (vl:-6/22): did not respond on given knockback (0.86 ticks behind) (expected -0.3331  0.3608  -0.2213)
+[20:39:41] [Client thread/INFO]: [CHAT] [Intave12] Naqsu_ failed MOVING / Knockback (vl:-6/28): did not respond on given knockback (0.80 ticks behind) (expected -0.3331  0.3608  -0.2213)
+[20:39:42] [Client thread/INFO]: [CHAT] [Intave12] Naqsu_ failed MOVING / Knockback (vl:-6/34): did not respond on given knockback (0.80 ticks behind) (expected -0.3331  0.3608  -0.2213)
+[20:39:48] [Client thread/INFO]: [CHAT] [Intave12] Naqsu_ failed MOVING / Knockback (vl:-4/0): did not respond on given knockback (0.92 ticks behind) (expected -1.3906  0.4608  -0.1619)
+[20:39:49] [Client thread/INFO]: [CHAT] [Intave12] Naqsu_ failed MOVING / Knockback (vl:-2/4): manipulated his knockback. (-0.0746 -0.1165 -0.0550 expected -1.3906  -0.1165  -0.1619)
+[20:39:49] [Client thread/INFO]: [CHAT] [Intave12] Naqsu_ failed MOVING / Knockback (vl:-4/6): did not respond on given knockback (0.84 ticks behind) (expected -1.1673  0.4608  -0.7181)
+[20:39:50] [Client thread/INFO]: [CHAT] [Intave12] Naqsu_ failed MOVING / Knockback (vl:-6/10): did not respond on given knockback (0.84 ticks behind) (expected -1.1673  0.4608  -0.7181)
+[20:39:51] [Client thread/INFO]: [CHAT] [Intave12] Naqsu_ failed MOVING / Knockback (vl:-6/16): did not respond on given knockback (0.86 ticks behind) (expected -1.1673  0.4608  -0.7181)
+[20:39:52] [Client thread/INFO]: [CHAT] [Intave12] Naqsu_ failed MOVING / Knockback (vl:-6/22): did not respond on given knockback (0.74 ticks behind) (expected -1.1673  0.4608  -0.7181)
+[20:39:55] [Client thread/INFO]: [CHAT] trans aureliameows: 4bps hey twin since you're against retards why are you one
+[20:39:58] [Client thread/INFO]: [CHAT] trans aureliameows: :mending_heart:
+[20:40:00] [Client thread/INFO]: [CHAT] 4bps: bro thinks he's a native speaker :skull:
+[20:40:02] [Client thread/INFO]: [CHAT] CCBlueX >> All items on the ground will be cleaned in 30 seconds!
+[20:40:11] [Client thread/INFO]: [CHAT] Jor9daN: macaco
+[20:40:12] [Client thread/INFO]: [CHAT] CCBlueX >> You can use /i command to get items!
+[20:40:13] [Client thread/INFO]: [CHAT] CCBlueX >> You selected: Matrix
+[20:40:17] [Client thread/INFO]: [CHAT] [Matrix] Naqsu_ failed KILLAURA(vl:3): exhibiting an aiming pattern similar to aimbot // acceleration (9) component: ka.abt.acl | KILLAURA: 3 vl(s)
+[20:40:17] [Client thread/INFO]: [CHAT] [Matrix] Naqsu_ failed KILLAURA(vl:3): exhibiting an aiming pattern similar to aimbot // acceleration (10) component: ka.abt.acl | KILLAURA: 6 vl(s)
+[20:40:26] [Client thread/INFO]: [CHAT] 4bps: Jor9daN scimmia ci sarai tu testa di cazzo
+[20:40:27] [Client thread/INFO]: [CHAT] CCBlueX >> All items on the ground will be cleaned in 5 seconds!
+[20:40:32] [Client thread/INFO]: [CHAT] CCBlueX >> 0 items have been cleaned!
+[20:40:34] [Client thread/INFO]: [CHAT] Jor9daN: Morocco
+[20:40:34] [Client thread/INFO]: [CHAT] [-] t1um
+[20:40:37] [Client thread/INFO]: [CHAT] [+] t1um
+[20:40:37] [Client thread/INFO]: [CHAT] LoyisaIsImposter: Why u hack
+[20:40:38] [Client thread/INFO]: [CHAT] [Matrix] Naqsu_ failed CLICK(vl:4): reached 16/15 cps during the combat // cps (dynamic) component: ka.clk.cps | CLICK: 4 vl(s)
+[20:40:38] [Client thread/INFO]: [CHAT] [Matrix] Naqsu_ failed CLICK(vl:8): exhibiting suspicious clicks patterns during the combat // timing // avg: 1, stdDev: 0.592 component: ka.clk.tim | CLICK: 12 vl(s)
+[20:40:42] [Client thread/INFO]: [CHAT] [-] 140_
+[20:40:42] [Client thread/INFO]: [CHAT] Nessli: ofcourse it's the broke italian living in the slums of naples
+[20:40:45] [Client thread/INFO]: [CHAT] [-] t1um
+[20:40:53] [Client thread/INFO]: [CHAT] [+] t1um
+[20:40:53] [Client thread/INFO]: [CHAT] CCBlueX >> You selected: GrimAC
+[20:40:53] [Client thread/INFO]: [CHAT] You were kicked from legacy: §3§lCCBlueX§8 >> §6To ensure anticheat(s) works properly, reconnecting to the server...
+[20:40:53] [Client thread/INFO]: [CHAT]        
+[20:40:53] [Client thread/INFO]: [CHAT] You are on the legacy(1.8.8) server!
+[20:40:53] [Client thread/INFO]: [CHAT] For the latest server, type /server latest!
+[20:40:53] [Client thread/INFO]: [CHAT] [+] Naqsu_
+[20:40:53] [Client thread/INFO]: [CHAT] CCBlueX >> Your client brand is vanilla
+[20:40:54] [Client thread/INFO]: [CHAT] LoyisaIsImposter: Why u hack
+[20:40:55] [Client thread/INFO]: [CHAT] [GrimAC] Naqsu_ failed Simulation (vl:0.0): .030965 /gl 8
+[20:40:55] [Client thread/INFO]: [CHAT] [GrimAC] Naqsu_ failed BadPacketsX (vl:0.0)
+[20:40:55] [Client thread/INFO]: [CHAT] [GrimAC] Naqsu_ failed Simulation (vl:1.0): .009697 /gl 8
+[20:40:55] [Client thread/INFO]: [CHAT] [GrimAC] Naqsu_ failed Simulation (vl:2.0): .008634 /gl 8
+[20:40:55] [Client thread/INFO]: [CHAT] [GrimAC] Naqsu_ failed Simulation (vl:3.0): .007857 /gl 8
+[20:40:55] [Client thread/INFO]: [CHAT] [GrimAC] Naqsu_ failed Simulation (vl:4.0): .007150 /gl 8
+[20:40:55] [Client thread/INFO]: [CHAT] [GrimAC] Naqsu_ failed Simulation (vl:5.0): .006507 /gl 8
+[20:40:55] [Client thread/INFO]: [CHAT] [GrimAC] Naqsu_ failed Simulation (vl:6.0): .005922 /gl 8
+[20:40:55] [Client thread/INFO]: [CHAT] [GrimAC] Naqsu_ failed Simulation (vl:7.0): .005389 /gl 8
+[20:40:55] [Client thread/INFO]: [CHAT] [GrimAC] Naqsu_ failed Simulation (vl:8.0): .005868 /gl 8
+[20:40:55] [Client thread/INFO]: [CHAT] [GrimAC] Naqsu_ failed Simulation (vl:9.0): .003211 /gl 8
+[20:40:55] [Client thread/INFO]: [CHAT] [GrimAC] Naqsu_ failed Simulation (vl:10.0): .001757 /gl 8
+[20:40:56] [Client thread/INFO]: [CHAT] [GrimAC] Naqsu_ failed Simulation (vl:11.0): .030000 /gl 8
+[20:40:56] [Client thread/INFO]: [CHAT] [GrimAC] Naqsu_ failed Simulation (vl:12.0): .007644 /gl 8
+[20:40:56] [Client thread/INFO]: [CHAT] [GrimAC] Naqsu_ failed Simulation (vl:13.0): .044437 /gl 8
+[20:40:56] [Client thread/INFO]: [CHAT] [GrimAC] Naqsu_ failed Simulation (vl:14.0): .087789 /gl 8
+[20:40:57] [Client thread/INFO]: [CHAT] [GrimAC] Naqsu_ failed Simulation (vl:15.0): .058674 /gl 8
+[20:40:57] [Client thread/INFO]: [CHAT] [GrimAC] Naqsu_ failed Simulation (vl:16.0): .014483 /gl 8
+[20:40:57] [Client thread/INFO]: [CHAT] [GrimAC] Naqsu_ failed Simulation (vl:17.0): .068500 /gl 8
+[20:40:57] [Client thread/INFO]: [CHAT] [GrimAC] Naqsu_ failed Simulation (vl:18.0): .052346 /gl 8
+[20:40:57] [Client thread/INFO]: [CHAT] [GrimAC] Naqsu_ failed Simulation (vl:19.0): .016779 /gl 8
+[20:40:57] [Client thread/INFO]: [CHAT] [GrimAC] Naqsu_ failed Simulation (vl:20.0): .009161 /gl 8
+[20:40:57] [Client thread/INFO]: [CHAT] [GrimAC] Naqsu_ failed Simulation (vl:21.0): .005002 /gl 8
+[20:40:57] [Client thread/INFO]: [CHAT] [GrimAC] Naqsu_ failed Simulation (vl:22.0): .085000 /gl 8
+[20:40:57] [Client thread/INFO]: [CHAT] [GrimAC] Naqsu_ failed Simulation (vl:23.0): .017171 /gl 8
+[20:40:57] [Client thread/INFO]: [CHAT] [GrimAC] Naqsu_ failed Simulation (vl:24.0): .010037 /gl 8
+[20:40:57] [Client thread/INFO]: [CHAT] [GrimAC] Naqsu_ failed Simulation (vl:25.0): .046560 /gl 8
+[20:40:57] [Client thread/INFO]: [CHAT] [GrimAC] Naqsu_ failed Simulation (vl:26.0): .025422 /gl 8
+[20:40:57] [Client thread/INFO]: [CHAT] [GrimAC] Naqsu_ failed Simulation (vl:27.0): .013880 /gl 8
+[20:40:57] [Client thread/INFO]: [CHAT] [GrimAC] Naqsu_ failed Simulation (vl:28.0): .007578 /gl 8
+[20:40:57] [Client thread/INFO]: [CHAT] [GrimAC] Naqsu_ failed Simulation (vl:29.0): .029630 /gl 8
+[20:40:57] [Client thread/INFO]: [CHAT] [GrimAC] Naqsu_ failed Simulation (vl:30.0): .016178 /gl 8
+[20:40:57] [Client thread/INFO]: [CHAT] [GrimAC] Naqsu_ failed Simulation (vl:31.0): .008833 /gl 8
+[20:40:57] [Client thread/INFO]: [CHAT] [GrimAC] Naqsu_ failed Simulation (vl:32.0): .004823 /gl 8
+[20:40:57] [Client thread/INFO]: [CHAT] [GrimAC] Naqsu_ failed Simulation (vl:33.0): .002633 /gl 8
+[20:40:57] [Client thread/INFO]: [CHAT] [GrimAC] Naqsu_ failed Simulation (vl:34.0): .001438 /gl 8
+[20:40:58] [Client thread/INFO]: [CHAT] [GrimAC] Naqsu_ failed Simulation (vl:35.0): .031246 /gl 8
+[20:40:58] [Client thread/INFO]: [CHAT] [GrimAC] Naqsu_ failed Simulation (vl:36.0): .017067 /gl 8
+[20:40:58] [Client thread/INFO]: [CHAT] [GrimAC] Naqsu_ failed Simulation (vl:37.0): .009316 /gl 8
+[20:40:58] [Client thread/INFO]: [CHAT] [GrimAC] Naqsu_ failed Simulation (vl:38.0): .087894 /gl 8
+[20:40:58] [Client thread/INFO]: [CHAT] [GrimAC] Naqsu_ failed Reach (vl:0.0): 3.03473 blocks, type=player
+[20:40:58] [Client thread/INFO]: [CHAT] [GrimAC] Naqsu_ failed Simulation (vl:39.0): .017355 /gl 8
+[20:40:58] [Client thread/INFO]: [CHAT] [GrimAC] Naqsu_ failed Simulation (vl:40.0): .037870 /gl 8
+[20:40:58] [Client thread/INFO]: [CHAT] [GrimAC] Naqsu_ failed Simulation (vl:41.0): .060320 /gl 8
+[20:40:58] [Client thread/INFO]: [CHAT] [GrimAC] Naqsu_ failed Simulation (vl:42.0): .107737 /gl 8
+[20:40:58] [Client thread/INFO]: [CHAT] [GrimAC] Naqsu_ failed Simulation (vl:43.0): .029335 /gl 8
+[20:40:58] [Client thread/INFO]: [CHAT] [GrimAC] Naqsu_ failed Simulation (vl:44.0): .119761 /gl 8
+[20:40:59] [Client thread/INFO]: [CHAT] [GrimAC] Naqsu_ failed Simulation (vl:45.0): .021993 /gl 8
+[20:41:00] [Client thread/INFO]: [CHAT] 4bps: Luckly I am NOT neapolitan
+[20:41:03] [Client thread/INFO]: [CHAT] [GrimAC] Naqsu_ failed Simulation (vl:46.0): .029400 /gl 8
+[20:41:03] [Client thread/INFO]: [CHAT] [GrimAC] Naqsu_ failed Simulation (vl:47.0): .079847 /gl 8
+[20:41:03] [Client thread/INFO]: [CHAT] [GrimAC] Naqsu_ failed Simulation (vl:48.0): .109990 /gl 8
+[20:41:03] [Client thread/INFO]: [CHAT] [GrimAC] Naqsu_ failed Simulation (vl:49.0): .040148 /gl 8
+[20:41:03] [Client thread/INFO]: [CHAT] [GrimAC] Naqsu_ failed Reach (vl:1.0): 3.03333 blocks, type=player
+[20:41:03] [Client thread/INFO]: [CHAT] [GrimAC] Naqsu_ failed Simulation (vl:50.0): .111433 /gl 8
+[20:41:04] [Client thread/INFO]: [CHAT] [GrimAC] Naqsu_ failed Simulation (vl:51.0): .019464 /gl 8
+[20:41:04] [Client thread/INFO]: [CHAT] [GrimAC] Naqsu_ failed Simulation (vl:52.0): .019897 /gl 8
+[20:41:04] [Client thread/INFO]: [CHAT] [GrimAC] Naqsu_ failed Simulation (vl:53.0): .103892 /gl 8
+[20:41:04] [Client thread/INFO]: [CHAT] [GrimAC] Naqsu_ failed Simulation (vl:54.0): .013305 /gl 8
+[20:41:04] [Client thread/INFO]: [CHAT] [GrimAC] Naqsu_ failed Simulation (vl:55.0): .090269 /gl 8
+[20:41:05] [Client thread/INFO]: [CHAT] [GrimAC] Naqsu_ failed Reach (vl:2.0): 3.08292 blocks, type=player
+[20:41:05] [Client thread/INFO]: [CHAT] [GrimAC] Naqsu_ failed Simulation (vl:56.0): .030000 /gl 8
+[20:41:05] [Client thread/INFO]: [CHAT] [GrimAC] Naqsu_ failed Simulation (vl:57.0): .007834 /gl 8
+[20:41:05] [Client thread/INFO]: [CHAT] [GrimAC] Naqsu_ failed Simulation (vl:58.0): .019487 /gl 8
+[20:41:06] [Client thread/INFO]: [CHAT] [GrimAC] Naqsu_ failed Simulation (vl:59.0): .085873 /gl 8
+[20:41:06] [Client thread/INFO]: [CHAT] [GrimAC] Naqsu_ failed Simulation (vl:60.0): .029400 /gl 8
+[20:41:06] [Client thread/INFO]: [CHAT] [GrimAC] Naqsu_ failed Simulation (vl:61.0): .029400 /gl 8
+[20:41:06] [Client thread/INFO]: [CHAT] [GrimAC] Naqsu_ failed Simulation (vl:62.0): .107734 /gl 8
+[20:41:06] [Client thread/INFO]: [CHAT] [GrimAC] Naqsu_ failed Simulation (vl:63.0): .116704 /gl 8
+[20:41:06] [Client thread/INFO]: [CHAT] [GrimAC] Naqsu_ failed Simulation (vl:64.0): .008241 /gl 8
+[20:41:07] [Client thread/INFO]: [CHAT] [GrimAC] Naqsu_ failed Simulation (vl:65.0): .008231 /gl 8
+[20:41:08] [Client thread/INFO]: [CHAT] trans aureliameows: bro ist ausländer und regt sich auf
+[20:41:09] [Client thread/INFO]: [CHAT] [-] t1um
+[20:41:12] [Client thread/INFO]: [CHAT] trans aureliameows: such dir 'nen server in deinem land
+[20:41:13] [Client thread/INFO]: [CHAT] trans aureliameows: bastard
+[20:41:16] [Client thread/INFO]: [CHAT] CCBlueX >> CCBlueX's Discord: https://discord.gg/68GgEGTRr9
+[20:41:30] [Client thread/INFO]: [CHAT] 4bps: I hope, one day, some1 will find a cure for transgenders
+[20:41:42] [Client thread/INFO]: [CHAT] trans aureliameows: Ok
+[20:41:45] [Client thread/INFO]: [CHAT] Jor9daN: Source: StarCloud 2024 | url: id﹒heromc﹒net/member/dangky﹒php | username: 4bps | pаѕѕword: bruhbruh
+[20:41:49] [Client thread/INFO]: [CHAT] trans aureliameows: LMFAOOOO
+[20:41:50] [Client thread/INFO]: [CHAT] trans aureliameows: LMFAIOSDHFOASDIPOH
+[20:41:54] [Client thread/INFO]: [CHAT] Nessli: i hope someday the italians will stop being unemployed
+[20:41:56] [Client thread/INFO]: [CHAT] Jor9daN: Source: craftrise | email: oergin234@gmail﹒com | pаѕѕword: mc123258 | username: 4bps
+[20:42:04] [Client thread/INFO]: [CHAT] Jor9daN: Source: RinaOrc﹒com 2024 | username: 4bps | pаѕѕword: $SHA$0dxuj81kbz2t39yta8or$5cbda8be2775143acfd8
+[20:42:10] [Client thread/INFO]: [CHAT] 4bps: Jor9daN nice try
+[20:42:16] [Client thread/INFO]: [CHAT] Jor9daN: Just a dump
+[20:42:20] [Client thread/INFO]: [CHAT] CCBlueX >> You can use /i command to get items!
+[20:42:25] [Client thread/INFO]: [CHAT] Nessli: i have to relaunch can you guys give me a moment
+[20:42:26] [Client thread/INFO]: [CHAT] Jor9daN: ur also on StarCloud 2024
+[20:42:29] [Client thread/INFO]: [CHAT] Jor9daN: unfortunate
+[20:42:30] [Client thread/INFO]: [CHAT] [-] Nessli
+[20:42:55] [Client thread/INFO]: [CHAT] [+] Nessli
+[20:42:55] [Client thread/INFO]: [CHAT] 4bps: aureliameows but transgenders at the moment needs some lead in their ass
+[20:43:06] [Client thread/INFO]: [CHAT] Nessli: is that what you're in to
+[20:43:12] [Client thread/INFO]: [CHAT] Nessli: transgenders with something up their ass
+[20:43:13] [Client thread/INFO]: [CHAT] Nessli: ?
+[20:43:14] [Client thread/INFO]: [CHAT] trans aureliameows: right twin when are you gonna come beat me to death you said you'd do that
+[20:43:23] [Client thread/INFO]: [CHAT] [GrimAC] Naqsu_ failed Simulation (vl:66.0): .070231 /gl 8
+[20:43:24] [Client thread/INFO]: [CHAT] [GrimAC] Naqsu_ failed Simulation (vl:67.0): .087413 /gl 8
+[20:43:24] [Client thread/INFO]: [CHAT] CCBlueX >> You can use /i command to get items!
+[20:43:24] [Client thread/INFO]: [CHAT] [GrimAC] Naqsu_ failed Hitboxes (vl:0.0): type=villager
+[20:43:27] [Client thread/INFO]: [CHAT] [GrimAC] Naqsu_ failed AimModulo360 (vl:0.0)
+[20:43:39] [Client thread/INFO]: [CHAT] trans aureliameows: i'm waiting
+[20:43:49] [Client thread/INFO]: [CHAT] CCBlueX >> All items on the ground will be cleaned in 60 seconds!
+[20:43:55] [Client thread/INFO]: [CHAT] [+] 140_
+[20:44:05] [Client thread/INFO]: [CHAT] Nessli: unemployed italians typically don't leave italy
+[20:44:17] [Client thread/INFO]: [CHAT] 4bps: Nessli shut up
+[20:44:19] [Client thread/INFO]: [CHAT] CCBlueX >> All items on the ground will be cleaned in 30 seconds!
+[20:44:24] [Client thread/INFO]: [CHAT] trans aureliameows: unemployed at 19 is rough
+[20:44:26] [Client thread/INFO]: [CHAT] Nessli: what are you going to do about it
+[20:44:26] [Client thread/INFO]: [CHAT] 4bps: Italy is the best place in the world
+[20:44:27] [Client thread/INFO]: [CHAT] [-] Cvrwed
+[20:44:28] [Client thread/INFO]: [CHAT] CCBlueX >> You can use /server latest command to join the 1.21.4 server!
+[20:44:36] [Client thread/INFO]: [CHAT] Nessli: best at being unemployed bums
+[20:44:44] [Client thread/INFO]: [CHAT] CCBlueX >> All items on the ground will be cleaned in 5 seconds!
+[20:44:49] [Client thread/INFO]: [CHAT] CCBlueX >> 0 items have been cleaned!
+[20:45:00] [Client thread/INFO]: [CHAT] Nessli: the only good italian part is sudtirol which is austria
+[20:45:04] [Client thread/INFO]: [CHAT] trans aureliameows: best at being right wing nazis if anyhting lmaoo
+[20:45:05] [Client thread/INFO]: [CHAT] Nessli: i know its rough
+[20:45:10] [Client thread/INFO]: [CHAT] 4bps: Nessli NO
+[20:45:10] [Client thread/INFO]: [CHAT] trans aureliameows: anything*
+[20:45:18] [Client thread/INFO]: [CHAT] 4bps: sudtirol is italy
+[20:45:32] [Client thread/INFO]: [CHAT] CCBlueX >> You can use /i command to get items!
+[20:45:44] [Client thread/INFO]: [CHAT] [+] sillytransgender
+[20:45:45] [Client thread/INFO]: [CHAT] [+] dolofnik
+[20:45:46] [Client thread/INFO]: [CHAT] Nessli: so why do they speak anything except italian
+[20:45:47] [Client thread/INFO]: [CHAT] [-] 140_
+[20:45:51] [Client thread/INFO]: [CHAT] sillytransgender: somebody say transgenders
+[20:46:04] [Client thread/INFO]: [CHAT] [-] Medion747
+[20:46:08] [Client thread/INFO]: [CHAT] trans aureliameows: watch out 4bps is going to dox you for being trans
+[20:46:11] [Client thread/INFO]: [CHAT] trans aureliameows: and beat you to death
+[20:46:11] [Client thread/INFO]: [CHAT] 4bps: sillytransgender somebody says you must go to a mental hospital
+[20:46:11] [Client thread/INFO]: [CHAT] trans aureliameows: !
+[20:46:17] [Client thread/INFO]: [CHAT] 4bps: pls
+[20:46:21] [Client thread/INFO]: [CHAT] [+] BrandowLucas
+[20:46:36] [Client thread/INFO]: [CHAT] CCBlueX >> You can use /i command to get items!
+[20:46:44] [Client thread/INFO]: [CHAT] [-] BrandowLucas
+[20:46:46] [Client thread/INFO]: [CHAT] sillytransgender: 4bps do you remember the last time you felt the warm embrace of somebody close to you
+[20:46:48] [Client thread/INFO]: [CHAT] sillytransgender: i bet you dont
+[20:46:58] [Client thread/INFO]: [CHAT] [+] BrandowLucas
+[20:47:07] [Client thread/INFO]: [CHAT] [-] dolofnik
+[20:47:07] [Client thread/INFO]: [CHAT] [-] BrandowLucas
+[20:47:19] [Client thread/INFO]: [CHAT] [+] dolofnik
+[20:47:29] [Client thread/INFO]: [CHAT] 4bps: I don't listen to monkeys
+[20:47:30] [Client thread/INFO]: [CHAT] dolofnik: .фс
+[20:47:38] [Client thread/INFO]: [CHAT] 4bps: dolofnik
+[20:47:39] [Client thread/INFO]: [CHAT] 4bps: you
+[20:47:40] [Client thread/INFO]: [CHAT] CCBlueX >> Loyisa's Discord: https://discord.gg/fdmkfts
+[20:47:41] [Client thread/INFO]: [CHAT] sillytransgender: so you don't listen to humans?
+[20:47:44] [Client thread/INFO]: [CHAT] [-] Jor9daN
+[20:47:47] [Client thread/INFO]: [CHAT] sillytransgender: humans come from apes
+[20:47:49] [Client thread/INFO]: [CHAT] [-] deviousmarisa
+[20:47:52] [Client thread/INFO]: [CHAT] sillytransgender: not listening isnt good
+[20:48:01] [Client thread/INFO]: [CHAT] sillytransgender: might wanna go check with your doctor for hearing loss
+[20:48:06] [Client thread/INFO]: [CHAT] CCBlueX >> All items on the ground will be cleaned in 60 seconds!
+[20:48:09] [Client thread/INFO]: [CHAT] trans aureliameows: 4bps wie wäre es mal mit gesundem menschenverstand
+[20:48:16] [Client thread/INFO]: [CHAT] trans aureliameows: ?
+[20:48:28] [Client thread/INFO]: [CHAT] 4bps: aureliameows shut up, i don't speak german
+[20:48:29] [Client thread/INFO]: [CHAT] trans aureliameows: und vernünftiger grammatik
+[20:48:32] [Client thread/INFO]: [CHAT] Nessli: immer wieder deutschers uberall digga
+[20:48:36] [Client thread/INFO]: [CHAT] CCBlueX >> All items on the ground will be cleaned in 30 seconds!
+[20:48:41] [Client thread/INFO]: [CHAT] trans aureliameows: boo hoo bro
+[20:48:44] [Client thread/INFO]: [CHAT] trans aureliameows: you're on a german server
+[20:48:44] [Client thread/INFO]: [CHAT] CCBlueX >> CCBlueX's Discord: https://discord.gg/68GgEGTRr9
+[20:48:57] [Client thread/INFO]: [CHAT] [-] dolofnik
+[20:49:01] [Client thread/INFO]: [CHAT] CCBlueX >> All items on the ground will be cleaned in 5 seconds!
+[20:49:06] [Client thread/INFO]: [CHAT] CCBlueX >> 0 items have been cleaned!
+[20:49:13] [Client thread/INFO]: [CHAT] 4bps: fucking germans, you were ruined by the USSR and the USA
+[20:49:22] [Client thread/INFO]: [CHAT] trans aureliameows: italy was on the same side as germany?
+[20:49:26] [Client thread/INFO]: [CHAT] Nessli: im not german
+[20:49:29] [Client thread/INFO]: [CHAT] trans aureliameows: do you not know this twin
+[20:49:29] [Client thread/INFO]: [CHAT] Nessli: im austrian
+[20:49:30] [Client thread/INFO]: [CHAT] sillytransgender: you know this server is owned by a german group right
+[20:49:32] [Client thread/INFO]: [CHAT] [+] Cvrwed
+[20:49:46] [Client thread/INFO]: [CHAT] trans aureliameows: i don't think he does
+[20:49:48] [Client thread/INFO]: [CHAT] CCBlueX >> You can use /i command to get items!
+[20:49:50] [Client thread/INFO]: [CHAT] 4bps: listen
+[20:49:56] [Client thread/INFO]: [CHAT] sillytransgender: he doesnt seem to know alot
+[20:50:00] [Client thread/INFO]: [CHAT] 4bps: shut up
+[20:50:04] [Client thread/INFO]: [CHAT] 4bps: I am pissed off
+[20:50:04] [Client thread/INFO]: [CHAT] sillytransgender: considering his passwords are bruhbruh and mc123258
+[20:50:05] [Client thread/INFO]: [CHAT] 4bps: bye
+[20:50:08] [Client thread/INFO]: [CHAT] [-] 4bps
+[20:50:10] [Client thread/INFO]: [CHAT] trans aureliameows: LOL
+[20:50:12] [Client thread/INFO]: [CHAT] trans aureliameows: FOLD
+[20:50:14] [Client thread/INFO]: [CHAT] trans aureliameows: FOLDED
+[20:50:15] [Client thread/INFO]: [CHAT] [+] 4bps
+[20:50:19] [Client thread/INFO]: [CHAT] trans aureliameows: NICE FOLD LMAO
+[20:50:22] [Client thread/INFO]: [CHAT] Nessli: is he still mad
+[20:50:24] [Client thread/INFO]: [CHAT] [-] 4bps
+[20:50:26] [Client thread/INFO]: [CHAT] sillytransgender: apparently so
+[20:50:30] [Client thread/INFO]: [CHAT] sillytransgender: he folded and left
+[20:50:39] [Client thread/INFO]: [CHAT] Nessli: he was going to dox me :(
+[20:50:44] [Client thread/INFO]: [CHAT] trans aureliameows: he was going to come beat me to death
+[20:50:51] [Client thread/INFO]: [CHAT] [-] Cvrwed
+[20:50:52] [Client thread/INFO]: [CHAT] [-] Nessli
+[20:50:52] [Client thread/INFO]: [CHAT] CCBlueX >> Loyisa's Discord: https://discord.gg/fdmkfts
+[20:51:02] [Client thread/INFO]: [CHAT] [+] Cvrwed
+[20:51:14] [Client thread/INFO]: [CHAT] [+] Nessli
+[20:51:16] [Client thread/INFO]: [CHAT] sillytransgender: sigh
+[20:51:16] [Client thread/INFO]: [CHAT] [-] Cvrwed
+[20:51:19] [Client thread/INFO]: [CHAT] sillytransgender: no sword noslow
+[20:51:22] [Client thread/INFO]: [CHAT] [+] Cvrwed
+[20:51:31] [Client thread/INFO]: [CHAT] [-] aureliameows
+[20:51:56] [Client thread/INFO]: [CHAT] CCBlueX >> CCBlueX's Discord: https://discord.gg/68GgEGTRr9
+[20:51:58] [Client thread/INFO]: [CHAT] [+] Luminozity
+[20:52:05] [Client thread/INFO]: [CHAT] [-] Luminozity
+[20:52:15] [Client thread/INFO]: [CHAT] [+] Jor9daN
+[20:52:22] [Client thread/INFO]: [CHAT] [-] Cvrwed
+[20:52:23] [Client thread/INFO]: [CHAT] CCBlueX >> All items on the ground will be cleaned in 60 seconds!
+[20:52:53] [Client thread/INFO]: [CHAT] CCBlueX >> All items on the ground will be cleaned in 30 seconds!
+[20:53:00] [Client thread/INFO]: [CHAT] CCBlueX >> CCBlueX's Discord: https://discord.gg/68GgEGTRr9
+[20:53:18] [Client thread/INFO]: [CHAT] CCBlueX >> All items on the ground will be cleaned in 5 seconds!
+[20:53:23] [Client thread/INFO]: [CHAT] CCBlueX >> 0 items have been cleaned!
+[20:54:04] [Client thread/INFO]: [CHAT] CCBlueX >> CCBlueX's Discord: https://discord.gg/68GgEGTRr9
+[20:54:26] [Client thread/INFO]: [CHAT] [-] Nessli
+[20:55:08] [Client thread/INFO]: [CHAT] CCBlueX >> CCBlueX's Discord: https://discord.gg/68GgEGTRr9
+[20:55:52] [Client thread/INFO]: [CHAT] [+] Nessli
+[20:56:11] [Client thread/INFO]: [CHAT] [-] Jor9daN
+[20:56:12] [Client thread/INFO]: [CHAT] CCBlueX >> CCBlueX's Discord: https://discord.gg/68GgEGTRr9
+[20:56:40] [Client thread/INFO]: [CHAT] CCBlueX >> All items on the ground will be cleaned in 60 seconds!
+[20:56:42] [Client thread/INFO]: [CHAT] [+] larryfart52
+[20:57:10] [Client thread/INFO]: [CHAT] CCBlueX >> All items on the ground will be cleaned in 30 seconds!
+[20:57:16] [Client thread/INFO]: [CHAT] CCBlueX >> CCBlueX's Discord: https://discord.gg/68GgEGTRr9
+[20:57:20] [Client thread/INFO]: [CHAT] [-] Nessli
+[20:57:35] [Client thread/INFO]: [CHAT] CCBlueX >> All items on the ground will be cleaned in 5 seconds!
+[20:57:40] [Client thread/INFO]: [CHAT] CCBlueX >> 0 items have been cleaned!
+[20:57:58] [Client thread/INFO]: [CHAT] [+] Nessli
+[20:58:20] [Client thread/INFO]: [CHAT] CCBlueX >> You can use /server latest command to join the 1.21.4 server!
+[20:59:24] [Client thread/INFO]: [CHAT] CCBlueX >> CCBlueX's Discord: https://discord.gg/68GgEGTRr9
+[20:59:25] [Client thread/INFO]: [CHAT] [+] Jor9daN
+[20:59:35] [Client thread/INFO]: [CHAT] [-] khtk
+[21:00:28] [Client thread/INFO]: [CHAT] CCBlueX >> You can use /server latest command to join the 1.21.4 server!
+[21:00:57] [Client thread/INFO]: [CHAT] CCBlueX >> All items on the ground will be cleaned in 60 seconds!
+[21:01:27] [Client thread/INFO]: [CHAT] CCBlueX >> All items on the ground will be cleaned in 30 seconds!
+[21:01:32] [Client thread/INFO]: [CHAT] CCBlueX >> You can use /server latest command to join the 1.21.4 server!
+[21:01:52] [Client thread/INFO]: [CHAT] CCBlueX >> All items on the ground will be cleaned in 5 seconds!
+[21:01:56] [Client thread/INFO]: [CHAT] [+] BPLunar
+[21:01:57] [Client thread/INFO]: [CHAT] CCBlueX >> 0 items have been cleaned!
+[21:02:36] [Client thread/INFO]: [CHAT] CCBlueX >> You can use /i command to get items!
+[21:03:40] [Client thread/INFO]: [CHAT] CCBlueX >> You can use /i command to get items!
+[21:04:18] [Client thread/INFO]: [CHAT] [+] vqxse
+[21:04:44] [Client thread/INFO]: [CHAT] CCBlueX >> Loyisa's Discord: https://discord.gg/fdmkfts
+[21:05:14] [Client thread/INFO]: [CHAT] CCBlueX >> All items on the ground will be cleaned in 60 seconds!
+[21:05:25] [Client thread/INFO]: [CHAT] [-] larryfart52
+[21:05:25] [Client thread/INFO]: [CHAT] [+] larryfart52
+[21:05:44] [Client thread/INFO]: [CHAT] CCBlueX >> All items on the ground will be cleaned in 30 seconds!
+[21:05:48] [Client thread/INFO]: [CHAT] CCBlueX >> CCBlueX's Discord: https://discord.gg/68GgEGTRr9
+[21:06:09] [Client thread/INFO]: [CHAT] CCBlueX >> All items on the ground will be cleaned in 5 seconds!
+[21:06:14] [Client thread/INFO]: [CHAT] CCBlueX >> 0 items have been cleaned!
+[21:06:25] [Client thread/INFO]: [CHAT] [-] larryfart52
+[21:06:29] [Client thread/INFO]: [CHAT] [+] larryfart52
+[21:06:32] [Client thread/INFO]: [CHAT] [-] larryfart52
+[21:06:36] [Client thread/INFO]: [CHAT] [+] larryfart52
+[21:06:44] [Client thread/INFO]: [CHAT] [-] larryfart52
+[21:06:52] [Client thread/INFO]: [CHAT] CCBlueX >> You can use /i command to get items!
+[21:07:32] [Client thread/INFO]: [CHAT] [-] BPLunar
+[21:07:43] [Client thread/INFO]: [CHAT] [-] sillytransgender
+[21:07:56] [Client thread/INFO]: [CHAT] CCBlueX >> You can use /server latest command to join the 1.21.4 server!
+[21:07:58] [Client thread/INFO]: [CHAT] [-] Nessli
+[21:08:19] [Client thread/INFO]: [CHAT] [+] BPLunar
+[21:08:50] [Client thread/INFO]: [CHAT] [+] Nessli
+[21:09:00] [Client thread/INFO]: [CHAT] CCBlueX >> You can use /i command to get items!
+[21:09:31] [Client thread/INFO]: [CHAT] CCBlueX >> All items on the ground will be cleaned in 60 seconds!
+[21:10:01] [Client thread/INFO]: [CHAT] CCBlueX >> All items on the ground will be cleaned in 30 seconds!
+[21:10:04] [Client thread/INFO]: [CHAT] CCBlueX >> CCBlueX's Discord: https://discord.gg/68GgEGTRr9
+[21:10:25] [Client thread/INFO]: [CHAT] [+] Lorendbr__
+[21:10:26] [Client thread/INFO]: [CHAT] CCBlueX >> All items on the ground will be cleaned in 5 seconds!
+[21:10:31] [Client thread/INFO]: [CHAT] CCBlueX >> 56 items have been cleaned!
+[21:10:51] [Client thread/INFO]: [CHAT] [-] Lorendbr__
+[21:10:51] [Client thread/INFO]: [CHAT] [+] Lorendbr__
+[21:10:53] [Client thread/INFO]: [CHAT] [+] sillytransgender
+[21:11:08] [Client thread/INFO]: [CHAT] CCBlueX >> You can use /server latest command to join the 1.21.4 server!
+[21:11:15] [Client thread/INFO]: [CHAT] [-] Lorendbr__
+[21:11:55] [Client thread/INFO]: [CHAT] [-] vqxse
+[21:12:12] [Client thread/INFO]: [CHAT] CCBlueX >> You can use /server latest command to join the 1.21.4 server!
+[21:12:32] [Client thread/INFO]: [CHAT] [+] _Steve01
+[21:12:50] [Client thread/INFO]: [CHAT] [-] BPLunar
+[21:13:16] [Client thread/INFO]: [CHAT] CCBlueX >> You can use /i command to get items!
+[21:13:48] [Client thread/INFO]: [CHAT] CCBlueX >> All items on the ground will be cleaned in 60 seconds!
+[21:13:50] [Client thread/INFO]: [CHAT] [-] sillytransgender
+[21:14:18] [Client thread/INFO]: [CHAT] CCBlueX >> All items on the ground will be cleaned in 30 seconds!
+[21:14:20] [Client thread/INFO]: [CHAT] CCBlueX >> You can use /i command to get items!
+[21:14:43] [Client thread/INFO]: [CHAT] CCBlueX >> All items on the ground will be cleaned in 5 seconds!
+[21:14:48] [Client thread/INFO]: [CHAT] CCBlueX >> 0 items have been cleaned!
+[21:15:24] [Client thread/INFO]: [CHAT] CCBlueX >> Loyisa's Discord: https://discord.gg/fdmkfts
+[21:16:28] [Client thread/INFO]: [CHAT] CCBlueX >> You can use /server latest command to join the 1.21.4 server!
+[21:16:31] [Client thread/INFO]: [CHAT] [+] Mitix3011
+[21:16:34] [Client thread/INFO]: [CHAT] [-] Mitix3011
+[21:16:55] [Client thread/INFO]: [CHAT] [+] SparkyTheTiel
+[21:17:14] [Client thread/INFO]: [CHAT] [-] Nessli
+[21:17:22] [Client thread/INFO]: [CHAT] [-] SparkyTheTiel
+[21:17:22] [Client thread/INFO]: [CHAT] [+] SparkyTheTiel
+[21:17:32] [Client thread/INFO]: [CHAT] CCBlueX >> Loyisa's Discord: https://discord.gg/fdmkfts
+[21:17:51] [Client thread/INFO]: [CHAT] [+] alluuzx
+[21:18:05] [Client thread/INFO]: [CHAT] CCBlueX >> All items on the ground will be cleaned in 60 seconds!
+[21:18:10] [Client thread/INFO]: [CHAT] [+] aureliameows
+[21:18:12] [Client thread/INFO]: [CHAT] [+] Nessli
+[21:18:14] [Client thread/INFO]: [CHAT] [-] aureliameows
+[21:26:42] [Client thread/INFO]: Setting user: Jupa22
+[21:26:42] [Client thread/INFO]: (Session ID is token:0:Jupa22)
+[21:26:42] [Client thread/INFO]: LWJGL Version: 2.9.4
+[21:26:43] [Client thread/INFO]: Reloading ResourceManager: Default, ! §2Sammyfault §a[16x].zip
+[21:26:43] [Client thread/ERROR]: Couldn't initialize twitch stream
+[21:26:43] [Sound Library Loader/INFO]: Starting up SoundSystem...
+[21:26:43] [Thread-5/INFO]: Initializing LWJGL OpenAL
+[21:26:43] [Thread-5/INFO]: (The LWJGL binding of OpenAL.  For more information, see http://www.lwjgl.org)
+[21:26:43] [Thread-5/INFO]: OpenAL initialized.
+[21:26:43] [Sound Library Loader/INFO]: Sound engine started
+[21:26:43] [Client thread/INFO]: Created: 512x512 textures-atlas
+[21:26:43] [Client thread/ERROR]: Realms module missing
+java.lang.ClassNotFoundException: com.mojang.realmsclient.gui.screens.RealmsNotificationsScreen
+	at java.net.URLClassLoader.findClass(URLClassLoader.java:387) ~[?:1.8.0_452]
+	at java.lang.ClassLoader.loadClass(ClassLoader.java:418) ~[?:1.8.0_452]
+	at sun.misc.Launcher$AppClassLoader.loadClass(Launcher.java:352) ~[?:1.8.0_452]
+	at java.lang.ClassLoader.loadClass(ClassLoader.java:351) ~[?:1.8.0_452]
+	at java.lang.Class.forName0(Native Method) ~[?:1.8.0_452]
+	at java.lang.Class.forName(Class.java:264) ~[?:1.8.0_452]
+	at net.minecraft.realms.RealmsBridge.getNotificationScreen(RealmsBridge.java:38) [classes/:?]
+	at net.minecraft.client.gui.GuiMainMenu.initGui(GuiMainMenu.java:243) [classes/:?]
+	at net.minecraft.client.gui.GuiScreen.setWorldAndResolution(GuiScreen.java:556) [classes/:?]
+	at net.minecraft.client.Minecraft.displayGuiScreen(Minecraft.java:1020) [classes/:?]
+	at net.minecraft.client.Minecraft.startGame(Minecraft.java:580) [classes/:?]
+	at net.minecraft.client.Minecraft.run(Minecraft.java:409) [classes/:?]
+	at net.minecraft.client.main.Main.main(Main.java:113) [classes/:?]
+	at Start.main(Start.java:22) [test-classes/:?]
+[21:26:54] [Client thread/INFO]: Connecting to proxy.craftplay.pl., 25541
+[21:26:55] [Client thread/INFO]: [CHAT] 
+[21:26:55] [Client thread/INFO]: [CHAT] 
+[21:26:55] [Client thread/INFO]: [CHAT] 
+[21:26:55] [Client thread/INFO]: [CHAT] 
+[21:26:55] [Client thread/INFO]: [CHAT] 
+[21:26:55] [Client thread/INFO]: [CHAT] 
+[21:26:55] [Client thread/INFO]: [CHAT] 
+[21:26:55] [Client thread/INFO]: [CHAT] 
+[21:26:55] [Client thread/INFO]: [CHAT] 
+[21:26:55] [Client thread/INFO]: [CHAT] 
+[21:26:55] [Client thread/INFO]: [CHAT] 
+[21:26:55] [Client thread/INFO]: [CHAT] 
+[21:26:55] [Client thread/INFO]: [CHAT] 
+[21:26:55] [Client thread/INFO]: [CHAT] 
+[21:26:55] [Client thread/INFO]: [CHAT] 
+[21:26:55] [Client thread/INFO]: [CHAT] 
+[21:26:55] [Client thread/INFO]: [CHAT] 
+[21:26:55] [Client thread/INFO]: [CHAT] 
+[21:26:55] [Client thread/INFO]: [CHAT] 
+[21:26:55] [Client thread/INFO]: [CHAT] 
+[21:26:55] [Client thread/INFO]: [CHAT] 
+[21:26:55] [Client thread/INFO]: [CHAT] 
+[21:26:55] [Client thread/INFO]: [CHAT] 
+[21:26:55] [Client thread/INFO]: [CHAT] 
+[21:26:55] [Client thread/INFO]: [CHAT] 
+[21:26:55] [Client thread/INFO]: [CHAT] 
+[21:26:55] [Client thread/INFO]: [CHAT] 
+[21:26:55] [Client thread/INFO]: [CHAT] 
+[21:26:55] [Client thread/INFO]: [CHAT] 
+[21:26:55] [Client thread/INFO]: [CHAT] 
+[21:26:55] [Client thread/INFO]: [CHAT] 
+[21:26:55] [Client thread/INFO]: [CHAT] 
+[21:26:55] [Client thread/INFO]: [CHAT] 
+[21:26:55] [Client thread/INFO]: [CHAT] 
+[21:26:55] [Client thread/INFO]: [CHAT] 
+[21:26:55] [Client thread/INFO]: [CHAT] 
+[21:26:55] [Client thread/INFO]: [CHAT] 
+[21:26:55] [Client thread/INFO]: [CHAT] 
+[21:26:55] [Client thread/INFO]: [CHAT] 
+[21:26:55] [Client thread/INFO]: [CHAT] 
+[21:26:55] [Client thread/INFO]: [CHAT] 
+[21:26:55] [Client thread/INFO]: [CHAT] 
+[21:26:55] [Client thread/INFO]: [CHAT] 
+[21:26:55] [Client thread/INFO]: [CHAT] 
+[21:26:55] [Client thread/INFO]: [CHAT] 
+[21:26:55] [Client thread/INFO]: [CHAT] 
+[21:26:55] [Client thread/INFO]: [CHAT] 
+[21:26:55] [Client thread/INFO]: [CHAT] 
+[21:26:55] [Client thread/INFO]: [CHAT] 
+[21:26:55] [Client thread/INFO]: [CHAT] 
+[21:26:55] [Client thread/INFO]: [CHAT] 
+[21:26:55] [Client thread/INFO]: [CHAT] 
+[21:26:55] [Client thread/INFO]: [CHAT] 
+[21:26:55] [Client thread/INFO]: [CHAT] 
+[21:26:55] [Client thread/INFO]: [CHAT] 
+[21:26:55] [Client thread/INFO]: [CHAT] 
+[21:26:55] [Client thread/INFO]: [CHAT] 
+[21:26:55] [Client thread/INFO]: [CHAT] 
+[21:26:55] [Client thread/INFO]: [CHAT] 
+[21:26:55] [Client thread/INFO]: [CHAT] 
+[21:26:55] [Client thread/INFO]: [CHAT] 
+[21:26:55] [Client thread/INFO]: [CHAT] 
+[21:26:55] [Client thread/INFO]: [CHAT] 
+[21:26:55] [Client thread/INFO]: [CHAT] 
+[21:26:55] [Client thread/INFO]: [CHAT] 
+[21:26:55] [Client thread/INFO]: [CHAT] 
+[21:26:55] [Client thread/INFO]: [CHAT] 
+[21:26:55] [Client thread/INFO]: [CHAT] 
+[21:26:55] [Client thread/INFO]: [CHAT] 
+[21:26:55] [Client thread/INFO]: [CHAT] 
+[21:26:55] [Client thread/INFO]: [CHAT] 
+[21:26:55] [Client thread/INFO]: [CHAT] 
+[21:26:55] [Client thread/INFO]: [CHAT] 
+[21:26:55] [Client thread/INFO]: [CHAT] 
+[21:26:55] [Client thread/INFO]: [CHAT] 
+[21:26:55] [Client thread/INFO]: [CHAT] 
+[21:26:55] [Client thread/INFO]: [CHAT] 
+[21:26:55] [Client thread/INFO]: [CHAT] 
+[21:26:55] [Client thread/INFO]: [CHAT] 
+[21:26:55] [Client thread/INFO]: [CHAT] 
+[21:26:55] [Client thread/INFO]: [CHAT] 
+[21:26:55] [Client thread/INFO]: [CHAT] 
+[21:26:55] [Client thread/INFO]: [CHAT] 
+[21:26:55] [Client thread/INFO]: [CHAT] 
+[21:26:55] [Client thread/INFO]: [CHAT] 
+[21:26:55] [Client thread/INFO]: [CHAT] 
+[21:26:55] [Client thread/INFO]: [CHAT] 
+[21:26:55] [Client thread/INFO]: [CHAT] 
+[21:26:55] [Client thread/INFO]: [CHAT] 
+[21:26:55] [Client thread/INFO]: [CHAT] 
+[21:26:55] [Client thread/INFO]: [CHAT] 
+[21:26:55] [Client thread/INFO]: [CHAT] 
+[21:26:55] [Client thread/INFO]: [CHAT] 
+[21:26:55] [Client thread/INFO]: [CHAT] 
+[21:26:55] [Client thread/INFO]: [CHAT] 
+[21:26:55] [Client thread/INFO]: [CHAT] 
+[21:26:55] [Client thread/INFO]: [CHAT] 
+[21:26:55] [Client thread/INFO]: [CHAT] 
+[21:26:55] [Client thread/INFO]: [CHAT] 
+[21:26:55] [Client thread/INFO]: [CHAT] 
+[21:26:55] [Client thread/INFO]: [CHAT]  Witaj na CraftPlay.pl (1.8 - 1.21)
+[21:26:55] [Client thread/INFO]: [CHAT] 
+[21:26:55] [Client thread/INFO]: [CHAT]  Sklep → www.CraftPlay.pl
+[21:26:55] [Client thread/INFO]: [CHAT]  Discord → discord.gg/craftplaypl
+[21:26:55] [Client thread/INFO]: [CHAT]  Nagrody → Uzyj /nagrody na trybach!
+[21:26:55] [Client thread/INFO]: [CHAT] 
+[21:26:55] [Client thread/INFO]: [CHAT]  Zyczymy milej gry na naszym serwerze!
+[21:26:55] [Client thread/INFO]: [CHAT] 
+[21:26:55] [Client thread/INFO]: [CHAT]  Logowanie » Zaloguj sie: /login haslo
+[21:27:00] [Client thread/INFO]: [CHAT]  Logowanie » Zostales pomyslnie zalogowany.
+[21:28:06] [pool-2-thread-1/ERROR]: Textures payload has been tampered with (signature invalid)
+[21:33:51] [Client thread/INFO]: [CHAT] 
+[21:33:51] [Client thread/INFO]: [CHAT]  Na lobby jest juz mniej niz 50 osob.
+[21:33:51] [Client thread/INFO]: [CHAT]  Wszyscy gracze znow stali sie widoczni.
+[21:33:51] [Client thread/INFO]: [CHAT] 
+[21:34:28] [Client thread/INFO]: [CHAT] [WLASCICIEL] Axon: jail key all + booster all
+[21:34:28] [Client thread/INFO]: [CHAT] [WLASCICIEL] Axon: jail key all + booster all
+[21:34:29] [Client thread/INFO]: [CHAT] [WLASCICIEL] Axon: jail key all + booster all
+[21:34:29] [Client thread/INFO]: [CHAT] [WLASCICIEL] Axon: jail key all + booster all
+[21:34:29] [Client thread/INFO]: [CHAT] [WLASCICIEL] Axon: jail key all + booster all
+[21:34:29] [Client thread/INFO]: [CHAT] [WLASCICIEL] Axon: jail key all + booster all
+[21:34:30] [Client thread/INFO]: [CHAT] [WLASCICIEL] Axon: jail key all + booster all
+[21:34:43] [Client thread/INFO]: [CHAT] [WLASCICIEL] Axon: jail key all + booster all
+[21:34:43] [Client thread/INFO]: [CHAT] [WLASCICIEL] Axon: jail key all + booster all
+[21:34:44] [Client thread/INFO]: [CHAT] [WLASCICIEL] Axon: jail key all + booster all
+[21:34:44] [Client thread/INFO]: [CHAT] [WLASCICIEL] Axon: jail key all + booster all
+[21:36:58] [Client thread/INFO]: Setting user: Jupa22
+[21:36:58] [Client thread/INFO]: (Session ID is token:0:Jupa22)
+[21:36:58] [Client thread/INFO]: LWJGL Version: 2.9.4
+[21:36:59] [Client thread/INFO]: Reloading ResourceManager: Default, ! §2Sammyfault §a[16x].zip
+[21:36:59] [Client thread/ERROR]: Couldn't initialize twitch stream
+[21:36:59] [Sound Library Loader/INFO]: Starting up SoundSystem...
+[21:36:59] [Thread-5/INFO]: Initializing LWJGL OpenAL
+[21:36:59] [Thread-5/INFO]: (The LWJGL binding of OpenAL.  For more information, see http://www.lwjgl.org)
+[21:36:59] [Thread-5/INFO]: OpenAL initialized.
+[21:36:59] [Client thread/INFO]: Created: 512x512 textures-atlas
+[21:36:59] [Sound Library Loader/INFO]: Sound engine started
+[21:37:00] [Client thread/ERROR]: Realms module missing
+java.lang.ClassNotFoundException: com.mojang.realmsclient.gui.screens.RealmsNotificationsScreen
+	at java.net.URLClassLoader.findClass(URLClassLoader.java:387) ~[?:1.8.0_452]
+	at java.lang.ClassLoader.loadClass(ClassLoader.java:418) ~[?:1.8.0_452]
+	at sun.misc.Launcher$AppClassLoader.loadClass(Launcher.java:352) ~[?:1.8.0_452]
+	at java.lang.ClassLoader.loadClass(ClassLoader.java:351) ~[?:1.8.0_452]
+	at java.lang.Class.forName0(Native Method) ~[?:1.8.0_452]
+	at java.lang.Class.forName(Class.java:264) ~[?:1.8.0_452]
+	at net.minecraft.realms.RealmsBridge.getNotificationScreen(RealmsBridge.java:38) [classes/:?]
+	at net.minecraft.client.gui.GuiMainMenu.initGui(GuiMainMenu.java:243) [classes/:?]
+	at net.minecraft.client.gui.GuiScreen.setWorldAndResolution(GuiScreen.java:556) [classes/:?]
+	at net.minecraft.client.Minecraft.displayGuiScreen(Minecraft.java:1020) [classes/:?]
+	at net.minecraft.client.Minecraft.startGame(Minecraft.java:580) [classes/:?]
+	at net.minecraft.client.Minecraft.run(Minecraft.java:409) [classes/:?]
+	at net.minecraft.client.main.Main.main(Main.java:113) [classes/:?]
+	at Start.main(Start.java:22) [test-classes/:?]
+[21:37:12] [Client thread/INFO]: Connecting to cf.anarchia.gg., 25561
+[21:37:14] [Client thread/INFO]: Connecting to proxy.craftplay.pl., 25541
+[21:37:15] [Client thread/INFO]: [CHAT] 
+[21:37:15] [Client thread/INFO]: [CHAT] 
+[21:37:15] [Client thread/INFO]: [CHAT] 
+[21:37:15] [Client thread/INFO]: [CHAT] 
+[21:37:15] [Client thread/INFO]: [CHAT] 
+[21:37:15] [Client thread/INFO]: [CHAT] 
+[21:37:15] [Client thread/INFO]: [CHAT] 
+[21:37:15] [Client thread/INFO]: [CHAT] 
+[21:37:15] [Client thread/INFO]: [CHAT] 
+[21:37:15] [Client thread/INFO]: [CHAT] 
+[21:37:15] [Client thread/INFO]: [CHAT] 
+[21:37:15] [Client thread/INFO]: [CHAT] 
+[21:37:15] [Client thread/INFO]: [CHAT] 
+[21:37:15] [Client thread/INFO]: [CHAT] 
+[21:37:15] [Client thread/INFO]: [CHAT] 
+[21:37:15] [Client thread/INFO]: [CHAT] 
+[21:37:15] [Client thread/INFO]: [CHAT] 
+[21:37:15] [Client thread/INFO]: [CHAT] 
+[21:37:15] [Client thread/INFO]: [CHAT] 
+[21:37:15] [Client thread/INFO]: [CHAT] 
+[21:37:15] [Client thread/INFO]: [CHAT] 
+[21:37:15] [Client thread/INFO]: [CHAT] 
+[21:37:15] [Client thread/INFO]: [CHAT] 
+[21:37:15] [Client thread/INFO]: [CHAT] 
+[21:37:15] [Client thread/INFO]: [CHAT] 
+[21:37:15] [Client thread/INFO]: [CHAT] 
+[21:37:15] [Client thread/INFO]: [CHAT] 
+[21:37:15] [Client thread/INFO]: [CHAT] 
+[21:37:15] [Client thread/INFO]: [CHAT] 
+[21:37:15] [Client thread/INFO]: [CHAT] 
+[21:37:15] [Client thread/INFO]: [CHAT] 
+[21:37:15] [Client thread/INFO]: [CHAT] 
+[21:37:15] [Client thread/INFO]: [CHAT] 
+[21:37:15] [Client thread/INFO]: [CHAT] 
+[21:37:15] [Client thread/INFO]: [CHAT] 
+[21:37:15] [Client thread/INFO]: [CHAT] 
+[21:37:15] [Client thread/INFO]: [CHAT] 
+[21:37:15] [Client thread/INFO]: [CHAT] 
+[21:37:15] [Client thread/INFO]: [CHAT] 
+[21:37:15] [Client thread/INFO]: [CHAT] 
+[21:37:15] [Client thread/INFO]: [CHAT] 
+[21:37:15] [Client thread/INFO]: [CHAT] 
+[21:37:15] [Client thread/INFO]: [CHAT] 
+[21:37:15] [Client thread/INFO]: [CHAT] 
+[21:37:15] [Client thread/INFO]: [CHAT] 
+[21:37:15] [Client thread/INFO]: [CHAT] 
+[21:37:15] [Client thread/INFO]: [CHAT] 
+[21:37:15] [Client thread/INFO]: [CHAT] 
+[21:37:15] [Client thread/INFO]: [CHAT] 
+[21:37:15] [Client thread/INFO]: [CHAT] 
+[21:37:15] [Client thread/INFO]: [CHAT] 
+[21:37:15] [Client thread/INFO]: [CHAT] 
+[21:37:15] [Client thread/INFO]: [CHAT] 
+[21:37:15] [Client thread/INFO]: [CHAT] 
+[21:37:15] [Client thread/INFO]: [CHAT] 
+[21:37:15] [Client thread/INFO]: [CHAT] 
+[21:37:15] [Client thread/INFO]: [CHAT] 
+[21:37:15] [Client thread/INFO]: [CHAT] 
+[21:37:15] [Client thread/INFO]: [CHAT] 
+[21:37:15] [Client thread/INFO]: [CHAT] 
+[21:37:15] [Client thread/INFO]: [CHAT] 
+[21:37:15] [Client thread/INFO]: [CHAT] 
+[21:37:15] [Client thread/INFO]: [CHAT] 
+[21:37:15] [Client thread/INFO]: [CHAT] 
+[21:37:15] [Client thread/INFO]: [CHAT] 
+[21:37:15] [Client thread/INFO]: [CHAT] 
+[21:37:15] [Client thread/INFO]: [CHAT] 
+[21:37:15] [Client thread/INFO]: [CHAT] 
+[21:37:15] [Client thread/INFO]: [CHAT] 
+[21:37:15] [Client thread/INFO]: [CHAT] 
+[21:37:15] [Client thread/INFO]: [CHAT] 
+[21:37:15] [Client thread/INFO]: [CHAT] 
+[21:37:15] [Client thread/INFO]: [CHAT] 
+[21:37:15] [Client thread/INFO]: [CHAT] 
+[21:37:15] [Client thread/INFO]: [CHAT] 
+[21:37:15] [Client thread/INFO]: [CHAT] 
+[21:37:15] [Client thread/INFO]: [CHAT] 
+[21:37:15] [Client thread/INFO]: [CHAT] 
+[21:37:15] [Client thread/INFO]: [CHAT] 
+[21:37:15] [Client thread/INFO]: [CHAT] 
+[21:37:15] [Client thread/INFO]: [CHAT] 
+[21:37:15] [Client thread/INFO]: [CHAT] 
+[21:37:15] [Client thread/INFO]: [CHAT] 
+[21:37:15] [Client thread/INFO]: [CHAT] 
+[21:37:15] [Client thread/INFO]: [CHAT] 
+[21:37:15] [Client thread/INFO]: [CHAT] 
+[21:37:15] [Client thread/INFO]: [CHAT] 
+[21:37:15] [Client thread/INFO]: [CHAT] 
+[21:37:15] [Client thread/INFO]: [CHAT] 
+[21:37:15] [Client thread/INFO]: [CHAT] 
+[21:37:15] [Client thread/INFO]: [CHAT] 
+[21:37:15] [Client thread/INFO]: [CHAT] 
+[21:37:15] [Client thread/INFO]: [CHAT] 
+[21:37:15] [Client thread/INFO]: [CHAT] 
+[21:37:15] [Client thread/INFO]: [CHAT] 
+[21:37:15] [Client thread/INFO]: [CHAT] 
+[21:37:15] [Client thread/INFO]: [CHAT] 
+[21:37:15] [Client thread/INFO]: [CHAT] 
+[21:37:15] [Client thread/INFO]: [CHAT] 
+[21:37:15] [Client thread/INFO]: [CHAT] 
+[21:37:15] [Client thread/INFO]: [CHAT]  Witaj na CraftPlay.pl (1.8 - 1.21)
+[21:37:15] [Client thread/INFO]: [CHAT] 
+[21:37:15] [Client thread/INFO]: [CHAT]  Sklep → www.CraftPlay.pl
+[21:37:15] [Client thread/INFO]: [CHAT]  Discord → discord.gg/craftplaypl
+[21:37:15] [Client thread/INFO]: [CHAT]  Nagrody → Uzyj /nagrody na trybach!
+[21:37:15] [Client thread/INFO]: [CHAT] 
+[21:37:15] [Client thread/INFO]: [CHAT]  Zyczymy milej gry na naszym serwerze!
+[21:37:15] [Client thread/INFO]: [CHAT] 
+[21:37:15] [Client thread/INFO]: [CHAT]  Logowanie » Sesja autologowania jest aktywna.
+[21:38:40] [Client thread/INFO]: [CHAT] 
+[21:38:40] [Client thread/INFO]: [CHAT]  Na lobby jest juz mniej niz 50 osob.
+[21:38:40] [Client thread/INFO]: [CHAT]  Wszyscy gracze znow stali sie widoczni.
+[21:38:40] [Client thread/INFO]: [CHAT] 
+[21:41:49] [Client thread/INFO]: [CHAT] 
+[21:41:49] [Client thread/INFO]: [CHAT]  Na lobby jest wiecej niz 50 osob.
+[21:41:49] [Client thread/INFO]: [CHAT]  Wszyscy gracze stali sie niewidzialni.
+[21:41:49] [Client thread/INFO]: [CHAT] 

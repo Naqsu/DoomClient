@@ -1,0 +1,80 @@
+---- Minecraft Crash Report ----
+// Don't be sad, have a hug! <3
+
+Time: 12/28/25 9:56 PM
+Description: Unexpected error
+
+java.util.ConcurrentModificationException
+	at java.util.HashMap$HashIterator.nextNode(HashMap.java:1469)
+	at java.util.HashMap$EntryIterator.next(HashMap.java:1503)
+	at java.util.HashMap$EntryIterator.next(HashMap.java:1501)
+	at doom.event.EventManager.call(EventManager.java:55)
+	at doom.event.Event.call(Event.java:12)
+	at net.minecraft.client.Minecraft.runTick(Minecraft.java:1916)
+	at net.minecraft.client.Minecraft.runGameLoop(Minecraft.java:1124)
+	at net.minecraft.client.Minecraft.run(Minecraft.java:429)
+	at net.minecraft.client.main.Main.main(Main.java:113)
+	at Start.main(Start.java:22)
+
+
+A detailed walkthrough of the error, its code path and all known details is as follows:
+---------------------------------------------------------------------------------------
+
+-- Head --
+Stacktrace:
+	at java.util.HashMap$HashIterator.nextNode(HashMap.java:1469)
+	at java.util.HashMap$EntryIterator.next(HashMap.java:1503)
+	at java.util.HashMap$EntryIterator.next(HashMap.java:1501)
+	at doom.event.EventManager.call(EventManager.java:55)
+	at doom.event.Event.call(Event.java:12)
+
+-- Affected level --
+Details:
+	Level name: MpServer
+	All players: 40 total; [EntityPlayerSP['Jupa22'/36931, l='MpServer', x=1.46, y=99.00, z=13.22], EntityOtherPlayerMP['ezazo'/35391, l='MpServer', x=8.97, y=98.00, z=14.22], EntityOtherPlayerMP['brajek123451'/36919, l='MpServer', x=0.50, y=100.18, z=0.69], EntityOtherPlayerMP['ItzzYukii_'/25228, l='MpServer', x=0.50, y=100.00, z=0.50], EntityOtherPlayerMP['_xxxFilipekk'/36899, l='MpServer', x=8.53, y=98.00, z=18.84], EntityOtherPlayerMP['_P3droo'/36881, l='MpServer', x=0.50, y=100.00, z=0.50], EntityOtherPlayerMP['3437512'/35903, l='MpServer', x=0.50, y=100.00, z=0.50], EntityOtherPlayerMP['Bealang'/36908, l='MpServer', x=0.50, y=100.00, z=0.50], EntityOtherPlayerMP['X_Nikos_Nikos_X'/35906, l='MpServer', x=0.50, y=100.00, z=0.50], EntityOtherPlayerMP['mazvk_crf'/36662, l='MpServer', x=4.09, y=99.50, z=8.28], EntityOtherPlayerMP['NAPLETMKS1909'/36885, l='MpServer', x=1.81, y=99.00, z=11.94], EntityOtherPlayerMP['1nc23d'/36773, l='MpServer', x=0.50, y=100.00, z=0.50], EntityOtherPlayerMP['Patryszon67'/36913, l='MpServer', x=0.50, y=100.00, z=0.50], EntityOtherPlayerMP['Amorek_'/36917, l='MpServer', x=0.50, y=100.00, z=0.50], EntityOtherPlayerMP['franeczek888'/36918, l='MpServer', x=0.50, y=100.00, z=0.50], EntityOtherPlayerMP['00vaxa00'/36928, l='MpServer', x=0.50, y=100.00, z=0.50], EntityOtherPlayerMP['3sdLysy1889z'/36922, l='MpServer', x=0.50, y=100.00, z=0.50], EntityOtherPlayerMP['ni3_dotkne_'/36923, l='MpServer', x=0.50, y=100.00, z=0.50], EntityOtherPlayerMP['pit_bull1'/36926, l='MpServer', x=0.50, y=100.00, z=0.50], EntityOtherPlayerMP[''/241, l='MpServer', x=10.50, y=99.00, z=27.50], EntityOtherPlayerMP[''/245, l='MpServer', x=8.50, y=99.00, z=30.50], EntityOtherPlayerMP[''/249, l='MpServer', x=12.50, y=99.00, z=21.50], EntityOtherPlayerMP[''/253, l='MpServer', x=11.50, y=99.00, z=24.50], EntityOtherPlayerMP[''/257, l='MpServer', x=13.50, y=99.00, z=18.50], EntityOtherPlayerMP['vortix9833fx'/36640, l='MpServer', x=2.57, y=98.00, z=19.29], EntityOtherPlayerMP['majkel817153'/36909, l='MpServer', x=0.16, y=98.00, z=22.03], EntityOtherPlayerMP['Czesiuu10'/36589, l='MpServer', x=-1.38, y=100.00, z=2.41], EntityOtherPlayerMP['Paracetamol___2'/36912, l='MpServer', x=18.24, y=99.17, z=7.93], EntityOtherPlayerMP[''/213, l='MpServer', x=-10.50, y=99.00, z=24.50], EntityOtherPlayerMP[''/217, l='MpServer', x=-9.50, y=99.00, z=27.50], EntityOtherPlayerMP[''/221, l='MpServer', x=-11.50, y=99.00, z=21.50], EntityOtherPlayerMP[''/225, l='MpServer', x=-7.50, y=99.00, z=30.50], EntityOtherPlayerMP[''/229, l='MpServer', x=-12.50, y=99.00, z=18.50], EntityOtherPlayerMP[''/233, l='MpServer', x=2.50, y=99.00, z=35.50], EntityOtherPlayerMP[''/237, l='MpServer', x=6.50, y=99.00, z=33.50], EntityOtherPlayerMP['mxzs'/35870, l='MpServer', x=-0.72, y=98.00, z=24.94], EntityOtherPlayerMP[''/205, l='MpServer', x=-5.50, y=99.00, z=33.50], EntityOtherPlayerMP[''/209, l='MpServer', x=-1.50, y=99.00, z=35.50], EntityOtherPlayerMP['filipeeekkkk'/36934, l='MpServer', x=0.50, y=100.00, z=0.50], EntityOtherPlayerMP['KwasnaCytryna12'/36935, l='MpServer', x=0.50, y=100.00, z=0.50]]
+	Chunk stats: MultiplayerChunkCache: 157, 157
+	Level seed: 0
+	Level generator: ID 01 - flat, ver 0. Features enabled: false
+	Level generator options: 
+	Level spawn location: 0.00,100.00,0.00 - World: (0,100,0), Chunk: (at 0,6,0 in 0,0; contains blocks 0,0,0 to 15,255,15), Region: (0,0; contains chunks 0,0 to 31,31, blocks 0,0,0 to 511,255,511)
+	Level time: 2351431383 game time, 1000 day time
+	Level dimension: 0
+	Level storage version: 0x00000 - Unknown?
+	Level weather: Rain time: 0 (now: false), thunder time: 0 (now: false)
+	Level game mode: Game mode: survival (ID 0). Hardcore: false. Cheats: false
+	Forced entities: 114 total; [EntityPlayerSP['Jupa22'/36931, l='MpServer', x=1.46, y=99.00, z=13.22], EntityOtherPlayerMP[''/257, l='MpServer', x=13.50, y=99.00, z=18.50], EntityArmorStand['§6§lChestPvP'/3, l='MpServer', x=-10.50, y=101.25, z=24.50], EntityArmorStand['§7Online §f314 osob'/4, l='MpServer', x=-10.50, y=101.00, z=24.50], EntityArmorStand['§6Kliknij aby dolaczyc!'/5, l='MpServer', x=-10.50, y=100.72, z=24.50], EntityArmorStand['§a§lSurvival 1.21'/9, l='MpServer', x=8.50, y=101.25, z=30.50], EntityArmorStand['§7Online §f434 osob'/10, l='MpServer', x=8.50, y=101.00, z=30.50], EntityArmorStand['§aKliknij aby dolaczyc!'/11, l='MpServer', x=8.50, y=100.72, z=30.50], EntityOtherPlayerMP['_P3droo'/36881, l='MpServer', x=0.50, y=100.00, z=0.50], EntityArmorStand['§b§lSkyBlock'/20, l='MpServer', x=2.50, y=101.25, z=35.50], EntityArmorStand['§7Online §f157 osob'/21, l='MpServer', x=2.50, y=101.00, z=35.50], EntityOtherPlayerMP['NAPLETMKS1909'/36885, l='MpServer', x=1.81, y=99.00, z=11.94], EntityArmorStand['§bKliknij aby dolaczyc!'/22, l='MpServer', x=2.50, y=100.72, z=35.50], EntityArmorStand['§8§lCaveBlock'/27, l='MpServer', x=-7.50, y=101.25, z=30.50], EntityArmorStand['§7Online §f174 osob'/28, l='MpServer', x=-7.50, y=101.00, z=30.50], EntityArmorStand['§8Kliknij aby dolaczyc!'/29, l='MpServer', x=-7.50, y=100.72, z=30.50], EntityOtherPlayerMP['mxzs'/35870, l='MpServer', x=-0.72, y=98.00, z=24.94], EntityOtherPlayerMP['vortix9833fx'/36640, l='MpServer', x=2.57, y=98.00, z=19.29], EntityOtherPlayerMP['_xxxFilipekk'/36899, l='MpServer', x=8.53, y=98.00, z=18.84], EntityArmorStand['§a§lAnarchia SMP'/36, l='MpServer', x=13.50, y=101.25, z=18.50], EntityArmorStand['§7Online §f165 osob'/37, l='MpServer', x=13.50, y=101.00, z=18.50], EntityArmorStand['§aKliknij aby dolaczyc!'/38, l='MpServer', x=13.50, y=100.72, z=18.50], EntityArmorStand['§e§lJail'/39, l='MpServer', x=11.50, y=101.25, z=24.50], EntityArmorStand['§7Online §f262 osob'/40, l='MpServer', x=11.50, y=101.00, z=24.50], EntityArmorStand['§eKliknij aby dolaczyc!'/41, l='MpServer', x=11.50, y=100.72, z=24.50], EntityOtherPlayerMP['ezazo'/35391, l='MpServer', x=8.97, y=98.00, z=14.22], EntityOtherPlayerMP['brajek123451'/36919, l='MpServer', x=0.50, y=100.18, z=0.69], EntityOtherPlayerMP['Bealang'/36908, l='MpServer', x=0.50, y=100.00, z=0.50], EntityOtherPlayerMP['ItzzYukii_'/25228, l='MpServer', x=0.50, y=100.00, z=0.50], EntityOtherPlayerMP['majkel817153'/36909, l='MpServer', x=0.16, y=98.00, z=22.03], EntityOtherPlayerMP['_xxxFilipekk'/36899, l='MpServer', x=8.53, y=98.00, z=18.84], EntityOtherPlayerMP['_P3droo'/36881, l='MpServer', x=0.50, y=100.00, z=0.50], EntityOtherPlayerMP['lukasiek'/36930, l='MpServer', x=0.50, y=100.00, z=0.50], EntityOtherPlayerMP['Paracetamol___2'/36912, l='MpServer', x=18.24, y=99.17, z=7.93], EntityOtherPlayerMP['3437512'/35903, l='MpServer', x=0.50, y=100.00, z=0.50], EntityOtherPlayerMP['Patryszon67'/36913, l='MpServer', x=0.50, y=100.00, z=0.50], EntityOtherPlayerMP['Bealang'/36908, l='MpServer', x=0.50, y=100.00, z=0.50], EntityOtherPlayerMP['X_Nikos_Nikos_X'/35906, l='MpServer', x=0.50, y=100.00, z=0.50], EntityOtherPlayerMP['mazvk_crf'/36662, l='MpServer', x=4.09, y=99.50, z=8.28], EntityOtherPlayerMP['NAPLETMKS1909'/36885, l='MpServer', x=1.81, y=99.00, z=11.94], EntityOtherPlayerMP['Amorek_'/36917, l='MpServer', x=0.50, y=100.00, z=0.50], EntityOtherPlayerMP['mazvk_crf'/36662, l='MpServer', x=4.09, y=99.50, z=8.28], EntityOtherPlayerMP['1nc23d'/36773, l='MpServer', x=0.50, y=100.00, z=0.50], EntityOtherPlayerMP['franeczek888'/36918, l='MpServer', x=0.50, y=100.00, z=0.50], EntityOtherPlayerMP['brajek123451'/36919, l='MpServer', x=0.50, y=100.18, z=0.69], EntityOtherPlayerMP['Patryszon67'/36913, l='MpServer', x=0.50, y=100.00, z=0.50], EntityOtherPlayerMP['Amorek_'/36917, l='MpServer', x=0.50, y=100.00, z=0.50], EntityOtherPlayerMP['filipeeekkkk'/36934, l='MpServer', x=0.50, y=100.00, z=0.50], EntityOtherPlayerMP['KwasnaCytryna12'/36935, l='MpServer', x=0.50, y=100.00, z=0.50], EntityOtherPlayerMP['franeczek888'/36918, l='MpServer', x=0.50, y=100.00, z=0.50], EntityOtherPlayerMP['00vaxa00'/36928, l='MpServer', x=0.50, y=100.00, z=0.50], EntityOtherPlayerMP['3sdLysy1889z'/36922, l='MpServer', x=0.50, y=100.00, z=0.50], EntityArmorStand['§9§lWaterBlock'/59, l='MpServer', x=-1.50, y=101.25, z=35.50], EntityOtherPlayerMP['ni3_dotkne_'/36923, l='MpServer', x=0.50, y=100.00, z=0.50], EntityArmorStand['§7Online §f23 osob'/60, l='MpServer', x=-1.50, y=101.00, z=35.50], EntityArmorStand['§9Kliknij aby dolaczyc!'/61, l='MpServer', x=-1.50, y=100.72, z=35.50], EntityOtherPlayerMP['pit_bull1'/36926, l='MpServer', x=0.50, y=100.00, z=0.50], EntityOtherPlayerMP[''/241, l='MpServer', x=10.50, y=99.00, z=27.50], EntityOtherPlayerMP['ezazo'/35391, l='MpServer', x=8.97, y=98.00, z=14.22], EntityOtherPlayerMP['3437512'/35903, l='MpServer', x=0.50, y=100.00, z=0.50], EntityOtherPlayerMP[''/245, l='MpServer', x=8.50, y=99.00, z=30.50], EntityOtherPlayerMP['00vaxa00'/36928, l='MpServer', x=0.50, y=100.00, z=0.50], EntityOtherPlayerMP[''/249, l='MpServer', x=12.50, y=99.00, z=21.50], EntityOtherPlayerMP[''/253, l='MpServer', x=11.50, y=99.00, z=24.50], EntityOtherPlayerMP['X_Nikos_Nikos_X'/35906, l='MpServer', x=0.50, y=100.00, z=0.50], EntityOtherPlayerMP[''/257, l='MpServer', x=13.50, y=99.00, z=18.50], EntityOtherPlayerMP['vortix9833fx'/36640, l='MpServer', x=2.57, y=98.00, z=19.29], EntityOtherPlayerMP['M1SS1A'/36927, l='MpServer', x=11.28, y=98.00, z=26.65], EntityOtherPlayerMP['majkel817153'/36909, l='MpServer', x=0.16, y=98.00, z=22.03], EntityArmorStand['§c§lSurvival + Gildie'/70, l='MpServer', x=6.50, y=101.25, z=33.50], EntityOtherPlayerMP['filipeeekkkk'/36934, l='MpServer', x=0.50, y=100.00, z=0.50], EntityArmorStand['§7Online §f131 osob'/71, l='MpServer', x=6.50, y=101.00, z=33.50], EntityOtherPlayerMP['KwasnaCytryna12'/36935, l='MpServer', x=0.50, y=100.00, z=0.50], EntityArmorStand['§cKliknij aby dolaczyc!'/72, l='MpServer', x=6.50, y=100.72, z=33.50], EntityArmorStand['§9§lCreative'/73, l='MpServer', x=12.50, y=101.25, z=21.50], EntityArmorStand['§7Online §f200 osob'/74, l='MpServer', x=12.50, y=101.00, z=21.50], EntityArmorStand['§9Kliknij aby dolaczyc!'/75, l='MpServer', x=12.50, y=100.72, z=21.50], EntityArmorStand['§e§lBoxPvP'/76, l='MpServer', x=-11.50, y=101.25, z=21.50], EntityArmorStand['§7Online §f64 osob'/77, l='MpServer', x=-11.50, y=101.00, z=21.50], EntityArmorStand['§eKliknij aby dolaczyc!'/78, l='MpServer', x=-11.50, y=100.72, z=21.50], EntityArmorStand['§b§lDrop SMP'/79, l='MpServer', x=-12.50, y=101.25, z=18.50], EntityArmorStand['§7Online §f111 osob'/80, l='MpServer', x=-12.50, y=101.00, z=18.50], EntityArmorStand['§bKliknij aby dolaczyc!'/81, l='MpServer', x=-12.50, y=100.72, z=18.50], EntityOtherPlayerMP['SigMichu'/36932, l='MpServer', x=0.47, y=100.00, z=2.09], EntityArmorStand['§d§lBedWars'/103, l='MpServer', x=10.50, y=101.25, z=27.50], EntityArmorStand['§7Online §f1521 osob'/104, l='MpServer', x=10.50, y=101.00, z=27.50], EntityArmorStand['§dKliknij aby dolaczyc!'/105, l='MpServer', x=10.50, y=100.72, z=27.50], EntityArmorStand['§6§lOneBlock'/106, l='MpServer', x=-5.50, y=101.25, z=33.50], EntityArmorStand['§7Online §f327 osob'/107, l='MpServer', x=-5.50, y=101.00, z=33.50], EntityArmorStand['§6Kliknij aby dolaczyc!'/108, l='MpServer', x=-5.50, y=100.72, z=33.50], EntityArmorStand['§3§lSkyWars'/109, l='MpServer', x=-9.50, y=101.25, z=27.50], EntityArmorStand['§7Online §f0 osob'/110, l='MpServer', x=-9.50, y=101.00, z=27.50], EntityArmorStand['§3Kliknij aby dolaczyc!'/111, l='MpServer', x=-9.50, y=100.72, z=27.50], EntityOtherPlayerMP[''/233, l='MpServer', x=2.50, y=99.00, z=35.50], EntityOtherPlayerMP[''/237, l='MpServer', x=6.50, y=99.00, z=33.50], EntityOtherPlayerMP['mxzs'/35870, l='MpServer', x=-0.72, y=98.00, z=24.94], EntityOtherPlayerMP['ItzzYukii_'/25228, l='MpServer', x=0.50, y=100.00, z=0.50], EntityOtherPlayerMP['1nc23d'/36773, l='MpServer', x=0.50, y=100.00, z=0.50], EntityOtherPlayerMP[''/205, l='MpServer', x=-5.50, y=99.00, z=33.50], EntityOtherPlayerMP[''/209, l='MpServer', x=-1.50, y=99.00, z=35.50], EntityOtherPlayerMP[''/213, l='MpServer', x=-10.50, y=99.00, z=24.50], EntityOtherPlayerMP[''/209, l='MpServer', x=-1.50, y=99.00, z=35.50], EntityOtherPlayerMP[''/217, l='MpServer', x=-9.50, y=99.00, z=27.50], EntityOtherPlayerMP[''/221, l='MpServer', x=-11.50, y=99.00, z=21.50], EntityOtherPlayerMP[''/225, l='MpServer', x=-7.50, y=99.00, z=30.50], EntityOtherPlayerMP[''/229, l='MpServer', x=-12.50, y=99.00, z=18.50], EntityOtherPlayerMP[''/233, l='MpServer', x=2.50, y=99.00, z=35.50], EntityOtherPlayerMP['nasque'/36933, l='MpServer', x=0.50, y=100.00, z=0.50], EntityOtherPlayerMP['Czesiuu10'/36589, l='MpServer', x=-1.38, y=100.00, z=2.41], EntityOtherPlayerMP[''/237, l='MpServer', x=6.50, y=99.00, z=33.50], EntityOtherPlayerMP[''/241, l='MpServer', x=10.50, y=99.00, z=27.50], EntityOtherPlayerMP[''/245, l='MpServer', x=8.50, y=99.00, z=30.50], EntityOtherPlayerMP[''/249, l='MpServer', x=12.50, y=99.00, z=21.50], EntityOtherPlayerMP[''/253, l='MpServer', x=11.50, y=99.00, z=24.50]]
+	Retry entities: 0 total; []
+	Server brand: Waterfall <- Purpur
+	Server type: Non-integrated multiplayer server
+Stacktrace:
+	at net.minecraft.client.multiplayer.WorldClient.addWorldInfoToCrashReport(WorldClient.java:390)
+	at net.minecraft.client.Minecraft.addGraphicsAndWorldToCrashReport(Minecraft.java:2783)
+	at net.minecraft.client.Minecraft.run(Minecraft.java:458)
+	at net.minecraft.client.main.Main.main(Main.java:113)
+	at Start.main(Start.java:22)
+
+-- System Details --
+Details:
+	Minecraft Version: 1.8.9
+	Operating System: Windows 11 (amd64) version 10.0
+	Java Version: 1.8.0_462, Amazon.com Inc.
+	Java VM Version: OpenJDK 64-Bit Server VM (mixed mode), Amazon.com Inc.
+	Memory: 213018480 bytes (203 MB) / 1015545856 bytes (968 MB) up to 7424966656 bytes (7081 MB)
+	JVM Flags: 0 total; 
+	IntCache: cache: 0, tcache: 0, allocated: 0, tallocated: 0
+	Launched Version: MavenMCP
+	LWJGL: 2.9.4
+	OpenGL: AMD Radeon RX 7700 XT GL version 4.6.0 Compatibility Profile Context 25.12.1.251128, ATI Technologies Inc.
+	GL Caps: Using GL 1.3 multitexturing.
+Using GL 1.3 texture combiners.
+Using framebuffer objects because OpenGL 3.0 is supported and separate blending is supported.
+Shaders are available because OpenGL 2.1 is supported.
+VBOs are available because OpenGL 1.5 is supported.
+
+	Using VBOs: No
+	Is Modded: Very likely; Jar signature invalidated
+	Type: Client (map_client.txt)
+	Resource Packs: 
+	Current Language: English (US)
+	Profiler Position: N/A (disabled)
+	CPU: 16x AMD Ryzen 7 7700 8-Core Processor 

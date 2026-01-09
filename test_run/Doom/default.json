@@ -1,0 +1,55 @@
+{
+  "Modules": {
+    "TargetHUD": {
+      "toggled": true,
+      "key": 0,
+      "posX": 10.0,
+      "posY": 10.0,
+      "Settings": {}
+    },
+    "Animations": {
+      "toggled": true,
+      "key": 0,
+      "posX": 10.0,
+      "posY": 10.0,
+      "Settings": {
+        "Mode": "Sigma",
+        "Swing Speed": 1.0,
+        "X": 0.0,
+        "Y": 0.0,
+        "Z": 0.0
+      }
+    },
+    "Killaura": {
+      "toggled": false,
+      "key": 19,
+      "posX": 10.0,
+      "posY": 10.0,
+      "Settings": {
+        "Mode": "Switch",
+        "Range": 4.0,
+        "CPS": 10.0,
+        "AutoBlock": true,
+        "Rotations": true
+      }
+    },
+    "ClickGui": {
+      "toggled": false,
+      "key": 54,
+      "posX": 10.0,
+      "posY": 10.0,
+      "Settings": {}
+    },
+    "HUD": {
+      "toggled": true,
+      "key": 0,
+      "posX": 10.0,
+      "posY": 10.0,
+      "Settings": {
+        "Watermark": true,
+        "ArrayList": true,
+        "InfoBar": true
+      }
+    }
+  }
+}

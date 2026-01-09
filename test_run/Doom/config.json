@@ -1,0 +1,361 @@
+{
+  "Modules": {
+    "Watermark": {
+      "toggled": true,
+      "key": 0,
+      "posX": 2.0,
+      "posY": 7.0,
+      "Settings": {}
+    },
+    "InfoHUD": {
+      "toggled": false,
+      "key": 0,
+      "posX": 99.0,
+      "posY": 5.0,
+      "Settings": {}
+    },
+    "ArrayList": {
+      "toggled": true,
+      "key": 0,
+      "posX": 3.0,
+      "posY": 29.0,
+      "Settings": {}
+    },
+    "SessionInfo": {
+      "toggled": false,
+      "key": 0,
+      "posX": 5.0,
+      "posY": 30.0,
+      "Settings": {}
+    },
+    "TargetHUD": {
+      "toggled": true,
+      "key": 0,
+      "posX": 661.0,
+      "posY": 273.0,
+      "Settings": {}
+    },
+    "Animations": {
+      "toggled": true,
+      "key": 0,
+      "posX": 10.0,
+      "posY": 10.0,
+      "Settings": {
+        "Mode": "Swang",
+        "Swing Speed": 0.9,
+        "X": -0.5,
+        "Y": -0.1,
+        "Z": 0.7
+      }
+    },
+    "HUD": {
+      "toggled": true,
+      "key": 0,
+      "posX": 10.0,
+      "posY": 10.0,
+      "Settings": {
+        "Elements: Watermark": true,
+        "Elements: ArrayList": true,
+        "Elements: Info": false,
+        "Background": false,
+        "Sidebar": false,
+        "Rainbow": true,
+        "Align": "Left",
+        "Suffix": "None"
+      }
+    },
+    "Killaura": {
+      "toggled": true,
+      "key": 19,
+      "posX": 10.0,
+      "posY": 10.0,
+      "Settings": {
+        "Range": 3.0,
+        "Min APS": 20.0,
+        "Max APS": 20.0,
+        "Smoothness": 1.0,
+        "KeepSprint": false,
+        "AutoBlock": false,
+        "RayCast": true,
+        "Players": true,
+        "Mobs": true,
+        "Animals": true,
+        "Invisibles": true,
+        "Ignore Teams": true,
+        "Cracked/NoRules": true
+      }
+    },
+    "ClickGui": {
+      "toggled": false,
+      "key": 54,
+      "posX": 10.0,
+      "posY": 10.0,
+      "Settings": {}
+    },
+    "Speed": {
+      "toggled": false,
+      "key": 21,
+      "posX": 10.0,
+      "posY": 10.0,
+      "Settings": {
+        "Mode": "Vulcan",
+        "Speed": 0.2,
+        "Use Timer": true,
+        "AutoJump": true
+      }
+    },
+    "Notifications": {
+      "toggled": true,
+      "key": 0,
+      "posX": 10.0,
+      "posY": 10.0,
+      "Settings": {
+        "Duration (s)": 2.0
+      }
+    },
+    "AntiBot": {
+      "toggled": false,
+      "key": 0,
+      "posX": 10.0,
+      "posY": 10.0,
+      "Settings": {
+        "Tab Check": true,
+        "EntityID Check": true,
+        "Color Check": true,
+        "UUID Check": true,
+        "Invis Check": true
+      }
+    },
+    "ESP": {
+      "toggled": true,
+      "key": 0,
+      "posX": 10.0,
+      "posY": 10.0,
+      "Settings": {
+        "Mode": "3D",
+        "Targets: Players": true,
+        "Targets: Mobs": true,
+        "Targets: Animals": false
+      }
+    },
+    "Scaffold": {
+      "toggled": false,
+      "key": 48,
+      "posX": 10.0,
+      "posY": 10.0,
+      "Settings": {
+        "Rotation": "VulcanSprint",
+        "Sprint": true,
+        "Tower": false,
+        "Jump": true,
+        "Swing": true,
+        "Silent": true,
+        "RayCast": true,
+        "Delay": 0.0
+      }
+    },
+    "BlockCounter": {
+      "toggled": false,
+      "key": 0,
+      "posX": 1220.0,
+      "posY": 661.0,
+      "Settings": {}
+    },
+    "Velocity": {
+      "toggled": false,
+      "key": 35,
+      "posX": 10.0,
+      "posY": 10.0,
+      "Settings": {
+        "Mode": "Transaction",
+        "Horizontal": 100.0,
+        "Vertical": 100.0,
+        "Chance": 100.0,
+        "Transaction Exploit": false,
+        "Packet Buffer": false,
+        "Prediction Match": true,
+        "Ground Spoof": false,
+        "Movement Compensation": false,
+        "Buffer Time": 1.0,
+        "Compensation": 0.5,
+        "Bypass Mode": "Balanced"
+      }
+    },
+    "Grim Exploits": {
+      "toggled": false,
+      "key": 47,
+      "posX": 10.0,
+      "posY": 10.0,
+      "Settings": {
+        "Mode": "Disabler",
+        "Grim Disabler": true,
+        "Backtrack": false,
+        "Fake Lag": false,
+        "TickBase": false,
+        "Disable Movement": true,
+        "Disable Rotation": true,
+        "Disable Velocity": true,
+        "Disable Timer": true,
+        "Disable NoSlow": true,
+        "Disabler Mode": "Desync",
+        "BT Delay": 500.0,
+        "BT Range": 6.0,
+        "BT ESP": true,
+        "Lag Amount": 10.0,
+        "Lag Mode": "Constant",
+        "Dynamic": true,
+        "TB Amount": 5.0,
+        "TB Charge": true
+      }
+    },
+    "Fly": {
+      "toggled": false,
+      "key": 33,
+      "posX": 10.0,
+      "posY": 10.0,
+      "Settings": {
+        "Mode": "Vanilla",
+        "Speed": 9.5,
+        "Vertical": 0.0,
+        "Timer": 1.0,
+        "Wait Damage": true,
+        "Blink (Desync)": true,
+        "Stop on Ground": true,
+        "View Bobbing": true
+      }
+    },
+    "Trail": {
+      "toggled": true,
+      "key": 0,
+      "posX": 10.0,
+      "posY": 10.0,
+      "Settings": {
+        "Mode": "Line",
+        "Length": 3000.0,
+        "Rainbow": false,
+        "SeeThrough": true
+      }
+    },
+    "JumpCircles": {
+      "toggled": false,
+      "key": 0,
+      "posX": 10.0,
+      "posY": 10.0,
+      "Settings": {
+        "Mode": "Disc",
+        "Radius": 2.5,
+        "Speed": 0.03,
+        "Rainbow": true
+      }
+    },
+    "SpiritAura": {
+      "toggled": true,
+      "key": 0,
+      "posX": 10.0,
+      "posY": 10.0,
+      "Settings": {
+        "Speed": 3.0,
+        "Radius": 0.7,
+        "Height": 1.4,
+        "Trail Length": 24.0,
+        "Team Color": true
+      }
+    },
+    "BlockOverlay": {
+      "toggled": false,
+      "key": 0,
+      "posX": 10.0,
+      "posY": 10.0,
+      "Settings": {
+        "Outline": true,
+        "Fill": false,
+        "Rainbow": false
+      }
+    },
+    "ChinaHat": {
+      "toggled": false,
+      "key": 0,
+      "posX": 10.0,
+      "posY": 10.0,
+      "Settings": {
+        "Mode": "Normal",
+        "Radius": 0.7,
+        "Height": 0.4,
+        "Rainbow": true,
+        "Outline": true
+      }
+    },
+    "Wings": {
+      "toggled": true,
+      "key": 0,
+      "posX": 10.0,
+      "posY": 10.0,
+      "Settings": {
+        "Rainbow": false,
+        "Scale": 100.0,
+        "Height": 0.25,
+        "Distance": -0.15
+      }
+    },
+    "BedBreaker": {
+      "toggled": false,
+      "key": 0,
+      "posX": 10.0,
+      "posY": 10.0,
+      "Settings": {
+        "Range": 4.5,
+        "Break Speed": 1.5,
+        "Rotations": true,
+        "Through Walls": true,
+        "ESP": true,
+        "Swing": true
+      }
+    },
+    "Debugger": {
+      "toggled": true,
+      "key": 0,
+      "posX": 10.0,
+      "posY": 10.0,
+      "Settings": {
+        "Check Simulation": true
+      }
+    },
+    "InvManager": {
+      "toggled": true,
+      "key": 44,
+      "posX": 10.0,
+      "posY": 10.0,
+      "Settings": {
+        "Delay": 120.0,
+        "Inv Open Only": true,
+        "Auto Armor": true,
+        "Cleaner": true,
+        "Sorter": true
+      }
+    },
+    "ChestStealer": {
+      "toggled": true,
+      "key": 44,
+      "posX": 10.0,
+      "posY": 10.0,
+      "Settings": {
+        "Delay (ms)": 70.0,
+        "Auto Close": true,
+        "Check Name": true,
+        "Random Delay": true
+      }
+    },
+    "Phase": {
+      "toggled": false,
+      "key": 25,
+      "posX": 10.0,
+      "posY": 10.0,
+      "Settings": {
+        "Mode": "Grim V-Clip",
+        "Distance": 2.0,
+        "Sneak Only": false,
+        "Stop Motion": true
+      }
+    }
+  }
+}

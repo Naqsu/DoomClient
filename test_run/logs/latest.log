@@ -1,0 +1,92 @@
+[00:33:29] [Client thread/INFO]: Setting user: Jupa22
+[00:33:29] [Client thread/INFO]: (Session ID is token:0:Jupa22)
+[00:33:30] [Client thread/INFO]: LWJGL Version: 2.9.4
+[00:33:30] [Client thread/INFO]: Reloading ResourceManager: Default, ! §2Sammyfault §a[16x].zip
+[00:33:30] [Client thread/ERROR]: Couldn't initialize twitch stream
+[00:33:30] [Sound Library Loader/INFO]: Starting up SoundSystem...
+[00:33:30] [Thread-6/INFO]: Initializing LWJGL OpenAL
+[00:33:30] [Thread-6/INFO]: (The LWJGL binding of OpenAL.  For more information, see http://www.lwjgl.org)
+[00:33:30] [Thread-6/INFO]: OpenAL initialized.
+[00:33:31] [Client thread/INFO]: Created: 512x512 textures-atlas
+[00:33:31] [Client thread/ERROR]: Realms module missing
+java.lang.ClassNotFoundException: com.mojang.realmsclient.gui.screens.RealmsNotificationsScreen
+	at java.net.URLClassLoader.findClass(URLClassLoader.java:387) ~[?:1.8.0_452]
+	at java.lang.ClassLoader.loadClass(ClassLoader.java:418) ~[?:1.8.0_452]
+	at sun.misc.Launcher$AppClassLoader.loadClass(Launcher.java:352) ~[?:1.8.0_452]
+	at java.lang.ClassLoader.loadClass(ClassLoader.java:351) ~[?:1.8.0_452]
+	at java.lang.Class.forName0(Native Method) ~[?:1.8.0_452]
+	at java.lang.Class.forName(Class.java:264) ~[?:1.8.0_452]
+	at net.minecraft.realms.RealmsBridge.getNotificationScreen(RealmsBridge.java:38) [classes/:?]
+	at net.minecraft.client.gui.GuiMainMenu.initGui(GuiMainMenu.java:243) [classes/:?]
+	at net.minecraft.client.gui.GuiScreen.setWorldAndResolution(GuiScreen.java:556) [classes/:?]
+	at net.minecraft.client.Minecraft.displayGuiScreen(Minecraft.java:1020) [classes/:?]
+	at net.minecraft.client.Minecraft.startGame(Minecraft.java:580) [classes/:?]
+	at net.minecraft.client.Minecraft.run(Minecraft.java:409) [classes/:?]
+	at net.minecraft.client.main.Main.main(Main.java:113) [classes/:?]
+	at Start.main(Start.java:22) [test-classes/:?]
+[00:33:31] [Sound Library Loader/INFO]: Sound engine started
+[00:33:39] [Client thread/INFO]: Connecting to spectrum.anticheat-test.com., 24524
+[00:33:40] [Client thread/INFO]: [CHAT]                                      
+[00:33:40] [Client thread/INFO]: [CHAT] You can now place blocks
+[00:33:40] [Client thread/INFO]: [CHAT] Use /items to get items
+[00:33:41] [Client thread/INFO]: [CHAT] [ACTest] » You joined with the client brand: vanilla
+[00:33:43] [Client thread/INFO]: [CHAT] [ACTest] » Your current language is: English use /language to change it
+[00:33:59] [Client thread/INFO]: [CHAT] You can no-longer place blocks
+[00:34:06] [Client thread/INFO]: [CHAT]  
+[00:34:06] [Client thread/INFO]: [CHAT] [ACTest] » Looking for someone to fight but nobody will? use /botduel
+[00:34:06] [Client thread/INFO]: [CHAT]  
+[00:34:06] [Client thread/INFO]: [CHAT] [ACTest] » All enchanted items inside your inventory will be reset when pvp is enabled (leave if you don't want them to be reset)
+[00:34:07] [Client thread/INFO]: [CHAT] [ACTest] » PvP will be enabled in 3 seconds
+[00:34:08] [Client thread/INFO]: [CHAT] [ACTest] » PvP will be enabled in 2 seconds
+[00:34:09] [Client thread/INFO]: [CHAT] [ACTest] » PvP will be enabled in 1 second
+[00:34:10] [Client thread/INFO]: [CHAT] [ACTest] » PvP is now enabled
+[00:34:13] [Client thread/INFO]: [CHAT] Tarezy » 1s
+[00:34:14] [Client thread/INFO]: [CHAT] PvP is now disabled
+[00:34:22] [Client thread/INFO]: [CHAT] §cVulcan§7 > §7Hiri12§7 failed §cKillaura§7 (§cAcceleration§7) §cx3.6
+[00:34:23] [Client thread/INFO]: [CHAT] [Grim] clov4a » what ac was that
+[00:34:28] [Client thread/INFO]: [CHAT] §cVulcan§7 > §7Hiri12§7 failed §cHitbox§7 (§cHistory§7) §cx4.78
+[00:34:28] [Client thread/INFO]: [CHAT] §cVulcan§7 > §7Hiri12§7 failed §cHitbox§7 (§cHistory§7) §cx5.83
+[00:34:28] [Client thread/INFO]: [CHAT] §cVulcan§7 > §7Hiri12§7 failed §cHitbox§7 (§cHistory§7) §cx6.84
+[00:34:28] [Client thread/INFO]: [CHAT] §cVulcan§7 > §7Hiri12§7 failed §cHitbox§7 (§cHistory§7) §cx7.84
+[00:34:33] [Client thread/INFO]: [CHAT] §cVulcan§7 > §7Hiri12§7 failed §cAim§7 (§cRotation§7) §cx7.84
+[00:34:34] [Client thread/INFO]: [CHAT] §cVulcan§7 > §7Hiri12§7 failed §cAim§7 (§cRotation§7) §cx7.84
+[00:34:34] [Client thread/INFO]: [CHAT] §cVulcan§7 > §7Hiri12§7 failed §cAim§7 (§cRotation§7) §cx7.84
+[00:34:34] [Client thread/INFO]: [CHAT] §cVulcan§7 > §7Hiri12§7 failed §cAim§7 (§cRotation§7) §cx7.84
+[00:34:34] [Client thread/INFO]: [CHAT] §cVulcan§7 > §7Hiri12§7 failed §cSpeed§7 (§cPrediction§7) §cx8.52
+[00:34:35] [Client thread/INFO]: [CHAT] [Grim] Tarezy » hypixel
+[00:34:39] [Client thread/INFO]: [CHAT] §cVulcan§7 > §7Hiri12§7 failed §cBadpackets§7 (§cEntity Action§7) §cx8.52
+[00:34:42] [Client thread/INFO]: [CHAT] [Grim] Tarezy » wait no
+[00:34:44] [Client thread/INFO]: [CHAT] [Grim] Tarezy » vanilla
+[00:34:45] [Client thread/INFO]: [CHAT] [Grim] clov4a » grim?
+[00:34:47] [Client thread/INFO]: [CHAT] [Grim] clov4a » oh
+[00:34:50] [Client thread/INFO]: [CHAT] Perm_Army_bot_12 » moin xD
+[00:34:54] [Client thread/INFO]: [CHAT] notyourclientyt » servus
+[00:34:58] [Client thread/INFO]: [CHAT] Perm_Army_bot_12 » servus hahaha
+[00:35:01] [Client thread/INFO]: [CHAT] notyourclientyt » xd
+[00:35:02] [Client thread/INFO]: [CHAT] [Grim] Tarezy » now its grim
+[00:35:08] [Client thread/INFO]: [CHAT] Perm_Army_bot_12 » guess mal wer ich bin
+[00:35:20] [Client thread/INFO]: [CHAT] notyourclientyt » bro idk xd
+[00:35:23] [Client thread/INFO]: [CHAT] Perm_Army_bot_12 » xd
+[00:35:26] [Client thread/INFO]: [CHAT] notyourclientyt » sag an
+[00:35:30] [Client thread/INFO]: [CHAT] Perm_Army_bot_12 » bin haze vertrau
+[00:35:30] [Client thread/INFO]: [CHAT] [Grim] Tarezy » what client ?
+[00:35:33] [Client thread/INFO]: [CHAT] [Grim] clov4a » im on raven rn
+[00:35:36] [Client thread/INFO]: [CHAT] notyourclientyt » vertrau
+[00:35:41] [Client thread/INFO]: [CHAT] Perm_Army_bot_12 » bin juli hahahah
+[00:35:52] [Client thread/INFO]: [CHAT] notyourclientyt » jooooo
+[00:35:53] [Client thread/INFO]: [CHAT] [Grim] clov4a » im tryna test adjust too js waiting for a friend
+[00:35:53] [Client thread/INFO]: [CHAT] [Grim] Tarezy » bruh my ka is just really weird idkkk
+[00:35:57] [Client thread/INFO]: [CHAT] Perm_Army_bot_12 » JOOOO
+[00:35:58] [Client thread/INFO]: [CHAT] notyourclientyt » das du lebst ist crazy
+[00:36:02] [Client thread/INFO]: [CHAT] Perm_Army_bot_12 » damn
+[00:36:10] [Client thread/INFO]: [CHAT] [Grim] Tarezy » im making a client for hypixel
+[00:36:14] [Client thread/INFO]: [CHAT] [Grim] clov4a » try enabling kill on ac ban
+[00:36:20] [Client thread/INFO]: [CHAT] [Grim] clov4a » cuz i wanna see if i flag a lot
+[00:38:09] [Client thread/INFO]: [CHAT] [Grim] clov4a » anyone tryna 1v1 on grim
+[00:39:06] [Client thread/INFO]: [CHAT]  
+[00:39:06] [Client thread/INFO]: [CHAT] [ACTest] » Want to change the look of the map? use /theme
+[00:39:06] [Client thread/INFO]: [CHAT]  
+[00:39:56] [Client thread/INFO]: [CHAT] §cVulcan§7 > §7Hiri12§7 failed §cAim§7 (§cRotation§7) §cx8.52
+[00:41:55] [Client thread/INFO]: Stopping!
+[00:41:55] [Client thread/INFO]: SoundSystem shutting down...
+[00:41:55] [Client thread/WARN]: Author: Paul Lamb, www.paulscode.com
