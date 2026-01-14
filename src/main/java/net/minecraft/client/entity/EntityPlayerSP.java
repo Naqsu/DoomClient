@@ -1,8 +1,5 @@
 package net.minecraft.client.entity;
 
-import doom.event.EventManager;
-import doom.event.impl.EventPostUpdate;
-import doom.event.impl.EventUpdate;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.audio.PositionedSoundRecord;
 import net.minecraft.client.gui.GuiScreen;
@@ -106,7 +103,14 @@ public class EntityPlayerSP extends AbstractClientPlayer {
             this.rotationYaw = realYaw;
             this.rotationPitch = realPitch;
 
-            event.setOnGround(this.onGround);
+            if (!event.isGroundSpoofed()) {
+                // ...to aktualizujemy stan zgodnie z fizyką gry.
+                // Dzięki temu przy skoku onGround będzie false -> brak flagi Jump (A).
+                event.setOnGround(this.onGround);
+            }
+            // Jeśli NoFall ustawił onGround na true, isGroundSpoofed będzie true,
+            // więc powyższy if się nie wykona i zachowamy "oszukany" stan.
+
             event.setSprinting(this.isSprinting());
             event.setSneaking(this.isSneaking());
 

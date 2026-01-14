@@ -3,8 +3,6 @@ package doom.command.impl;
 import doom.Client;
 import doom.command.Command;
 
-import java.io.File;
-
 public class ConfigCommand extends Command {
 
     public ConfigCommand() {

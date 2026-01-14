@@ -11,14 +11,23 @@ import java.io.InputStreamReader;
 public class ShaderUtil {
     private final int programID;
 
+    // Standard Vertex Shader used for 2D rendering (Hardcoded to prevent errors)
+    private static final String VERTEX_SHADER =
+            "#version 120\n" +
+                    "void main() {\n" +
+                    "    gl_TexCoord[0] = gl_MultiTexCoord0;\n" +
+                    "    gl_Position = gl_ModelViewProjectionMatrix * gl_Vertex;\n" +
+                    "}";
+
     public ShaderUtil(String fragmentShaderLoc) {
         int program = GL20.glCreateProgram();
         try {
+            // Load Fragment Shader from file
             int fragmentShaderID = createShader(Minecraft.getMinecraft().getResourceManager().getResource(new ResourceLocation(fragmentShaderLoc)).getInputStream(), GL20.GL_FRAGMENT_SHADER);
             GL20.glAttachShader(program, fragmentShaderID);
 
-            // W MC 1.8.9 vertex shader jest zazwyczaj standardowy, ale dla rounded rects potrzebujemy prostego pass-through
-            int vertexShaderID = createShader(Minecraft.getMinecraft().getResourceManager().getResource(new ResourceLocation("doom/shaders/vertex.vert")).getInputStream(), GL20.GL_VERTEX_SHADER);
+            // Load Vertex Shader from String (Prevents FileNotFoundException)
+            int vertexShaderID = createShaderFromSource(VERTEX_SHADER, GL20.GL_VERTEX_SHADER);
             GL20.glAttachShader(program, vertexShaderID);
 
         } catch (Exception e) {
@@ -34,18 +43,6 @@ public class ShaderUtil {
         this.programID = program;
     }
 
-    // Konstruktor przyjmujący kod źródłowy bezpośrednio (dla wygody)
-    public ShaderUtil(String fragmentSource, boolean isSource) {
-        int program = GL20.glCreateProgram();
-        int fragmentShaderID = createShaderFromSource(fragmentSource, GL20.GL_FRAGMENT_SHADER);
-        int vertexShaderID = createShaderFromSource(VERTEX_SHADER, GL20.GL_VERTEX_SHADER); // Używamy wbudowanego vertexa
-
-        GL20.glAttachShader(program, fragmentShaderID);
-        GL20.glAttachShader(program, vertexShaderID);
-        GL20.glLinkProgram(program);
-        this.programID = program;
-    }
-
     public void init() {
         GL20.glUseProgram(programID);
     }
@@ -58,6 +55,8 @@ public class ShaderUtil {
         return GL20.glGetUniformLocation(programID, name);
     }
 
+    // --- UNIFORM SETTERS ---
+
     public void setUniformf(String name, float... args) {
         int loc = getUniform(name);
         switch (args.length) {
@@ -67,6 +66,20 @@ public class ShaderUtil {
             case 4: GL20.glUniform4f(loc, args[0], args[1], args[2], args[3]); break;
         }
     }
+
+    public void setUniformi(String name, int... args) {
+        int loc = getUniform(name);
+        if (args.length > 1) GL20.glUniform1i(loc, args[0]);
+        else GL20.glUniform1i(loc, args[0]);
+    }
+
+    // Specific helpers for older code compatibility
+    public void setUniform1f(String name, float f) { GL20.glUniform1f(getUniform(name), f); }
+    public void setUniform2f(String name, float f1, float f2) { GL20.glUniform2f(getUniform(name), f1, f2); }
+    public void setUniform3f(String name, float f1, float f2, float f3) { GL20.glUniform3f(getUniform(name), f1, f2, f3); }
+    public void setUniform1i(String name, int i) { GL20.glUniform1i(getUniform(name), i); }
+
+    // --- INTERNAL HELPERS ---
 
     private int createShaderFromSource(String source, int shaderType) {
         int shader = GL20.glCreateShader(shaderType);
@@ -90,35 +103,5 @@ public class ShaderUtil {
             e.printStackTrace();
         }
         return createShaderFromSource(stringBuilder.toString(), shaderType);
-    }
-
-    // Standardowy Vertex Shader dla renderingu 2D w MC
-    private static final String VERTEX_SHADER =
-            "#version 120\n" +
-                    "void main() {\n" +
-                    "    gl_TexCoord[0] = gl_MultiTexCoord0;\n" +
-                    "    gl_Position = gl_ModelViewProjectionMatrix * gl_Vertex;\n" +
-                    "}";
-
-    // Dodaj to do klasy ShaderUtil:
-
-    public void setUniform1f(String name, float f) {
-        GL20.glUniform1f(getUniform(name), f);
-    }
-
-    public void setUniform2f(String name, float f1, float f2) {
-        GL20.glUniform2f(getUniform(name), f1, f2);
-    }
-
-    public void setUniform3f(String name, float f1, float f2, float f3) {
-        GL20.glUniform3f(getUniform(name), f1, f2, f3);
-    }
-
-    public void setUniform4f(String name, float f1, float f2, float f3, float f4) {
-        GL20.glUniform4f(getUniform(name), f1, f2, f3, f4);
-    }
-
-    public void setUniform1i(String name, int i) {
-        GL20.glUniform1i(getUniform(name), i);
     }
 }

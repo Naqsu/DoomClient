@@ -1,5 +1,6 @@
 package doom.module;
 
+import doom.Client;
 import doom.event.EventManager;
 import net.minecraft.client.Minecraft;
 
@@ -34,15 +35,25 @@ public class Module {
     public void toggle() {
         toggled = !toggled;
         if (toggled) {
-            onEnable();
-            EventManager.register(this);
-            // DODAJ TO:
-            doom.ui.notification.NotificationManager.show("Module", getName() + " enabled", doom.ui.notification.NotificationType.SUCCESS);
+            try {
+                onEnable();
+                // If onEnable succeeds, we register events and show notification
+                EventManager.register(this);
+                doom.ui.notification.NotificationManager.show("Module", getName() + " enabled", doom.ui.notification.NotificationType.SUCCESS);
+            } catch (Exception e) {
+                // THIS CATCHES THE CRASH AND TELLS YOU WHY
+                e.printStackTrace();
+                Client.addChatMessage("§cError enabling " + getName() + ": " + e.getMessage());
+                toggled = false; // Turn it back off since it failed
+            }
         } else {
-            onDisable();
-            EventManager.unregister(this);
-            // DODAJ TO:
-            doom.ui.notification.NotificationManager.show("Module", getName() + " disabled", doom.ui.notification.NotificationType.ERROR);
+            try {
+                onDisable();
+                EventManager.unregister(this);
+                doom.ui.notification.NotificationManager.show("Module", getName() + " disabled", doom.ui.notification.NotificationType.ERROR);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
     }
 

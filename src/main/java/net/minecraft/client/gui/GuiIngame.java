@@ -3,11 +3,8 @@ package net.minecraft.client.gui;
 import com.google.common.base.Predicate;
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
-import java.util.Collection;
-import java.util.List;
-import java.util.Random;
-
 import doom.event.impl.EventRender2D;
+import doom.ui.font.FontManager;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;
@@ -34,15 +31,12 @@ import net.minecraft.scoreboard.Score;
 import net.minecraft.scoreboard.ScoreObjective;
 import net.minecraft.scoreboard.ScorePlayerTeam;
 import net.minecraft.scoreboard.Scoreboard;
-import net.minecraft.util.BlockPos;
-import net.minecraft.util.EnumChatFormatting;
-import net.minecraft.util.FoodStats;
-import net.minecraft.util.IChatComponent;
-import net.minecraft.util.MathHelper;
-import net.minecraft.util.MovingObjectPosition;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.StringUtils;
+import net.minecraft.util.*;
 import net.minecraft.world.border.WorldBorder;
+
+import java.util.Collection;
+import java.util.List;
+import java.util.Random;
 
 public class GuiIngame extends Gui
 {

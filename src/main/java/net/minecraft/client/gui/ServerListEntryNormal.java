@@ -2,15 +2,11 @@ package net.minecraft.client.gui;
 
 import com.google.common.base.Charsets;
 import com.google.common.util.concurrent.ThreadFactoryBuilder;
+import doom.ui.font.FontManager;
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.ByteBufInputStream;
 import io.netty.buffer.Unpooled;
 import io.netty.handler.codec.base64.Base64;
-import java.awt.image.BufferedImage;
-import java.net.UnknownHostException;
-import java.util.List;
-import java.util.concurrent.ScheduledThreadPoolExecutor;
-import java.util.concurrent.ThreadPoolExecutor;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ServerData;
 import net.minecraft.client.renderer.GlStateManager;
@@ -21,6 +17,12 @@ import net.minecraft.util.ResourceLocation;
 import org.apache.commons.lang3.Validate;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+
+import java.awt.image.BufferedImage;
+import java.net.UnknownHostException;
+import java.util.List;
+import java.util.concurrent.ScheduledThreadPoolExecutor;
+import java.util.concurrent.ThreadPoolExecutor;
 
 public class ServerListEntryNormal implements GuiListExtended.IGuiListEntry
 {
@@ -78,17 +80,18 @@ public class ServerListEntryNormal implements GuiListExtended.IGuiListEntry
         boolean flag = this.server.version > 47;
         boolean flag1 = this.server.version < 47;
         boolean flag2 = flag || flag1;
-        this.mc.fontRendererObj.drawString(this.server.serverName, x + 32 + 3, y + 1, 16777215);
+        FontManager.r20.drawString(this.server.serverName, x + 32 + 3, y + 1, 16777215);
         List<String> list = this.mc.fontRendererObj.listFormattedStringToWidth(this.server.serverMOTD, listWidth - 32 - 2);
 
         for (int i = 0; i < Math.min(list.size(), 2); ++i)
         {
-            this.mc.fontRendererObj.drawString((String)list.get(i), x + 32 + 3, y + 12 + this.mc.fontRendererObj.FONT_HEIGHT * i, 8421504);
+            FontManager.r20.drawString((String)list.get(i), x + 32 + 3, y + 12 + FontManager.r20.getHeight()
+ * i, 8421504);
         }
 
         String s2 = flag2 ? EnumChatFormatting.DARK_RED + this.server.gameVersion : this.server.populationInfo;
-        int j = this.mc.fontRendererObj.getStringWidth(s2);
-        this.mc.fontRendererObj.drawString(s2, x + listWidth - j - 15 - 2, y + 1, 8421504);
+        int j = FontManager.r20.getStringWidth(s2);
+        FontManager.r20.drawString(s2, x + listWidth - j - 15 - 2, y + 1, 8421504);
         int k = 0;
         String s = null;
         int l;

@@ -1,6 +1,5 @@
 package doom.ui;
 
-import doom.util.RenderUtil;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.WorldRenderer;

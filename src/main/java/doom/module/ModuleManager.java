@@ -3,6 +3,10 @@ package doom.module;
 import doom.event.EventManager;
 import doom.event.EventTarget;
 import doom.event.impl.EventKey;
+import doom.module.impl.combat.HitLag;
+import doom.module.impl.player.AntiVoid;
+import doom.module.impl.player.NoFall;
+
 import java.util.ArrayList;
 
 // Tutaj będziemy importować konkretne mody, np.:
@@ -42,6 +46,16 @@ public class ModuleManager {
         modules.add(new doom.module.impl.player.InventoryManager());
         modules.add(new doom.module.impl.player.ChestStealer());
         modules.add(new doom.module.impl.movement.Phase());
+        modules.add(new doom.module.impl.render.ChestESP());
+        modules.add(new doom.module.impl.misc.AnticheatDetector());
+        modules.add(new doom.module.impl.combat.FakeLag());
+        modules.add(new doom.module.impl.combat.Backtrack());
+        modules.add(new doom.module.impl.combat.TickBase());
+        modules.add(new NoFall());
+        modules.add(new HitLag());
+        modules.add(new AntiVoid());
+        modules.add(new doom.module.impl.render.GlowESP());
+        modules.add(new doom.module.impl.misc.Disabler());
 
         EventManager.register(this);
     }
@@ -58,7 +72,16 @@ public class ModuleManager {
         }
         return null;
     }
-
+    public java.util.List<Module> getModulesByCategory(Module.Category category) {
+        java.util.List<Module> list = new java.util.ArrayList<>();
+        for (Module m : modules) {
+            // Teraz porównujemy ten sam typ enuma
+            if (m.getCategory() == category) {
+                list.add(m);
+            }
+        }
+        return list;
+    }
     // Metoda do szukania modułu po klasie (profesjonalne podejście)
     public <T extends Module> T getModule(Class<T> clazz) {
         for (Module m : modules) {

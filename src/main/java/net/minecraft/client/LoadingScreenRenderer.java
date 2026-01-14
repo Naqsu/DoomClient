@@ -1,5 +1,6 @@
 package net.minecraft.client;
 
+import doom.ui.font.FontManager;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.client.renderer.GlStateManager;
@@ -192,8 +193,8 @@ public class LoadingScreenRenderer implements IProgressUpdate
 
                 GlStateManager.enableBlend();
                 GlStateManager.tryBlendFuncSeparate(770, 771, 1, 0);
-                this.mc.fontRendererObj.drawStringWithShadow(this.currentlyDisplayedText, (float)((k - this.mc.fontRendererObj.getStringWidth(this.currentlyDisplayedText)) / 2), (float)(l / 2 - 4 - 16), 16777215);
-                this.mc.fontRendererObj.drawStringWithShadow(this.message, (float)((k - this.mc.fontRendererObj.getStringWidth(this.message)) / 2), (float)(l / 2 - 4 + 8), 16777215);
+                FontManager.r20.drawStringWithShadow(this.currentlyDisplayedText, (float)((k - FontManager.r20.getStringWidth(this.currentlyDisplayedText)) / 2), (float)(l / 2 - 4 - 16), 16777215);
+                FontManager.r20.drawStringWithShadow(this.message, (float)((k - FontManager.r20.getStringWidth(this.message)) / 2), (float)(l / 2 - 4 + 8), 16777215);
                 this.framebuffer.unbindFramebuffer();
 
                 if (OpenGlHelper.isFramebufferEnabled())

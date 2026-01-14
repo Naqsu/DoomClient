@@ -2,6 +2,7 @@ package doom.util;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.util.Timer;
+
 import java.lang.reflect.Field;
 
 public class TimerUtil {

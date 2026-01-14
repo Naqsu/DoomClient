@@ -1,6 +1,7 @@
 package doom.util;
 
 import net.minecraft.client.entity.EntityPlayerSP;
+
 import java.lang.reflect.Field;
 
 public class ReflectionUtil {

@@ -4,7 +4,6 @@ import doom.Client;
 import doom.event.EventTarget;
 import doom.event.impl.EventRender3D;
 import doom.event.impl.EventUpdate;
-import doom.module.Category;
 import doom.module.Module;
 import doom.settings.impl.BooleanSetting;
 import doom.settings.impl.ModeSetting;
@@ -13,7 +12,7 @@ import doom.util.ColorUtil;
 import net.minecraft.client.renderer.GlStateManager;
 import org.lwjgl.opengl.GL11;
 
-import java.awt.Color;
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;

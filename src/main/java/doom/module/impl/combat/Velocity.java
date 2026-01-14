@@ -3,21 +3,16 @@ package doom.module.impl.combat;
 import doom.Client;
 import doom.event.EventTarget;
 import doom.event.impl.EventPacket;
-import doom.module.Category;
 import doom.module.Module;
 import doom.settings.impl.BooleanSetting;
 import doom.settings.impl.ModeSetting;
 import doom.settings.impl.NumberSetting;
+import net.minecraft.network.play.client.C03PacketPlayer;
 import net.minecraft.network.play.server.S12PacketEntityVelocity;
 import net.minecraft.network.play.server.S27PacketExplosion;
-import net.minecraft.network.play.client.C03PacketPlayer;
 import net.minecraft.util.Vec3;
 
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Queue;
-import java.util.Random;
+import java.util.*;
 
 /**
  * ADVANCED VELOCITY BYPASS - Grim AC 2.3.73

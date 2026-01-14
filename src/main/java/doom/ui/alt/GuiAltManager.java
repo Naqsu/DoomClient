@@ -1,10 +1,15 @@
 package doom.ui.alt;
 
+import doom.ui.font.FontManager;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.*;
+import net.minecraft.client.gui.GuiButton;
+import net.minecraft.client.gui.GuiScreen;
+import net.minecraft.client.gui.GuiSlot;
+import net.minecraft.client.gui.GuiTextField;
 import net.minecraft.util.Session;
 import org.lwjgl.input.Keyboard;
-import java.awt.Color;
+
+import java.awt.*;
 import java.io.IOException;
 
 public class GuiAltManager extends GuiScreen {
@@ -30,7 +35,8 @@ public class GuiAltManager extends GuiScreen {
         this.buttonList.add(new GuiButton(3, centerX + 54, bottomY, 100, 20, "Remove"));
         this.buttonList.add(new GuiButton(4, centerX - 50, bottomY + 24, 100, 20, "Back"));
 
-        offlineField = new GuiTextField(0, mc.fontRendererObj, centerX - 100, 15, 200, 20);
+        offlineField = new GuiTextField(0, this.mc.fontRendererObj, centerX - 100, 15, 200, 20);
+
         offlineField.setMaxStringLength(16);
         offlineField.setText("Username");
     }
@@ -123,9 +129,9 @@ public class GuiAltManager extends GuiScreen {
             String type = alt.getType() == Alt.AltType.MICROSOFT ? "§b[Microsoft]" : "§7[Offline]";
             String state = alt.getStatus().toFormatted();
 
-            mc.fontRendererObj.drawStringWithShadow(name, this.width / 2 - mc.fontRendererObj.getStringWidth(name) / 2, p_180791_3_ + 2, -1);
-            mc.fontRendererObj.drawStringWithShadow(type, this.width / 2 - mc.fontRendererObj.getStringWidth(type) / 2, p_180791_3_ + 13, -1);
-            mc.fontRendererObj.drawStringWithShadow(state, this.width - 50, p_180791_3_ + 8, -1);
+            FontManager.r20.drawStringWithShadow(name, this.width / 2 - FontManager.r20.getStringWidth(name) / 2, p_180791_3_ + 2, -1);
+            FontManager.r20.drawStringWithShadow(type, this.width / 2 - FontManager.r20.getStringWidth(type) / 2, p_180791_3_ + 13, -1);
+            FontManager.r20.drawStringWithShadow(state, this.width - 50, p_180791_3_ + 8, -1);
         }
     }
 
@@ -134,9 +140,9 @@ public class GuiAltManager extends GuiScreen {
     public void drawScreen(int mouseX, int mouseY, float partialTicks) {
         this.drawDefaultBackground();
         this.altList.drawScreen(mouseX, mouseY, partialTicks);
-        this.drawCenteredString(mc.fontRendererObj, "Alt Manager - " + AltManager.INSTANCE.getAlts().size() + " alts", this.width / 2, 4, -1);
-        this.drawCenteredString(mc.fontRendererObj, "Current: §a" + (mc.session == null ? "?" : mc.session.getUsername()), this.width / 2, 28, -1);
-        this.drawCenteredString(mc.fontRendererObj, status, this.width / 2, this.height - 65, Color.YELLOW.getRGB());
+        this.drawCenteredString(this.mc.fontRendererObj, "Alt Manager - " + AltManager.INSTANCE.getAlts().size() + " alts", this.width / 2, 4, -1);
+        this.drawCenteredString(this.mc.fontRendererObj, "Current: §a" + (mc.session == null ? "?" : mc.session.getUsername()), this.width / 2, 28, -1);
+        this.drawCenteredString(this.mc.fontRendererObj, status, this.width / 2, this.height - 65, Color.YELLOW.getRGB());
         offlineField.drawTextBox();
         super.drawScreen(mouseX, mouseY, partialTicks);
     }

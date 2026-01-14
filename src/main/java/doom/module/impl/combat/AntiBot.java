@@ -1,11 +1,9 @@
 package doom.module.impl.combat;
 
 import doom.Client;
-import doom.module.Category;
 import doom.module.Module;
 import doom.settings.impl.BooleanSetting;
 import net.minecraft.client.network.NetworkPlayerInfo;
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 
 import java.util.UUID;
@@ -44,17 +42,26 @@ public class AntiBot extends Module {
      * Zwraca true, jeśli encja jest botem.
      */
     public boolean isBot(EntityPlayer player) {
+        // Jeśli moduł wyłączony lub sprawdzamy siebie - nie jest botem
         if (!this.isToggled()) return false;
-        if (player == mc.thePlayer) return false;
+        if (player == null || player == mc.thePlayer) return false;
 
-        // 1. Sprawdzanie TabListy (Najskuteczniejsze na Watchdoga/Matrixa)
-        // Boty często są spawnowane tylko w świecie, ale serwer nie wysyła info o nich w liście graczy.
-        if (tabCheck.isEnabled() && !isInTab(player)) {
-            return true;
+        // --- ZABEZPIECZENIE PRZED CRASHEM PRZY ZMIANIE SERWERA ---
+        // Jeśli gra ładuje świat, ignorujemy wszystkie checki (zwracamy false - nie jest botem)
+        if (mc.getNetHandler() == null) return false;
+
+        // Jeśli gracz nie ma jeszcze UUID (ładuje się), to nie jest botem
+        if (player.getUniqueID() == null) return false;
+
+        // 1. Sprawdzanie TabListy (POPRAWIONE)
+        if (tabCheck.isEnabled()) {
+            // Jeśli NIE MA go w tabie -> to BOT
+            if (!isInTab(player)) {
+                return true;
+            }
         }
 
         // 2. Sprawdzanie Entity ID (Hypixel Watchdog)
-        // Boty Watchdoga często mają bardzo wysokie lub ujemne ID, żeby nie kolidować z normalnymi graczami.
         if (entityIDCheck.isEnabled()) {
             if (player.getEntityId() >= 1000000000 || player.getEntityId() <= -1) {
                 return true;
@@ -62,19 +69,20 @@ public class AntiBot extends Module {
         }
 
         // 3. Sprawdzanie nazwy (Color Codes)
-        // Jeśli nazwa zawiera "§" (paragraf) i nie jest to NPC z pluginu Citizens (które czasem mają),
-        // to często jest to bot antycheata udający gracza.
         if (colorCheck.isEnabled()) {
-            if (player.getDisplayName().getFormattedText().startsWith("§") && !player.getName().contains("§")) {
-                // Sprawdzamy czy "czysta" nazwa pasuje do regexa Minecrafta
-                if (!NAME_PATTERN.matcher(player.getName()).matches()) {
-                    return true;
+            if (player.getName() != null && player.getDisplayName() != null) {
+                String formatted = player.getDisplayName().getFormattedText();
+                String cleanName = player.getName();
+
+                if (formatted.startsWith("§") && !cleanName.contains("§")) {
+                    if (!NAME_PATTERN.matcher(cleanName).matches()) {
+                        return true;
+                    }
                 }
             }
         }
 
-        // 4. UUID Check (Advanced)
-        // Boty często mają UUID w wersji 2 lub losowe, gracze mają wersję 4 (Mojang) lub 3 (Offline).
+        // 4. UUID Check
         if (uuidCheck.isEnabled()) {
             if (isInvalidUUID(player)) {
                 return true;
@@ -82,7 +90,6 @@ public class AntiBot extends Module {
         }
 
         // 5. Invisible Check
-        // Niektóre boty są niewidzialne i latają nad głową (Watchdog)
         if (invisibleCheck.isEnabled()) {
             if (player.isInvisible() && player.posY > mc.thePlayer.posY + 1.0) {
                 return true;
@@ -95,19 +102,22 @@ public class AntiBot extends Module {
     // --- Metody pomocnicze ---
 
     private boolean isInTab(EntityPlayer player) {
-        if (mc.getNetHandler() == null) return false;
-        for (NetworkPlayerInfo info : mc.getNetHandler().getPlayerInfoMap()) {
-            if (info.getGameProfile() != null && info.getGameProfile().getName().equals(player.getName())) {
-                return true;
-            }
-        }
-        return false;
+        // CRITICAL FIX:
+        // Jeśli NetHandler jest null (zmiana świata), zwracamy TRUE.
+        // Oznacza to "Zakładamy, że jest w tabie, żeby go nie usunąć".
+        // Wcześniej zwracałeś FALSE -> kod myślał że to bot -> próbował coś robić -> CRASH.
+        if (mc.getNetHandler() == null) return true;
+
+        // Pobieramy info bezpośrednio z mapy (bez pętli!)
+        NetworkPlayerInfo info = mc.getNetHandler().getPlayerInfo(player.getUniqueID());
+
+        // Sprawdzamy czy info istnieje
+        return info != null && info.getGameProfile() != null;
     }
 
     private boolean isInvalidUUID(EntityPlayer player) {
         UUID uuid = player.getUniqueID();
-        // Sprawdzenie czy UUID jest "Offline mode" (v3) lub "Online mode" (v4)
-        // Boty czasem mają dziwne UUID
+        if (uuid == null) return false; // Bezpiecznik
         return uuid.version() != 4 && uuid.version() != 3;
     }
 }

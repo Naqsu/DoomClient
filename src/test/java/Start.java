@@ -1,7 +1,7 @@
+import net.minecraft.client.main.Main;
+
 import java.io.File;
 import java.util.Arrays;
-
-import net.minecraft.client.main.Main;
 
 /**
  * Welcome to MCP 1.8.9 for Maven

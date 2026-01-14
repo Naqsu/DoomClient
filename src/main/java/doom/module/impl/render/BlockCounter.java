@@ -1,15 +1,15 @@
 package doom.module.impl.render;
 
 import doom.Client;
-import doom.module.Category;
 import doom.module.DraggableModule;
 import doom.module.impl.player.Scaffold;
+import doom.ui.font.FontManager;
 import doom.util.RenderUtil;
 import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.item.ItemStack;
 import org.lwjgl.opengl.GL11;
 
-import java.awt.Color;
+import java.awt.*;
 
 public class BlockCounter extends DraggableModule {
 
@@ -79,13 +79,15 @@ public class BlockCounter extends DraggableModule {
         String text = color + count + " \u00A77blocks";
 
         // Wyśrodkowanie tekstu w pionie
-        float fontY = y + (getHeight() / 2) - (mc.fontRendererObj.FONT_HEIGHT / 2);
-        mc.fontRendererObj.drawStringWithShadow(text, x + 24, fontY, -1);
+        float fontY = y + (getHeight() / 2) - (FontManager.r20.getHeight()
+ / 2);
+        FontManager.r20.drawStringWithShadow(text, x + 24, fontY, -1);
+
     }
 
     // To się wyświetla tylko w edytorze, gdy Scaffold jest wyłączony
     private void renderDummy(float x, float y) {
         RenderUtil.drawRoundedRect(x, y, getWidth(), getHeight(), 4, new Color(20, 20, 20, 100).getRGB());
-        mc.fontRendererObj.drawStringWithShadow("Blocks", x + 15, y + 8, -1);
+        FontManager.r20.drawStringWithShadow("Blocks", x + 15, y + 8, -1);
     }
 }

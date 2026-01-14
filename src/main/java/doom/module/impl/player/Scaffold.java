@@ -3,7 +3,6 @@ package doom.module.impl.player;
 import doom.Client;
 import doom.event.EventTarget;
 import doom.event.impl.EventUpdate;
-import doom.module.Category;
 import doom.module.Module;
 import doom.settings.impl.BooleanSetting;
 import doom.settings.impl.ModeSetting;
@@ -16,7 +15,9 @@ import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
+import net.minecraft.network.play.client.C09PacketHeldItemChange;
 import net.minecraft.network.play.client.C0APacketAnimation;
+import net.minecraft.network.play.client.C0BPacketEntityAction;
 import net.minecraft.util.*;
 import org.lwjgl.input.Keyboard;
 
@@ -26,26 +27,36 @@ import java.util.concurrent.ThreadLocalRandom;
 
 public class Scaffold extends Module {
 
-    // Settings
-    public ModeSetting rotationMode = new ModeSetting("Rotation", this, "VulcanSprint", "VulcanSprint", "Grim", "Strict", "Normal");
-    public BooleanSetting sprint = new BooleanSetting("Sprint", this, false);
-    public BooleanSetting tower = new BooleanSetting("Tower", this, false);
-    public BooleanSetting jump = new BooleanSetting("Jump", this, true);
+    // --- SETTINGS (Bez zmian) ---
+    public ModeSetting rotationMode = new ModeSetting("Rotation", this, "VulcanSwitch", "VulcanSwitch", "Normal");
+    public BooleanSetting sprint = new BooleanSetting("Sprint", this, true);
+    public BooleanSetting tower = new BooleanSetting("Tower", this, true);
+    public BooleanSetting towerMove = new BooleanSetting("Tower Move", this, true);
+    public BooleanSetting jump = new BooleanSetting("Jump", this, false);
     public BooleanSetting swing = new BooleanSetting("Swing", this, true);
     public BooleanSetting silent = new BooleanSetting("Silent", this, true);
-    public BooleanSetting rayCast = new BooleanSetting("RayCast", this, true);
-    // Zmniejszamy delay domyślny, bo przy szybkim skakaniu musi stawiać natychmiast
+    public BooleanSetting rayCast = new BooleanSetting("RayCast", this, false);
+
+    public BooleanSetting sneak = new BooleanSetting("Sneak", this, true);
+    public NumberSetting sneakEvery = new NumberSetting("Sneak Every", this, 4, 1, 10, 1);
+
     public NumberSetting placeDelay = new NumberSetting("Delay", this, 0, 0, 5, 1);
 
-    // Data
+    // --- DATA ---
     private BlockData targetBlock;
     private float[] currentRotations = new float[]{0, 0};
     private float lastYaw, lastPitch;
-    private int currentSlot = -1;
     private double keepY = -1;
     private final TimeHelper timer = new TimeHelper();
 
-    // Movement Fix vars
+    private int blocksPlaced = 0;
+    private boolean isSneaking = false;
+    private boolean isJumpingUp = false;
+    private int currentSlot = -1;
+
+    // Cache dla wektora uderzenia, aby był spójny między rotacją a postawieniem
+    private Vec3 currentHitVec = null;
+
     private float originalForward, originalStrafe;
 
     private final List<Block> invalidBlocks = Arrays.asList(
@@ -54,7 +65,8 @@ public class Scaffold extends Module {
             Blocks.crafting_table, Blocks.furnace, Blocks.lit_furnace, Blocks.dispenser, Blocks.dropper,
             Blocks.tnt, Blocks.noteblock, Blocks.jukebox, Blocks.anvil, Blocks.bed, Blocks.skull,
             Blocks.ladder, Blocks.vine, Blocks.reeds, Blocks.tallgrass, Blocks.deadbush, Blocks.snow_layer,
-            Blocks.glass, Blocks.stained_glass, Blocks.torch, Blocks.web, Blocks.sapling, Blocks.double_plant
+            Blocks.glass, Blocks.stained_glass, Blocks.torch, Blocks.web, Blocks.sapling, Blocks.double_plant,
+            Blocks.yellow_flower, Blocks.red_flower
     );
 
     public Scaffold() {
@@ -62,10 +74,13 @@ public class Scaffold extends Module {
         Client.INSTANCE.settingsManager.rSetting(rotationMode);
         Client.INSTANCE.settingsManager.rSetting(sprint);
         Client.INSTANCE.settingsManager.rSetting(tower);
+        Client.INSTANCE.settingsManager.rSetting(towerMove);
         Client.INSTANCE.settingsManager.rSetting(jump);
         Client.INSTANCE.settingsManager.rSetting(swing);
         Client.INSTANCE.settingsManager.rSetting(silent);
         Client.INSTANCE.settingsManager.rSetting(rayCast);
+        Client.INSTANCE.settingsManager.rSetting(sneak);
+        Client.INSTANCE.settingsManager.rSetting(sneakEvery);
         Client.INSTANCE.settingsManager.rSetting(placeDelay);
     }
 
@@ -73,107 +88,126 @@ public class Scaffold extends Module {
     public void onEnable() {
         if (mc.thePlayer == null) return;
 
-        lastYaw = mc.thePlayer.rotationYaw - 180;
+        lastYaw = mc.thePlayer.rotationYaw;
         lastPitch = 80.0f;
         currentRotations[0] = lastYaw;
         currentRotations[1] = lastPitch;
 
-        currentSlot = mc.thePlayer.inventory.currentItem;
         keepY = Math.floor(mc.thePlayer.posY - 1.0);
-
+        blocksPlaced = 0;
+        isSneaking = false;
+        currentHitVec = null;
         timer.reset();
+        currentSlot = mc.thePlayer.inventory.currentItem;
     }
 
     @Override
     public void onDisable() {
         if (mc.thePlayer == null) return;
-        if (currentSlot != -1) mc.thePlayer.inventory.currentItem = currentSlot;
         TimerUtil.setTimerSpeed(1.0f);
         KeyBinding.setKeyBindState(mc.gameSettings.keyBindSneak.getKeyCode(), false);
+
+        // Nie wyłączamy sprintu tutaj na siłę, bo gracz może chcieć biec dalej
+        if (sprint.isEnabled() && !Keyboard.isKeyDown(mc.gameSettings.keyBindSprint.getKeyCode())) {
+            mc.thePlayer.setSprinting(false);
+        }
+
+        RotationUtil.reset();
+
+        // Sync slotu przy wyłączaniu
+        if (mc.thePlayer.inventory.currentItem != currentSlot && currentSlot != -1) {
+            mc.getNetHandler().addToSendQueue(new C09PacketHeldItemChange(mc.thePlayer.inventory.currentItem));
+        }
     }
 
     @EventTarget
     public void onUpdate(EventUpdate event) {
-        // 1. Slot
-        int slot = getBlockSlot();
-        if (slot == -1) return;
-        mc.thePlayer.inventory.currentItem = slot;
+        // --- INPUT UPDATE ---
+        originalForward = mc.thePlayer.movementInput.moveForward;
+        originalStrafe = mc.thePlayer.movementInput.moveStrafe;
+        boolean moving = originalForward != 0 || originalStrafe != 0;
 
-        // 2. Keep Y
-        if (!jump.isEnabled() || mc.gameSettings.keyBindJump.isKeyDown()) {
+        // Warunek Towera
+        boolean isTowering = tower.isEnabled() && mc.gameSettings.keyBindJump.isKeyDown() && (!moving || towerMove.isEnabled());
+
+        // 1. Slot Logic
+        int bestSlot = getBlockSlot();
+        if (bestSlot == -1) return; // Brak bloków
+
+        // Zmieniamy slot tylko jeśli to konieczne
+        if (bestSlot != mc.thePlayer.inventory.currentItem) {
+            mc.thePlayer.inventory.currentItem = bestSlot;
+            currentSlot = bestSlot;
+        }
+
+        // KeepY Logic
+        if (!jump.isEnabled() || mc.gameSettings.keyBindJump.isKeyDown() || isTowering) {
             keepY = Math.floor(mc.thePlayer.posY - 1.0);
         } else {
+            // Jeśli tryb Jump jest włączony i nie trzymamy spacji, trzymaj Y
             if (mc.thePlayer.posY - 1.0 < keepY && mc.thePlayer.onGround) {
                 keepY = Math.floor(mc.thePlayer.posY - 1.0);
             }
         }
 
-        // 3. Find Block
+        // 2. Find Block
         BlockPos searchPos = new BlockPos(mc.thePlayer.posX, keepY, mc.thePlayer.posZ);
         BlockData newTarget = getBlockData(searchPos);
-        if (newTarget != null) targetBlock = newTarget;
 
-        // 4. Capture Input
-        if (silent.isEnabled()) {
-            originalForward = mc.thePlayer.movementInput.moveForward;
-            originalStrafe = mc.thePlayer.movementInput.moveStrafe;
+        // Reset hitVec jeśli zmieniliśmy blok docelowy
+        if (targetBlock == null || newTarget == null || !targetBlock.pos.equals(newTarget.pos) || targetBlock.face != newTarget.face) {
+            currentHitVec = null;
         }
 
-        // 5. Rotation Logic
+        if (newTarget != null) {
+            targetBlock = newTarget;
+            // Generujemy HitVec RAZ na blok, żeby rotacja i click były zgodne
+            if (currentHitVec == null) {
+                currentHitVec = getStrictVec3(targetBlock);
+            }
+        }
+
+        // 3. Jump Logic (Detekcja skoku dla rotacji Switch)
+        if (moving && !mc.gameSettings.keyBindJump.isKeyDown()) {
+            if (mc.thePlayer.onGround && jump.isEnabled()) {
+                mc.thePlayer.jump();
+                isJumpingUp = true;
+            } else if (mc.thePlayer.motionY > 0.1) {
+                isJumpingUp = true;
+            } else {
+                isJumpingUp = false;
+            }
+        } else {
+            isJumpingUp = false;
+        }
+
+        // 4. Rotations
         float[] rots = new float[]{lastYaw, lastPitch};
-        boolean forceSprintOff = false;
-        boolean forceSprintOn = false;
 
-        if (targetBlock != null) {
-            float[] blockRots = getRotations(targetBlock);
-
-            // Lekki Jitter
-            blockRots[0] += (ThreadLocalRandom.current().nextFloat() - 0.5f) * 0.5f;
-            blockRots[1] += (ThreadLocalRandom.current().nextFloat() - 0.5f) * 0.5f;
-
-            // --- VULCAN SPRINT LOGIC FIX ---
-            if (rotationMode.getMode().equalsIgnoreCase("VulcanSprint")) {
-                // Wykrywamy fazę skoku (Wznoszenie)
-                // Zmieniono próg motionY na 0.15 (wcześniej 0.05), żeby szybciej wracał do bloku pod koniec skoku
-                boolean isJumpingUp = !mc.thePlayer.onGround && mc.thePlayer.motionY > 0.15 && !mc.gameSettings.keyBindJump.isKeyDown();
-
-                if (isJumpingUp && isMoving()) {
-                    // Faza 1: Lot w górę -> Patrz w przód
-                    float movementYaw = getMovementYaw(mc.thePlayer.rotationYaw, originalForward, originalStrafe);
-
-                    // Płynne przejście w przód (0.25f)
-                    rots[0] = interpolateRotation(lastYaw, movementYaw, 0.25f);
-                    rots[1] = interpolateRotation(lastPitch, 5.0f, 0.25f);
-
-                    forceSprintOn = true;
-                } else {
-                    // Faza 2: Opadanie lub Ziemia -> SZYBKI powrót na blok
-                    // Zwiększono prędkość interpolacji do 0.8f (prawie instant), żeby zdążyć przed upadkiem
-                    rots[0] = interpolateRotation(lastYaw, blockRots[0], 0.6f);
-                    rots[1] = interpolateRotation(lastPitch, blockRots[1], 0.6f);
-
-                    forceSprintOff = true;
+        if (rotationMode.is("VulcanSwitch")) {
+            // Specyficzna logika dla Vulcana: patrzenie prosto podczas biegu i skoku
+            if (isJumpingUp && moving && !isTowering) {
+                float moveYaw = getMovementYaw(mc.thePlayer.rotationYaw, originalForward, originalStrafe);
+                rots[0] = interpolate(lastYaw, moveYaw, 45.0f);
+                rots[1] = 0.0f; // Patrz prosto
+            } else {
+                if (targetBlock != null && currentHitVec != null) {
+                    float[] dest = RotationUtil.getRotationsToVec(currentHitVec);
+                    rots = RotationUtil.applyGCD(new float[]{lastYaw, lastPitch}, dest);
                 }
             }
-            else {
-                // Inne tryby (Grim/Strict)
-                if (rotationMode.getMode().equalsIgnoreCase("Grim")) {
-                    rots = RotationUtil.applyGCD(new float[]{lastYaw, lastPitch}, blockRots);
-                } else {
-                    rots = blockRots;
-                }
+        } else {
+            // Normal mode
+            if (targetBlock != null && currentHitVec != null) {
+                float[] dest = RotationUtil.getRotationsToVec(currentHitVec);
+                rots = RotationUtil.applyGCD(new float[]{lastYaw, lastPitch}, dest);
             }
-
-            if (rotationMode.getMode().equalsIgnoreCase("VulcanSprint")) {
-                rots = RotationUtil.applyGCD(new float[]{lastYaw, lastPitch}, rots);
-            }
-
-            lastYaw = rots[0];
-            lastPitch = rots[1];
         }
+
+        lastYaw = rots[0];
+        lastPitch = rots[1];
         currentRotations = rots;
 
-        // 6. Apply Rotations
         event.setYaw(currentRotations[0]);
         event.setPitch(currentRotations[1]);
 
@@ -182,78 +216,115 @@ public class Scaffold extends Module {
         RotationUtil.renderPitch = currentRotations[1];
         RotationUtil.shouldUseCustomPitch = true;
 
-        // 7. Movement & Sprint
         if (silent.isEnabled()) {
             updateMovement(currentRotations[0]);
+        }
 
-            if (rotationMode.getMode().equalsIgnoreCase("VulcanSprint")) {
-                if (forceSprintOn) mc.thePlayer.setSprinting(true);
-                else if (forceSprintOff) mc.thePlayer.setSprinting(false);
-            } else {
-                // Standard Smart Sprint
-                if (sprint.isEnabled() && isMoving()) {
-                    float moveYaw = getMovementYaw(mc.thePlayer.rotationYaw, originalForward, originalStrafe);
-                    float diff = Math.abs(MathHelper.wrapAngleTo180_float(moveYaw - currentRotations[0]));
-                    if (diff > 60) mc.thePlayer.setSprinting(false);
-                    else mc.thePlayer.setSprinting(true);
-                } else {
-                    mc.thePlayer.setSprinting(false);
+        // --- 5. TOWER LOGIC ---
+        if (isTowering) {
+            if (!moving) {
+                // Stabilizacja środka bloku (płynniejsza niż w oryginale)
+                double centerX = Math.floor(mc.thePlayer.posX) + 0.5;
+                double centerZ = Math.floor(mc.thePlayer.posZ) + 0.5;
+                if (mc.thePlayer.getDistance(centerX, mc.thePlayer.posY, centerZ) > 0.1) {
+                    mc.thePlayer.motionX = (centerX - mc.thePlayer.posX) * 0.2;
+                    mc.thePlayer.motionZ = (centerZ - mc.thePlayer.posZ) * 0.2;
                 }
+            }
+
+            if (mc.thePlayer.onGround) {
+                mc.thePlayer.motionY = 0.42f;
+            }
+            else if (mc.thePlayer.motionY > 0) {
+                // Motion clip (Vulcan bypass)
+                if (mc.thePlayer.motionY < 0.1) {
+                    mc.thePlayer.motionY -= 0.015;
+                }
+            }
+        }
+
+        // 6. Placing
+        boolean canPlace = isTowering || (!isJumpingUp || (!moving && mc.gameSettings.keyBindJump.isKeyDown()));
+
+        // Dodatkowy check: nie stawiaj, jeśli rotacja Switch jeszcze nie wycelowała w dół (żeby nie stawiać w powietrze)
+        if (rotationMode.is("VulcanSwitch") && isJumpingUp && lastPitch < 45) {
+            canPlace = false;
+        }
+
+        if (canPlace && targetBlock != null && currentHitVec != null) {
+            if (mc.thePlayer.getDistanceSq(targetBlock.pos) <= 25) {
+                // Tower = brak delayu, normalnie = delay z ustawień
+                long delay = isTowering ? 0 : (long)(placeDelay.getValue() * 50);
+
+                if (timer.hasReached(delay)) {
+                    // RayCast Check: Używamy tych samych rotacji co w evencie
+                    if (rayCast.isEnabled()) {
+                        if (!isLookingAtBlock(event.getYaw(), event.getPitch(), targetBlock.pos, targetBlock.face)) return;
+                    }
+
+                    // --- SPRINT FIX ---
+                    // Vulcan/NCP wymaga wyłączenia sprintu pakietem przed interakcją
+                    boolean wasSprinting = mc.thePlayer.isSprinting();
+                    if (wasSprinting) {
+                        mc.getNetHandler().addToSendQueue(new C0BPacketEntityAction(mc.thePlayer, C0BPacketEntityAction.Action.STOP_SPRINTING));
+                    }
+
+                    if (placeBlock(targetBlock)) {
+                        if (swing.isEnabled()) {
+                            mc.thePlayer.swingItem();
+                        } else {
+                            mc.getNetHandler().addToSendQueue(new C0APacketAnimation());
+                        }
+
+                        timer.reset();
+
+                        if (sneak.isEnabled()) handleSneak();
+
+                        // Regeneracja HitVec po postawieniu (żeby kolejny click był w inne miejsce)
+                        currentHitVec = getStrictVec3(targetBlock);
+                    }
+
+                    // Przywróć sprint
+                    if (wasSprinting) {
+                        mc.getNetHandler().addToSendQueue(new C0BPacketEntityAction(mc.thePlayer, C0BPacketEntityAction.Action.START_SPRINTING));
+                    }
+                }
+            }
+        }
+    }
+
+    private void handleSneak() {
+        if (!sneak.isEnabled()) return;
+        blocksPlaced++;
+
+        if (blocksPlaced >= sneakEvery.getValue()) {
+            if (!isSneaking) {
+                isSneaking = true;
+                KeyBinding.setKeyBindState(mc.gameSettings.keyBindSneak.getKeyCode(), true);
+            } else if (mc.thePlayer.onGround) {
+                blocksPlaced = 0;
+                isSneaking = false;
+                KeyBinding.setKeyBindState(mc.gameSettings.keyBindSneak.getKeyCode(), false);
             }
         } else {
-            mc.thePlayer.rotationYaw = currentRotations[0];
-            mc.thePlayer.rotationPitch = currentRotations[1];
-            if (!sprint.isEnabled()) mc.thePlayer.setSprinting(false);
-        }
-
-        // 8. Auto Jump
-        if (jump.isEnabled() && isMoving() && mc.thePlayer.onGround && !mc.gameSettings.keyBindJump.isKeyDown()) {
-            mc.thePlayer.jump();
-        }
-
-        // 9. Placing Logic
-        long randomDelay = (long) (placeDelay.getValue() * 50);
-        if (randomDelay < 60) randomDelay = 60 + ThreadLocalRandom.current().nextInt(40);
-        if (targetBlock != null && mc.thePlayer.getDistanceSq(targetBlock.pos) <= 25 && timer.hasReached(randomDelay)) {
-            // RayCast Logic - tutaj jest zabezpieczenie przed stawianiem w powietrzu
-            // Jeśli RayCast nie widzi bloku (bo patrzymy w przód), po prostu nie postawi.
-            // Usunąłem sztuczną blokadę "pitch < 70", bo powodowała spadanie.
-            if (rayCast.isEnabled()) {
-                if (!isLookingAtBlock(event.getYaw(), event.getPitch(), targetBlock.pos)) {
-                    return;
-                }
+            // Resetuj, jeśli gracz puścił shift manualnie
+            if (!Keyboard.isKeyDown(mc.gameSettings.keyBindSneak.getKeyCode()) && isSneaking) {
+                isSneaking = false;
+                KeyBinding.setKeyBindState(mc.gameSettings.keyBindSneak.getKeyCode(), false);
             }
-
-            if (swing.isEnabled()) mc.thePlayer.swingItem();
-            else mc.getNetHandler().addToSendQueue(new C0APacketAnimation());
-
-            if (swing.isEnabled()) mc.thePlayer.swingItem();
-            else mc.getNetHandler().addToSendQueue(new C0APacketAnimation());
-
-            boolean placed = placeBlock(targetBlock);
-
-            if (placed) {
-                if (tower.isEnabled() && mc.gameSettings.keyBindJump.isKeyDown() && !isMoving()) {
-                    mc.thePlayer.motionY = 0.42f;
-                    mc.thePlayer.motionX = 0;
-                    mc.thePlayer.motionZ = 0;
-                }
-            }
-
-            timer.reset();
         }
     }
 
-    private float interpolateRotation(float current, float target, float speed) {
+    private float interpolate(float current, float target, float speed) {
         float diff = MathHelper.wrapAngleTo180_float(target - current);
-        if (Math.abs(diff) < 2.0f) return target;
-        return current + diff * speed;
+        if (diff > speed) diff = speed;
+        if (diff < -speed) diff = -speed;
+        return current + diff;
     }
 
-    private float getMovementYaw(float baseYaw, float forward, float strafe) {
-        if (forward == 0 && strafe == 0) return baseYaw;
-
-        float moveYaw = baseYaw;
+    private float getMovementYaw(float yaw, float forward, float strafe) {
+        if (forward == 0 && strafe == 0) return yaw;
+        float moveYaw = yaw;
         if (forward > 0) {
             if (strafe > 0) moveYaw -= 45;
             else if (strafe < 0) moveYaw += 45;
@@ -274,19 +345,22 @@ public class Scaffold extends Module {
 
         if (forward == 0 && strafe == 0) return;
 
-        float yawDifference = MathHelper.wrapAngleTo180_float(mc.thePlayer.rotationYaw - targetYaw);
-        double rad = Math.toRadians(yawDifference);
+        float yaw = mc.thePlayer.rotationYaw;
+        float fixedYaw = yaw - targetYaw;
 
+        float rad = (float) Math.toRadians(fixedYaw);
         float cos = (float) Math.cos(rad);
         float sin = (float) Math.sin(rad);
 
+        // Poprawiona matematyka wektora
         float fixedForward = forward * cos + strafe * sin;
         float fixedStrafe = strafe * cos - forward * sin;
 
+        // Normalizacja, aby nie przekraczać wartości wejścia
         if (Math.abs(fixedForward) > 1.0f) fixedForward = fixedForward > 0 ? 1.0f : -1.0f;
         if (Math.abs(fixedStrafe) > 1.0f) fixedStrafe = fixedStrafe > 0 ? 1.0f : -1.0f;
 
-        if (mc.thePlayer.isSneaking()) {
+        if (mc.gameSettings.keyBindSneak.isKeyDown() || isSneaking) {
             fixedForward *= 0.3f;
             fixedStrafe *= 0.3f;
         }
@@ -295,37 +369,28 @@ public class Scaffold extends Module {
         mc.thePlayer.movementInput.moveStrafe = fixedStrafe;
     }
 
-    private boolean isMoving() {
-        return mc.thePlayer != null && (originalForward != 0 || originalStrafe != 0);
-    }
-
-    private boolean isLookingAtBlock(float yaw, float pitch, BlockPos targetPos) {
+    private boolean isLookingAtBlock(float yaw, float pitch, BlockPos targetPos, EnumFacing targetFace) {
         Vec3 eyes = mc.thePlayer.getPositionEyes(1.0f);
         Vec3 dir = RotationUtil.getVectorForRotation(pitch, yaw);
         Vec3 end = eyes.addVector(dir.xCoord * 4.5, dir.yCoord * 4.5, dir.zCoord * 4.5);
         MovingObjectPosition ray = mc.theWorld.rayTraceBlocks(eyes, end, false, false, true);
 
-        // Poluzowany RayCast: pozwala na trafienie w "sąsiada" (sideHit), co pomaga przy lagu
         if (ray != null && ray.typeOfHit == MovingObjectPosition.MovingObjectType.BLOCK) {
             BlockPos hitPos = ray.getBlockPos();
-            if (hitPos.equals(targetPos)) return true;
-            if (hitPos.offset(ray.sideHit).equals(targetPos)) return true;
+            // Zezwalamy na trafienie w blok docelowy LUB sąsiada (czasem raycast łapie krawędź)
+            return hitPos.equals(targetPos);
         }
         return false;
     }
 
     private boolean placeBlock(BlockData data) {
         ItemStack stack = mc.thePlayer.inventory.getCurrentItem();
-        Vec3 hitVec = getVec3(data);
+        // Używamy zapamiętanego wektora, aby serwer widział kliknięcie tam, gdzie celowaliśmy
+        Vec3 hitVec = (currentHitVec != null) ? currentHitVec : getStrictVec3(data);
         return mc.playerController.onPlayerRightClick(mc.thePlayer, mc.theWorld, stack, data.pos, data.face, hitVec);
     }
 
-    private float[] getRotations(BlockData data) {
-        Vec3 hitVec = getVec3(data);
-        return RotationUtil.getRotationsToVec(hitVec);
-    }
-
-    private Vec3 getVec3(BlockData data) {
+    private Vec3 getStrictVec3(BlockData data) {
         BlockPos pos = data.pos;
         EnumFacing face = data.face;
         double x = pos.getX() + 0.5;
@@ -335,12 +400,13 @@ public class Scaffold extends Module {
         y += face.getFrontOffsetY() * 0.5;
         z += face.getFrontOffsetZ() * 0.5;
 
-        double jitter = 0.05;
+        double variance = 0.25; // Randomization range
+        // Dodajemy losowość, aby ominąć wykrywanie "Clicking same pixel"
         if (face == EnumFacing.UP || face == EnumFacing.DOWN) {
-            x += (ThreadLocalRandom.current().nextDouble() - 0.5) * jitter;
-            z += (ThreadLocalRandom.current().nextDouble() - 0.5) * jitter;
+            x += (ThreadLocalRandom.current().nextDouble() - 0.5) * variance;
+            z += (ThreadLocalRandom.current().nextDouble() - 0.5) * variance;
         } else {
-            y += (ThreadLocalRandom.current().nextDouble() - 0.5) * jitter;
+            y += (ThreadLocalRandom.current().nextDouble() - 0.5) * variance;
         }
         return new Vec3(x, y, z);
     }
@@ -349,15 +415,19 @@ public class Scaffold extends Module {
         if (isValidBlock(pos)) return null;
 
         EnumFacing[] facings = EnumFacing.values();
+
+        // 1. Sprawdź bezpośrednich sąsiadów
         for (EnumFacing facing : facings) {
-            if (facing == EnumFacing.UP || facing == EnumFacing.DOWN) continue;
+            if (facing == EnumFacing.UP || facing == EnumFacing.DOWN) continue; // Optymalizacja: najpierw boki
             BlockPos neighbor = pos.offset(facing);
             if (isValidBlock(neighbor)) return new BlockData(neighbor, facing.getOpposite());
         }
 
+        // 2. Sprawdź górę/dół
         if (isValidBlock(pos.add(0, -1, 0))) return new BlockData(pos.add(0, -1, 0), EnumFacing.UP);
         if (isValidBlock(pos.add(0, 1, 0))) return new BlockData(pos.add(0, 1, 0), EnumFacing.DOWN);
 
+        // 3. Sprawdź przekątne (dla lepszego wykrywania podczas szybkiego biegu)
         BlockPos[] diagonals = new BlockPos[]{pos.add(-1, 0, 0), pos.add(1, 0, 0), pos.add(0, 0, -1), pos.add(0, 0, 1)};
         for (BlockPos diagonal : diagonals) {
             if (isValidBlock(diagonal.down())) return new BlockData(diagonal.down(), EnumFacing.UP);
@@ -367,7 +437,7 @@ public class Scaffold extends Module {
 
     private boolean isValidBlock(BlockPos pos) {
         Block block = mc.theWorld.getBlockState(pos).getBlock();
-        return !invalidBlocks.contains(block) && block.isFullCube();
+        return !invalidBlocks.contains(block) && block.isFullCube(); // Wymagamy pełnego bloku do postawienia na nim
     }
 
     private int getBlockSlot() {

@@ -372,7 +372,7 @@ public class ItemRenderer
             doom.module.impl.render.Animations anim = (doom.module.impl.render.Animations) Client.INSTANCE.moduleManager.getModule(doom.module.impl.render.Animations.class);
 
             // LOGIKA BLOKOWANIA (Killaura lub Prawy Przycisk)
-            boolean auraBlocking = killaura != null && killaura.isToggled && killaura.target != null && this.itemToRender.getItem() instanceof net.minecraft.item.ItemSword;
+            boolean auraBlocking = killaura != null && killaura.isToggled() && killaura.target != null && this.itemToRender.getItem() instanceof net.minecraft.item.ItemSword;
             boolean isBlocking = auraBlocking || (abstractclientplayer.getItemInUseCount() > 0 && this.itemToRender.getItemUseAction() == EnumAction.BLOCK);
 
             if (this.itemToRender.getItem() == Items.filled_map)

@@ -3,12 +3,13 @@ package doom.module.impl.render;
 import doom.Client;
 import doom.event.EventTarget;
 import doom.event.impl.EventRender3D;
-import doom.module.Category;
 import doom.module.Module;
 import doom.module.impl.combat.AntiBot;
 import doom.settings.impl.BooleanSetting;
 import doom.settings.impl.ModeSetting;
+import doom.util.ColorUtil;
 import doom.util.RenderUtil;
+import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
@@ -18,130 +19,193 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.AxisAlignedBB;
 import org.lwjgl.opengl.GL11;
 
-import java.awt.Color;
+import java.awt.*;
 
 public class ESP extends Module {
 
-    public ModeSetting mode;
-    public BooleanSetting players;
-    public BooleanSetting mobs;
-    public BooleanSetting animals;
+    private final ModeSetting mode = new ModeSetting("Mode", this, "Box", "Box", "2D", "Outline");
+    private final BooleanSetting players = new BooleanSetting("Targets: Players", this, true);
+    private final BooleanSetting mobs = new BooleanSetting("Targets: Mobs", this, false);
+    private final BooleanSetting animals = new BooleanSetting("Targets: Animals", this, false);
+    private final BooleanSetting healthBar = new BooleanSetting("Health Bar", this, true);
+    private final BooleanSetting rainbow = new BooleanSetting("Rainbow", this, false);
 
     public ESP() {
         super("ESP", 0, Category.RENDER);
-
-        mode = new ModeSetting("Mode", this, "3D", "3D", "2D");
-        players = new BooleanSetting("Targets: Players", this, true);
-        mobs = new BooleanSetting("Targets: Mobs", this, false);
-        animals = new BooleanSetting("Targets: Animals", this, false);
-
         Client.INSTANCE.settingsManager.rSetting(mode);
         Client.INSTANCE.settingsManager.rSetting(players);
         Client.INSTANCE.settingsManager.rSetting(mobs);
         Client.INSTANCE.settingsManager.rSetting(animals);
+        Client.INSTANCE.settingsManager.rSetting(healthBar);
+        Client.INSTANCE.settingsManager.rSetting(rainbow);
     }
 
     @EventTarget
     public void onRender3D(EventRender3D event) {
         for (Entity entity : mc.theWorld.loadedEntityList) {
             if (shouldRender(entity)) {
+                EntityLivingBase living = (EntityLivingBase) entity;
+                Color color = getColor(living);
 
-                // Ustalanie koloru
-                Color color = getColor((EntityLivingBase) entity);
-
-                if (mode.is("3D")) {
-                    render3D((EntityLivingBase) entity, color, event.getPartialTicks());
-                } else {
-                    render2D((EntityLivingBase) entity, color, event.getPartialTicks());
+                if (mode.is("Box")) {
+                    renderBox(living, color, event.getPartialTicks());
+                } else if (mode.is("2D")) {
+                    render2D(living, color, event.getPartialTicks());
                 }
+
+                // Outline to osobny shader (zrobimy go później, teraz Box jest priorytetem)
             }
         }
     }
 
-    // --- RENDEROWANIE 3D (ŁADNE PUDEŁKA) ---
-    private void render3D(EntityLivingBase entity, Color color, float partialTicks) {
+    private void renderBox(EntityLivingBase entity, Color color, float partialTicks) {
         RenderManager rm = mc.getRenderManager();
 
-        double viewerX = rm.viewerPosX;
-        double viewerY = rm.viewerPosY;
-        double viewerZ = rm.viewerPosZ;
+        // 1. Interpolacja Pozycji (Klucz do gładkiego ESP)
+        double x = entity.lastTickPosX + (entity.posX - entity.lastTickPosX) * partialTicks - rm.viewerPosX;
+        double y = entity.lastTickPosY + (entity.posY - entity.lastTickPosY) * partialTicks - rm.viewerPosY;
+        double z = entity.lastTickPosZ + (entity.posZ - entity.lastTickPosZ) * partialTicks - rm.viewerPosZ;
 
-        // 1. Obliczamy pozycję gracza z interpolacją (żeby było płynnie)
-        double x = entity.lastTickPosX + (entity.posX - entity.lastTickPosX) * partialTicks - viewerX;
-        double y = entity.lastTickPosY + (entity.posY - entity.lastTickPosY) * partialTicks - viewerY;
-        double z = entity.lastTickPosZ + (entity.posZ - entity.lastTickPosZ) * partialTicks - viewerZ;
+        // Wymiary pudełka (dopasowane do hitboxa)
+        double width = entity.width / 2.0 + 0.1;
+        double height = entity.height + 0.1; // Lekki margines nad głową
 
-        // 2. Tworzymy pudełko (BoundingBox)
-        // Wymiary bierzemy z encji (width/height), a pozycję z obliczeń wyżej.
-        // Dodajemy mały margines (0.1), żeby ramka nie dotykała modelu gracza.
-        double width = entity.width / 2 + 0.1;
-        double height = entity.height + 0.1; // +0.1 nad głową
+        // Jeśli kucamy, hitbox jest niższy, ale renderowanie modelu w 1.8.9 jest specyficzne.
+        // Bierzemy to pod uwagę.
+        if (entity.isSneaking()) {
+            y -= 0.125; // Korekta dla sneaka
+        }
 
-        AxisAlignedBB bb = new AxisAlignedBB(
+        AxisAlignedBB axisAlignedBB = new AxisAlignedBB(
                 x - width, y, z - width,
                 x + width, y + height, z + width
         );
 
+        // 2. Setup OpenGL
+        GL11.glPushMatrix();
+        GL11.glEnable(GL11.GL_BLEND);
+        GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
+        GL11.glDisable(GL11.GL_TEXTURE_2D);
+        GL11.glDisable(GL11.GL_DEPTH_TEST); // Żeby widzieć przez ściany
+        GL11.glDepthMask(false);
+        GL11.glLineWidth(1.5f); // Grubość linii
+
         // 3. Rysowanie WYPEŁNIENIA (Fill)
-        // Alpha 50/255 -> bardzo przezroczyste
-        int fillColor = new Color(color.getRed(), color.getGreen(), color.getBlue(), 40).getRGB();
-        RenderUtil.drawFilledBox(bb, fillColor);
+        // Alpha 40/255 (bardzo delikatne)
+        RenderUtil.drawFilledBox(axisAlignedBB, new Color(color.getRed(), color.getGreen(), color.getBlue(), 40).getRGB());
 
         // 4. Rysowanie OBRYSU (Outline)
-        // Alpha 255/255 -> pełna widoczność
-        int outlineColor = new Color(color.getRed(), color.getGreen(), color.getBlue(), 255).getRGB();
-        RenderUtil.drawBoundingBox(bb, 1.5f, outlineColor);
+        // Pełny kolor, ale bez górnej i dolnej "klapy", żeby wyglądało czyściej (tzw. Corner Box lub Full Box)
+        // Tutaj rysujemy pełny box wireframe
+        RenderUtil.drawBoundingBox(axisAlignedBB, 1.5f, new Color(color.getRed(), color.getGreen(), color.getBlue(), 255).getRGB());
+
+        // 5. HEALTH BAR (Opcjonalny)
+        if (healthBar.isEnabled()) {
+            drawHealthBar(entity, x, y, z, width, height);
+        }
+
+        // Cleanup
+        GL11.glDepthMask(true);
+        GL11.glEnable(GL11.GL_DEPTH_TEST);
+        GL11.glEnable(GL11.GL_TEXTURE_2D);
+        GL11.glDisable(GL11.GL_BLEND);
+        GL11.glPopMatrix();
+        GlStateManager.resetColor();
     }
 
-    // --- RENDEROWANIE 2D (STARY STYL) ---
+    private void drawHealthBar(EntityLivingBase entity, double x, double y, double z, double width, double height) {
+        float hp = entity.getHealth();
+        float maxHp = entity.getMaxHealth();
+        float percentage = hp / maxHp;
+
+        // Kolor paska (Zielony -> Czerwony)
+        Color hpColor = Color.getHSBColor(percentage * 0.33f, 1.0f, 1.0f);
+
+        // Pozycja paska (po lewej lub prawej stronie boxa)
+        // Rysujemy po prawej
+        double barX = x - width - 0.2; // Odsunięcie od boxa
+        double barZ = z - width; // Wyrównanie do krawędzi
+
+        // W 3D paski są trudne, bo muszą się obracać do gracza.
+        // Najlepiej rysować je jako linię 3D wzdłuż krawędzi boxa.
+
+        GL11.glLineWidth(2.0f);
+
+        // Tło paska (Szare)
+        GL11.glColor4f(0.2f, 0.2f, 0.2f, 0.5f);
+        GL11.glBegin(GL11.GL_LINES);
+        GL11.glVertex3d(x - width - 0.1, y, z);
+        GL11.glVertex3d(x - width - 0.1, y + height, z);
+        GL11.glEnd();
+
+        // Pasek HP (Kolorowy)
+        GL11.glColor4f(hpColor.getRed()/255f, hpColor.getGreen()/255f, hpColor.getBlue()/255f, 1.0f);
+        GL11.glBegin(GL11.GL_LINES);
+        GL11.glVertex3d(x - width - 0.1, y, z);
+        // Wysokość paska zależna od HP
+        GL11.glVertex3d(x - width - 0.1, y + (height * percentage), z);
+        GL11.glEnd();
+    }
+
+    // --- STARY DOBRY 2D ESP (POPRAWIONY) ---
     private void render2D(EntityLivingBase entity, Color color, float partialTicks) {
         RenderManager rm = mc.getRenderManager();
-        double viewerX = rm.viewerPosX;
-        double viewerY = rm.viewerPosY;
-        double viewerZ = rm.viewerPosZ;
 
-        double x = entity.lastTickPosX + (entity.posX - entity.lastTickPosX) * partialTicks - viewerX;
-        double y = entity.lastTickPosY + (entity.posY - entity.lastTickPosY) * partialTicks - viewerY;
-        double z = entity.lastTickPosZ + (entity.posZ - entity.lastTickPosZ) * partialTicks - viewerZ;
+        double x = entity.lastTickPosX + (entity.posX - entity.lastTickPosX) * partialTicks - rm.viewerPosX;
+        double y = entity.lastTickPosY + (entity.posY - entity.lastTickPosY) * partialTicks - rm.viewerPosY;
+        double z = entity.lastTickPosZ + (entity.posZ - entity.lastTickPosZ) * partialTicks - rm.viewerPosZ;
 
         GL11.glPushMatrix();
         GL11.glTranslated(x, y, z);
+
+        // Obracamy billboard do gracza (żeby zawsze był przodem)
         GL11.glRotated(-rm.playerViewY, 0.0, 1.0, 0.0);
 
-        // Ustawienia GL
-        GL11.glEnable(GL11.GL_BLEND);
+        // Skalowanie w zależności od dystansu (żeby ramka była stałej wielkości na ekranie lub dopasowana do gracza)
+        // Tutaj robimy dopasowaną do gracza (w świecie 3D)
+
         GL11.glDisable(GL11.GL_TEXTURE_2D);
         GL11.glDisable(GL11.GL_DEPTH_TEST);
-        GL11.glDepthMask(false);
+        GL11.glEnable(GL11.GL_BLEND);
+        GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
 
-        GL11.glColor4f(color.getRed()/255f, color.getGreen()/255f, color.getBlue()/255f, 1f);
+        double w = entity.width / 1.5;
+        double h = entity.height + (entity.isSneaking() ? -0.2 : 0.1);
 
-        double width = entity.width / 1.5;
-        double height = entity.height + (entity.isSneaking() ? -0.3 : 0.2);
+        // Obrys (Czarny podkład)
+        GL11.glLineWidth(3.5f);
+        GL11.glColor4f(0, 0, 0, 0.5f);
+        drawRect2D(-w, 0, w, h);
 
-        GL11.glLineWidth(2.0f);
-        GL11.glBegin(GL11.GL_LINE_LOOP);
-        GL11.glVertex2d(-width, 0);
-        GL11.glVertex2d(-width, height);
-        GL11.glVertex2d(width, height);
-        GL11.glVertex2d(width, 0);
-        GL11.glEnd();
+        // Obrys (Kolorowy wierzch)
+        GL11.glLineWidth(1.5f);
+        GL11.glColor4f(color.getRed()/255f, color.getGreen()/255f, color.getBlue()/255f, 1.0f);
+        drawRect2D(-w, 0, w, h);
 
-        GL11.glDepthMask(true);
         GL11.glEnable(GL11.GL_DEPTH_TEST);
         GL11.glEnable(GL11.GL_TEXTURE_2D);
         GL11.glDisable(GL11.GL_BLEND);
         GL11.glPopMatrix();
     }
 
-    private Color getColor(EntityLivingBase entity) {
-        if (entity.hurtTime > 0) return Color.RED; // Jak dostaje dmg to czerwony
-        if (entity.isOnSameTeam(mc.thePlayer)) return Color.GREEN;
-        if (entity.isInvisible()) return Color.YELLOW;
+    private void drawRect2D(double x1, double y1, double x2, double y2) {
+        GL11.glBegin(GL11.GL_LINE_LOOP);
+        GL11.glVertex2d(x1, y1);
+        GL11.glVertex2d(x1, y2);
+        GL11.glVertex2d(x2, y2);
+        GL11.glVertex2d(x2, y1);
+        GL11.glEnd();
+    }
 
-        // Kolor zależny od dystansu (im bliżej tym bardziej czerwony) - opcjonalne
-        // return Color.WHITE;
-        return new Color(255, 255, 255);
+    private Color getColor(EntityLivingBase entity) {
+        if (rainbow.isEnabled()) {
+            return new Color(ColorUtil.getRainbow(4.0f, 0.7f, 1.0f, entity.getEntityId() * 100L));
+        }
+        if (entity.hurtTime > 0) return new Color(255, 0, 0, 255);
+        if (entity instanceof EntityPlayer) return new Color(255, 255, 255);
+        if (entity instanceof EntityMob) return new Color(255, 100, 100);
+        if (entity instanceof EntityAnimal) return new Color(100, 255, 100);
+        return Color.WHITE;
     }
 
     private boolean shouldRender(Entity entity) {
@@ -149,6 +213,7 @@ public class ESP extends Module {
         if (entity.isDead) return false;
         if (!(entity instanceof EntityLivingBase)) return false;
 
+        // AntiBot Check
         if (entity instanceof EntityPlayer) {
             AntiBot ab = Client.INSTANCE.moduleManager.getModule(AntiBot.class);
             if (ab != null && ab.isToggled() && ab.isBot((EntityPlayer) entity)) return false;

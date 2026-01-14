@@ -2,7 +2,11 @@ package doom.ui.alt;
 
 import com.google.gson.*;
 import net.minecraft.client.Minecraft;
-import java.io.*;
+
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 
 public class AltManager {

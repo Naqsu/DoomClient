@@ -1,5 +1,6 @@
 package net.minecraft.client.gui;
 
+import doom.ui.font.FontManager;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
@@ -29,11 +30,12 @@ public class GuiStreamIndicator
             if (i > 0)
             {
                 String s = "" + i;
-                int j = this.mc.fontRendererObj.getStringWidth(s);
+                int j = FontManager.r20.getStringWidth(s);
                 int k = 20;
                 int l = p_152437_1_ - j - 1;
                 int i1 = p_152437_2_ + 20 - 1;
-                int j1 = p_152437_2_ + 20 + this.mc.fontRendererObj.FONT_HEIGHT - 1;
+                int j1 = p_152437_2_ + 20 + FontManager.r20.getHeight()
+ - 1;
                 GlStateManager.disableTexture2D();
                 Tessellator tessellator = Tessellator.getInstance();
                 WorldRenderer worldrenderer = tessellator.getWorldRenderer();
@@ -45,7 +47,7 @@ public class GuiStreamIndicator
                 worldrenderer.pos((double)l, (double)i1, 0.0D).endVertex();
                 tessellator.draw();
                 GlStateManager.enableTexture2D();
-                this.mc.fontRendererObj.drawString(s, p_152437_1_ - j, p_152437_2_ + 20, 16777215);
+                FontManager.r20.drawString(s, p_152437_1_ - j, p_152437_2_ + 20, 16777215);
             }
 
             this.render(p_152437_1_, p_152437_2_, this.func_152440_b(), 0);

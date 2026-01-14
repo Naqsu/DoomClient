@@ -4,18 +4,13 @@ import doom.Client;
 import doom.event.EventTarget;
 import doom.event.impl.EventBlockCollision;
 import doom.event.impl.EventUpdate;
-import doom.event.impl.EventPacket;
-import doom.module.Category;
 import doom.module.Module;
 import doom.settings.impl.BooleanSetting;
 import doom.settings.impl.ModeSetting;
 import doom.settings.impl.NumberSetting;
-import doom.util.MoveUtil;
 import doom.util.TimeHelper;
 import net.minecraft.network.play.client.C03PacketPlayer;
-import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.MathHelper;
-import org.lwjgl.input.Keyboard;
 
 public class Phase extends Module {
 

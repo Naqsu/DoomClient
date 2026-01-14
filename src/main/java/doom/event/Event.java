@@ -1,7 +1,5 @@
 package doom.event;
 
-import java.util.ArrayList;
-
 public class Event {
 
     private boolean cancelled;

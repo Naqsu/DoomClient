@@ -1,10 +1,10 @@
 package doom.module.impl.render;
 
-import doom.module.Category;
 import doom.module.DraggableModule;
+import doom.ui.font.FontManager;
 import doom.util.RenderUtil;
-import doom.util.TimeHelper;
-import java.awt.Color;
+
+import java.awt.*;
 
 public class SessionInfo extends DraggableModule {
 
@@ -40,12 +40,12 @@ public class SessionInfo extends DraggableModule {
         long hours = (duration / (1000 * 60 * 60)) % 24;
         String timePlayed = String.format("%02dh %02dm %02ds", hours, minutes, seconds);
 
-        mc.fontRendererObj.drawStringWithShadow("Session Info", x + 5, y + 6, -1);
+        FontManager.r20.drawStringWithShadow("Session Info", x + 5, y + 6, -1);
 
         // Linia oddzielająca
         RenderUtil.drawRect(x + 5, y + 16, x + getWidth() - 5, y + 17, new Color(60, 60, 60).getRGB());
 
-        mc.fontRendererObj.drawStringWithShadow("Time: \u00A77" + timePlayed, x + 5, y + 22, -1);
-        mc.fontRendererObj.drawStringWithShadow("Name: \u00A77" + mc.session.getUsername(), x + 5, y + 34, -1);
+        FontManager.r20.drawStringWithShadow("Time: \u00A77" + timePlayed, x + 5, y + 22, -1);
+        FontManager.r20.drawStringWithShadow("Name: \u00A77" + mc.session.getUsername(), x + 5, y + 34, -1);
     }
 }

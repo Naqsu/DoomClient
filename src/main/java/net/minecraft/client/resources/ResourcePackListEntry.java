@@ -1,16 +1,14 @@
 package net.minecraft.client.resources;
 
-import java.util.List;
+import doom.ui.font.FontManager;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.Gui;
-import net.minecraft.client.gui.GuiListExtended;
-import net.minecraft.client.gui.GuiScreenResourcePacks;
-import net.minecraft.client.gui.GuiYesNo;
-import net.minecraft.client.gui.GuiYesNoCallback;
+import net.minecraft.client.gui.*;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.util.ChatComponentTranslation;
 import net.minecraft.util.IChatComponent;
 import net.minecraft.util.ResourceLocation;
+
+import java.util.List;
 
 public abstract class ResourcePackListEntry implements GuiListExtended.IGuiListEntry
 {
@@ -113,19 +111,19 @@ public abstract class ResourcePackListEntry implements GuiListExtended.IGuiListE
             }
         }
 
-        int i1 = this.mc.fontRendererObj.getStringWidth(s);
+        int i1 = FontManager.r20.getStringWidth(s);
 
         if (i1 > 157)
         {
-            s = this.mc.fontRendererObj.trimStringToWidth(s, 157 - this.mc.fontRendererObj.getStringWidth("...")) + "...";
+            s = this.mc.fontRendererObj.trimStringToWidth(s, 157 - FontManager.r20.getStringWidth("...")) + "...";
         }
 
-        this.mc.fontRendererObj.drawStringWithShadow(s, (float)(x + 32 + 2), (float)(y + 1), 16777215);
+        FontManager.r20.drawStringWithShadow(s, (float)(x + 32 + 2), (float)(y + 1), 16777215);
         List<String> list = this.mc.fontRendererObj.listFormattedStringToWidth(s1, 157);
 
         for (int l = 0; l < 2 && l < list.size(); ++l)
         {
-            this.mc.fontRendererObj.drawStringWithShadow((String)list.get(l), (float)(x + 32 + 2), (float)(y + 12 + 10 * l), 8421504);
+            FontManager.r20.drawStringWithShadow((String)list.get(l), (float)(x + 32 + 2), (float)(y + 12 + 10 * l), 8421504);
         }
     }
 

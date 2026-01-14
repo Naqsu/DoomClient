@@ -4,9 +4,11 @@ import com.google.common.base.Objects;
 import com.google.common.base.Predicate;
 import com.google.common.base.Predicates;
 import com.google.common.collect.Lists;
-import java.util.List;
+import doom.ui.font.FontManager;
 import net.minecraft.client.Minecraft;
 import net.minecraft.util.IntHashMap;
+
+import java.util.List;
 
 public class GuiPageButtonList extends GuiListExtended
 {

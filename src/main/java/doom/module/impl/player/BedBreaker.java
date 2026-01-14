@@ -4,7 +4,6 @@ import doom.Client;
 import doom.event.EventTarget;
 import doom.event.impl.EventRender3D;
 import doom.event.impl.EventUpdate;
-import doom.module.Category;
 import doom.module.Module;
 import doom.settings.impl.BooleanSetting;
 import doom.settings.impl.NumberSetting;
@@ -18,7 +17,7 @@ import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.Vec3;
 
-import java.awt.Color;
+import java.awt.*;
 
 public class BedBreaker extends Module {
 

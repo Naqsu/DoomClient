@@ -1,456 +1,362 @@
 package doom.ui.clickgui;
 
 import doom.Client;
+import doom.module.Category;
 import doom.module.Module;
+import doom.module.impl.render.ClickGuiModule;
 import doom.settings.Setting;
-import doom.settings.impl.BooleanSetting;
-import doom.settings.impl.ModeSetting;
-import doom.settings.impl.NumberSetting;
+import doom.settings.impl.*;
+import doom.ui.clickgui.components.*;
+import doom.ui.clickgui.components.Component;
+import doom.ui.font.FontManager;
 import doom.ui.hudeditor.GuiHudEditor;
+import doom.util.AnimationUtil;
 import doom.util.RenderUtil;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.gui.ScaledResolution;
-import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.GL11;
 
-import java.awt.Color;
-import java.awt.Desktop;
+import java.awt.*;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class ClickGui extends GuiScreen {
 
-    // --- ZMIENNE GŁÓWNE ---
     private float frameX, frameY, frameWidth, frameHeight;
-    private final float sidebarWidth = 110;
+    private final float sidebarWidth = 150;
 
     private Module.Category selectedCategory = Module.Category.COMBAT;
     private Module selectedModule = null;
 
-    private boolean isBinding = false;
-    private boolean showCredits = false;
-
-    // --- ZMIENNE DRAGGING ---
+    private float scrollY = 0, targetScrollY = 0, maxScroll = 0;
     private boolean dragging;
     private float dragX, dragY;
-    private NumberSetting draggingNumber = null;
 
-    // --- ZMIENNE SCROLLOWANIA (NOWE) ---
-    private float scrollY = 0;
-    private float targetScrollY = 0;
-    private float maxScroll = 0;
-
-    // --- KOLORY (DOOM PALETTE) ---
-    private final int COL_BG_DARK = new Color(15, 15, 15, 230).getRGB();
-    private final int COL_ACCENT_START = new Color(220, 20, 20).getRGB();
-    private final int COL_ACCENT_END = new Color(120, 0, 0).getRGB();
-    private final int COL_TEXT_SEC = new Color(150, 150, 150).getRGB();
+    private ArrayList<Component> activeComponents = new ArrayList<>();
+    private final Map<String, Float> animMap = new HashMap<>();
+    private float openProgress = 0.0f;
 
     @Override
     public void initGui() {
-        frameWidth = 500;
-        frameHeight = 350;
+        openProgress = 0.0f;
+        frameWidth = 700;
+        frameHeight = 450;
 
+        // Wyśrodkowanie przy pierwszym uruchomieniu (lub gdy pozycja to 0,0)
         if (frameX == 0 && frameY == 0) {
             ScaledResolution sr = new ScaledResolution(mc);
             frameX = (sr.getScaledWidth() / 2f) - (frameWidth / 2f);
             frameY = (sr.getScaledHeight() / 2f) - (frameHeight / 2f);
         }
+        if (selectedModule != null) initComponents();
     }
 
     @Override
     public void drawScreen(int mouseX, int mouseY, float partialTicks) {
-        drawOverlayInfo();
-
-        // Przesuwanie okna
         if (dragging) {
             frameX = mouseX - dragX;
             frameY = mouseY - dragY;
         }
-
-        if (draggingNumber != null && !Mouse.isButtonDown(0)) {
-            draggingNumber = null;
-        }
-
-        // ============================================================
-        //                  LOGIKA SCROLLOWANIA
-        // ============================================================
         handleScroll();
 
-        // 1. TŁO I RAMKA
-        RenderUtil.drawBlur(frameX, frameY, frameWidth, frameHeight, 15);
-        RenderUtil.drawGlow(frameX, frameY, frameWidth, frameHeight, 20, new Color(0, 0, 0, 150).getRGB());
-        RenderUtil.drawRoundedRect(frameX, frameY, frameWidth, frameHeight, 12, COL_BG_DARK);
+        // --- FIX: ZABEZPIECZENIE PRZED UCIECZKĄ POZA EKRAN (CLAMP) ---
+        ScaledResolution sr = new ScaledResolution(mc);
+        float screenW = sr.getScaledWidth();
+        float screenH = sr.getScaledHeight();
 
-        // 2. SIDEBAR
-        RenderUtil.drawRoundedRect(frameX, frameY, sidebarWidth, frameHeight, 12, new Color(10, 10, 10, 100).getRGB());
-        RenderUtil.drawRect(frameX + sidebarWidth, frameY + 10, frameX + sidebarWidth + 1, frameY + frameHeight - 10, new Color(40, 40, 40).getRGB());
+        // Jeśli okno jest za bardzo w lewo -> ustaw na 0
+        if (frameX < 0) frameX = 0;
+        // Jeśli okno jest za bardzo w górę -> ustaw na 0
+        if (frameY < 0) frameY = 0;
+        // Jeśli okno jest za bardzo w prawo -> przyciągnij do prawej krawędzi
+        if (frameX + frameWidth > screenW) frameX = screenW - frameWidth;
+        // Jeśli okno jest za bardzo w dół -> przyciągnij do dolnej krawędzi
+        if (frameY + frameHeight > screenH) frameY = screenH - frameHeight;
+        // -------------------------------------------------------------
 
-        mc.fontRendererObj.drawStringWithShadow("§cDOOM", frameX + 20, frameY + 20, -1);
-        mc.fontRendererObj.drawStringWithShadow("§7CLIENT", frameX + 20, frameY + 32, -1);
+        openProgress = AnimationUtil.animate(1.0f, openProgress, 0.1f);
+        float ease = AnimationUtil.getEase(openProgress, ClickGuiModule.easing.getMode());
 
-        drawCategories(mouseX, mouseY);
-        drawSidebarBottom(mouseX, mouseY);
+        float centerX = sr.getScaledWidth() / 2f;
+        float centerY = sr.getScaledHeight() / 2f;
 
-        // 3. CONTENT (Z OBSZAREM PRZYCINANIA / SCISSOR)
-        float contentX = frameX + sidebarWidth + 20;
-        float contentY = frameY + 20;
-        float contentWidth = frameWidth - sidebarWidth - 40;
-        float contentHeight = frameHeight - 40;
+        GL11.glPushMatrix();
 
-        // Włączamy przycinanie, żeby scrollowane elementy nie wyjeżdżały poza okno
+        String animMode = ClickGuiModule.openAnim.getMode();
+        switch (animMode) {
+            case "Zoom":
+                GL11.glTranslated(centerX, centerY, 0);
+                GL11.glScalef(ease, ease, 1f);
+                GL11.glTranslated(-centerX, -centerY, 0);
+                break;
+            case "SlideUp":
+                GL11.glTranslated(0, (1.0f - ease) * sr.getScaledHeight(), 0);
+                break;
+        }
+
+        int alpha = animMode.equals("Fade") ? (int)(255 * openProgress) : 255;
+        if (alpha < 10) alpha = 10;
+
+        Color themeColor = ClickGuiModule.getGuiColor();
+        int bgCol = new Color(18, 18, 22, (int)(230 * (alpha/255f))).getRGB();
+
+        if (openProgress > 0.8) {
+            RenderUtil.drawGlow(frameX, frameY, frameWidth, frameHeight, 15, new Color(themeColor.getRed(), themeColor.getGreen(), themeColor.getBlue(), 100).getRGB());
+        }
+        RenderUtil.drawRoundedRect(frameX, frameY, frameWidth, frameHeight, 12, bgCol);
+        RenderUtil.drawRoundedOutline(frameX, frameY, frameWidth, frameHeight, 12, 1.5f, new Color(255, 255, 255, 60).getRGB());
+
+        drawSidebar(mouseX, mouseY, themeColor, alpha);
+
+        float contentX = frameX + sidebarWidth;
+        float contentY = frameY + 40;
+        float contentW = frameWidth - sidebarWidth;
+        float contentH = frameHeight - 40;
+
         GL11.glEnable(GL11.GL_SCISSOR_TEST);
-        RenderUtil.scissor(contentX, contentY, contentWidth + 20, contentHeight); // +20 marginesu na scrollbar
+        RenderUtil.scissor(contentX, contentY, contentW, contentH - 10);
 
         if (selectedModule == null) {
-            drawModuleList(contentX, contentY, mouseX, mouseY);
+            drawModuleGrid(contentX, contentY, contentW, mouseX, mouseY, alpha);
         } else {
-            drawSettings(contentX, contentY, mouseX, mouseY);
+            drawSettingsPanel(contentX, contentY, contentW, mouseX, mouseY, alpha);
         }
 
         GL11.glDisable(GL11.GL_SCISSOR_TEST);
-
-        // 4. POPUP CREDITS
-        if (showCredits) {
-            drawCreditsPopup();
-        }
+        GL11.glPopMatrix();
     }
 
-    // --- LOGIKA SCROLLA ---
-    private void handleScroll() {
-        int wheel = Mouse.getDWheel();
-        if (wheel < 0) {
-            targetScrollY -= 25; // Przewijanie w dół
-        } else if (wheel > 0) {
-            targetScrollY += 25; // Przewijanie w górę
-        }
+    private void drawSidebar(int mouseX, int mouseY, Color theme, int alpha) {
+        float startX = frameX + 20;
+        float startY = frameY + 50;
 
-        // Zabezpieczenia (Clamp)
-        if (targetScrollY > 0) targetScrollY = 0;
-        if (targetScrollY < -maxScroll) targetScrollY = -maxScroll;
+        // --- 1. TITLE ---
+        FontManager.b20.drawStringWithShadow("DOOM", frameX + 20, frameY + 20, new Color(theme.getRed(), theme.getGreen(), theme.getBlue(), alpha).getRGB());
 
-        // Płynna animacja
-        scrollY = RenderUtil.lerp(scrollY, targetScrollY, 0.2f);
-    }
+        // --- 2. USER INFO ---
+        String username = mc.session.getUsername();
+        String stats = Minecraft.getDebugFPS() + " FPS";
 
-    // --- LISTA MODUŁÓW ---
-// --- RYSOWANIE LISTY MODUŁÓW (GRID + SCROLL) ---
-    private void drawModuleList(float startX, float startY, int mouseX, int mouseY) {
-        ArrayList<Module> modsInCategory = new ArrayList<>();
-        for (Module m : Client.INSTANCE.moduleManager.getModules()) {
-            if (m.getCategory() == selectedCategory && !m.hidden) {
-                modsInCategory.add(m);
+        FontManager.r18.drawStringWithShadow("User: \u00A7f" + username, frameX + 20, frameY + 38, new Color(150, 150, 150, alpha).getRGB());
+        FontManager.r18.drawStringWithShadow(stats, frameX + 20, frameY + 48, new Color(100, 100, 100, alpha).getRGB());
+
+        // --- 3. CATEGORIES ---
+        float catY = startY + 40;
+
+        for (Module.Category cat : Module.Category.values()) {
+            String icon = "";
+            switch(cat) {
+                case COMBAT: icon = doom.ui.font.Icons.COMBAT; break;
+                case MOVEMENT: icon = doom.ui.font.Icons.MOVEMENT; break;
+                case RENDER: icon = doom.ui.font.Icons.RENDER; break;
+                case PLAYER: icon = doom.ui.font.Icons.PLAYER; break;
+                case MISC: icon = doom.ui.font.Icons.MISC; break;
             }
+            boolean isSelected = (cat == selectedCategory);
+            float anim = getAnim("cat_" + cat.name(), isSelected ? 1.0f : 0.0f);
+
+            float xOffset = 5 * anim;
+            int color = RenderUtil.interpolateColor(new Color(150,150,150, alpha).getRGB(), -1, anim);
+
+            if (anim > 0.05) {
+                int barC = new Color(theme.getRed(), theme.getGreen(), theme.getBlue(), (int)(255 * anim * (alpha/255f))).getRGB();
+                RenderUtil.drawRoundedRect(startX, catY + 2, 2, 14, 1.0f, barC);
+            }
+
+            // Ikona i tekst
+            FontManager.icons18.drawStringWithShadow(icon, startX + 10 + xOffset, catY + 6, color);
+            FontManager.r20.drawStringWithShadow(cat.name(), startX + 35 + xOffset, catY + 6, color);
+
+            catY += 35;
         }
 
-        float modWidth = 160;
-        float modHeight = 28;
-        float gap = 10;
+        // --- 4. BOTTOM BUTTONS ---
+        float bottomY = frameY + frameHeight - 40;
+        float iconX = startX + 10;
 
-        // 1. Obliczanie wysokości contentu dla scrolla
-        // Dzielimy liczbę modułów przez 2 (bo 2 kolumny) i zaokrąglamy w górę
-        int rows = (int) Math.ceil(modsInCategory.size() / 2.0);
-        float totalContentHeight = rows * (modHeight + gap);
+        drawIconButton(iconX, bottomY, mouseX, mouseY, "Settings", theme);
+        drawIconButton(iconX + 35, bottomY, mouseX, mouseY, "HudEditor", theme);
+        drawIconButton(iconX + 70, bottomY, mouseX, mouseY, "AltManager", theme);
+    }
 
-        // Wysokość widocznego obszaru (okno minus marginesy)
-        float visibleHeight = frameHeight - 40;
+    private void drawIconButton(float x, float y, int mouseX, int mouseY, String type, Color themeColor) {
+        boolean hover = mouseX >= x && mouseX <= x + 24 && mouseY >= y && mouseY <= y + 24;
+        float anim = getAnim("btn_" + type, hover ? 1.0f : 0.0f);
 
-        // Ustawiamy maxScroll (ile można przewinąć w dół)
-        // Jeśli content jest mniejszy niż okno, maxScroll to 0.
-        maxScroll = Math.max(0, totalContentHeight - visibleHeight + 20); // +20 marginesu na dole
+        int bgNormal = new Color(40, 40, 45, 150).getRGB();
+        int bgHover = new Color(70, 70, 80, 220).getRGB();
+        int finalBg = RenderUtil.interpolateColor(bgNormal, bgHover, anim);
 
-        // 2. Rysowanie przycisków
+        RenderUtil.drawRoundedRect(x, y, 24, 24, 6, finalBg);
+
+        int outlineNormal = new Color(255, 255, 255, 30).getRGB();
+        int outlineHover = new Color(255, 255, 255, 150).getRGB();
+        int finalOutline = RenderUtil.interpolateColor(outlineNormal, outlineHover, anim);
+
+        RenderUtil.drawRoundedOutline(x, y, 24, 24, 6, 1.0f, finalOutline);
+
+        if (anim > 0.05f) {
+            int glowAlpha = (int)(150 * anim);
+            int glowColor = new Color(themeColor.getRed(), themeColor.getGreen(), themeColor.getBlue(), glowAlpha).getRGB();
+            RenderUtil.drawGlow(x, y, 24, 24, 8, glowColor);
+        }
+
+        String iconChar = "?";
+        float fontSize = 0;
+
+        switch (type) {
+            case "Settings": iconChar = doom.ui.font.Icons.SETTINGS; fontSize = 1.0f; break;
+            case "HudEditor": iconChar = doom.ui.font.Icons.HUD_EDITOR; fontSize = 1.0f; break;
+            case "AltManager": iconChar = doom.ui.font.Icons.ALT_MANAGER; fontSize = 1.0f; break;
+        }
+
+        int iconNormal = new Color(160, 160, 170).getRGB();
+        int iconHover = -1;
+        int finalIconColor = RenderUtil.interpolateColor(iconNormal, iconHover, anim);
+
+        doom.ui.font.FontManager.icons18.drawCenteredString(iconChar, x + 12, y + 9 + fontSize, finalIconColor);
+    }
+
+    private void drawModuleGrid(float x, float y, float w, int mouseX, int mouseY, int alpha) {
+        java.util.List<Module> mods = Client.INSTANCE.moduleManager.getModulesByCategory(selectedCategory);
+        float padding = 20;
+        float modW = (w - (padding * 3)) / 2;
+        float modH = 40;
+        float gap = 15;
+
+        // Poprawka: Obliczanie wysokości kontenera dla scrolla
+        int rows = (int) Math.ceil(mods.size() / 2.0);
+        float totalContentHeight = (rows * (modH + gap));
+        float viewHeight = frameHeight - 60; // Dostępna wysokość
+        maxScroll = Math.max(0, totalContentHeight - viewHeight);
+
         int i = 0;
-        for (Module m : modsInCategory) {
-            // Logika siatki (Grid):
-            // i % 2 == 0 -> Lewa kolumna, i % 2 == 1 -> Prawa kolumna
+        for (Module m : mods) {
             int col = i % 2;
             int row = i / 2;
+            float btnX = x + padding + (col * (modW + gap));
+            float btnY = y + 10 + scrollY + (row * (modH + gap));
 
-            float buttonX = startX + (col * (modWidth + gap));
-            // Do pozycji Y dodajemy scrollY (który jest ujemny, więc przesuwa w górę)
-            float buttonY = startY + scrollY + (row * (modHeight + gap));
+            // Optymalizacja: Nie rysuj jeśli poza widokiem
+            if (btnY > frameY + frameHeight || btnY + modH < frameY) { i++; continue; }
 
-            // OPTYMALIZACJA: Nie rysuj, jeśli przycisk wyjechał poza widoczny obszar
-            // (Zwiększa FPS przy dużej liście)
-            if (buttonY > frameY + frameHeight || buttonY + modHeight < frameY) {
-                i++;
-                continue;
-            }
+            boolean hover = mouseX >= btnX && mouseX <= btnX + modW && mouseY >= btnY && mouseY <= btnY + modH;
+            float scaleTarget = (hover && ClickGuiModule.hoverScale.isEnabled()) ? 1.03f : 1.0f;
+            float scale = getAnim("scale_" + m.getName(), scaleTarget);
 
-            // Sprawdzamy hover (czy myszka jest nad przyciskiem I czy jest wewnątrz okna contentu)
-            boolean isInContentArea = mouseX >= frameX + sidebarWidth && mouseX <= frameX + frameWidth
-                    && mouseY >= frameY && mouseY <= frameY + frameHeight;
+            float cx = btnX + modW/2;
+            float cy = btnY + modH/2;
 
-            boolean isHovered = isInContentArea && mouseX >= buttonX && mouseX <= buttonX + modWidth
-                    && mouseY >= buttonY && mouseY <= buttonY + modHeight;
+            GL11.glPushMatrix();
+            GL11.glTranslated(cx, cy, 0);
+            GL11.glScalef(scale, scale, 1f);
+            GL11.glTranslated(-cx, -cy, 0);
 
-            // Rysowanie wyglądu (Taki sam styl jak wcześniej)
-            if (m.isToggled()) {
-                RenderUtil.drawGlow(buttonX, buttonY, modWidth, modHeight, 10, new Color(220, 0, 0, 60).getRGB());
-                RenderUtil.drawRoundedGradientRect(buttonX, buttonY, modWidth, modHeight, 6, COL_ACCENT_START, COL_ACCENT_END, COL_ACCENT_END, COL_ACCENT_START);
-                mc.fontRendererObj.drawStringWithShadow(m.getName(), buttonX + 10, buttonY + 10, -1);
-            } else {
-                int bgCol = isHovered ? new Color(45, 45, 45).getRGB() : new Color(30, 30, 30).getRGB();
-                RenderUtil.drawRoundedRect(buttonX, buttonY, modWidth, modHeight, 6, bgCol);
+            float toggleAnim = getAnim("mod_" + m.getName(), m.isToggled() ? 1.0f : 0.0f);
+            Color modColor = ClickGuiModule.getGuiColor(i * 2);
+            int cOff = new Color(25, 25, 30, alpha).getRGB();
+            int cOn = new Color(modColor.getRed(), modColor.getGreen(), modColor.getBlue(), (int)(50 * (alpha/255f))).getRGB();
+            int bgCol = RenderUtil.interpolateColor(cOff, cOn, toggleAnim);
 
-                if (isHovered) {
-                    RenderUtil.drawRoundedOutline(buttonX, buttonY, modWidth, modHeight, 6, 1.0f, new Color(80, 80, 80).getRGB());
-                }
-
-                mc.fontRendererObj.drawStringWithShadow(m.getName(), buttonX + 10, buttonY + 10, isHovered ? -1 : 0xFFCCCCCC);
-            }
-
-            // Keybind info
-            if (m.getKey() != 0) {
-                String keyName = "[" + Keyboard.getKeyName(m.getKey()) + "]";
-                mc.fontRendererObj.drawStringWithShadow(keyName, buttonX + modWidth - mc.fontRendererObj.getStringWidth(keyName) - 8, buttonY + 10, new Color(255, 255, 255, 100).getRGB());
-            }
-
+            RenderUtil.drawRoundedRect(btnX, btnY, modW, modH, 8, bgCol);
+            int outlineC = RenderUtil.interpolateColor(new Color(255,255,255, 60).getRGB(), modColor.getRGB(), toggleAnim);
+            RenderUtil.drawRoundedOutline(btnX, btnY, modW, modH, 8, 1.0f + (0.5f * toggleAnim), outlineC);
+            FontManager.r20.drawStringWithShadow(m.getName(), btnX + 10, btnY + 16, -1);
+            GL11.glPopMatrix();
             i++;
         }
     }
 
-    // --- POPRAWIONA METODA RYSOWANIA MODUŁÓW (GRID) ---
-    // Zastępuje tę wyżej, bo tamta miała dziwną logikę kolumn
-    private void drawModuleListProper(float startX, float startY, int mouseX, int mouseY) {
-        ArrayList<Module> modsInCategory = new ArrayList<>();
-        for(Module m : Client.INSTANCE.moduleManager.getModules()) {
-            if(m.getCategory() == selectedCategory && !m.hidden) modsInCategory.add(m);
+    private void drawSettingsPanel(float x, float y, float w, int mouseX, int mouseY, int alpha) {
+        float startX = x + 20;
+        float currentY = y + 10 + scrollY;
+
+        // Header
+        FontManager.b20.drawStringWithShadow(selectedModule.getName(), startX + 20, currentY + 15, -1);
+        float backX = startX + w - 70;
+        FontManager.r18.drawStringWithShadow("< Back", backX, currentY + 15, new Color(160,160,160, alpha).getRGB());
+
+        float setY = currentY + 50;
+
+        // Obliczanie maxScroll dla settings
+        float totalH = 50;
+        for (Component comp : activeComponents) {
+            if (comp.setting.isVisible()) totalH += comp.height + 5;
         }
+        maxScroll = Math.max(0, totalH - (frameHeight - 60));
 
-        float modWidth = 160;
-        float modHeight = 28;
-        float gap = 10;
-
-        // Obliczamy całkowitą wysokość
-        int rows = (int) Math.ceil(modsInCategory.size() / 2.0); // 2 kolumny
-        float totalContentHeight = rows * (modHeight + gap);
-        float visibleHeight = frameHeight - 40;
-        maxScroll = Math.max(0, totalContentHeight - visibleHeight + 20); // +20 margines na dole
-
-        int i = 0;
-        for (Module m : modsInCategory) {
-            int col = i % 2; // 0 = lewa, 1 = prawa
-            int row = i / 2; // 0, 1, 2...
-
-            float buttonX = startX + (col * (modWidth + gap));
-            float buttonY = startY + scrollY + (row * (modHeight + gap));
-
-            // Optymalizacja: Nie rysuj jeśli poza ekranem
-            if (buttonY > frameY + frameHeight || buttonY + modHeight < frameY) {
-                i++;
+        for (Component comp : activeComponents) {
+            if (!comp.setting.isVisible()) continue;
+            // Optymalizacja renderowania
+            if (setY > frameY + frameHeight || setY + comp.height < frameY) {
+                setY += comp.height + 5;
                 continue;
             }
-
-            boolean isInContentArea = mouseX >= frameX + sidebarWidth && mouseX <= frameX + frameWidth && mouseY >= frameY && mouseY <= frameY + frameHeight;
-            boolean isHovered = isInContentArea && mouseX >= buttonX && mouseX <= buttonX + modWidth && mouseY >= buttonY && mouseY <= buttonY + modHeight;
-
-            if (m.isToggled()) {
-                RenderUtil.drawGlow(buttonX, buttonY, modWidth, modHeight, 10, new Color(220, 0, 0, 60).getRGB());
-                RenderUtil.drawRoundedGradientRect(buttonX, buttonY, modWidth, modHeight, 6, COL_ACCENT_START, COL_ACCENT_END, COL_ACCENT_END, COL_ACCENT_START);
-                mc.fontRendererObj.drawStringWithShadow(m.getName(), buttonX + 10, buttonY + 10, -1);
-            } else {
-                int bgCol = isHovered ? new Color(45, 45, 45).getRGB() : new Color(30, 30, 30).getRGB();
-                RenderUtil.drawRoundedRect(buttonX, buttonY, modWidth, modHeight, 6, bgCol);
-                if (isHovered) RenderUtil.drawRoundedOutline(buttonX, buttonY, modWidth, modHeight, 6, 1.0f, new Color(80, 80, 80).getRGB());
-                mc.fontRendererObj.drawStringWithShadow(m.getName(), buttonX + 10, buttonY + 10, isHovered ? -1 : 0xFFCCCCCC);
-            }
-
-            if (m.getKey() != 0) {
-                String keyName = "[" + Keyboard.getKeyName(m.getKey()) + "]";
-                mc.fontRendererObj.drawStringWithShadow(keyName, buttonX + modWidth - mc.fontRendererObj.getStringWidth(keyName) - 8, buttonY + 10, new Color(255, 255, 255, 100).getRGB());
-            }
-
-            i++;
-        }
-    }
-
-    // --- USTAWIENIA (Z UWZGLĘDNIENIEM SCROLLA) ---
-    private void drawSettings(float startX, float startY, int mouseX, int mouseY) {
-        // Obliczamy wysokość contentu na start (żeby ustawić maxScroll)
-        ArrayList<Setting> settings = Client.INSTANCE.settingsManager.getSettingsByMod(selectedModule);
-        float calculatedHeight = 80; // Nagłówek + bind
-        for (Setting s : settings) {
-            if (!s.isVisible()) continue;
-            if (s instanceof BooleanSetting) calculatedHeight += 22;
-            else if (s instanceof NumberSetting) calculatedHeight += 28;
-            else if (s instanceof ModeSetting) calculatedHeight += 30;
-        }
-        float visibleHeight = frameHeight - 40;
-        maxScroll = Math.max(0, calculatedHeight - visibleHeight + 20);
-
-        // HEADER (Statyczny - nie scrolluje się, lub scrolluje - tutaj scrolluje się wszystko dla spójności)
-        float currentY = startY + scrollY;
-
-        RenderUtil.drawRoundedRect(startX, currentY, 350, 30, 6, new Color(30, 30, 30).getRGB());
-        mc.fontRendererObj.drawStringWithShadow("Editing: §c" + selectedModule.getName(), startX + 10, currentY + 11, -1);
-
-        // Back Button
-        String backText = "< Back";
-        float backW = mc.fontRendererObj.getStringWidth(backText) + 12;
-        float backX = startX + 350 - backW - 5;
-        boolean isInContent = mouseY >= frameY && mouseY <= frameY + frameHeight;
-        boolean hoverBack = isInContent && mouseX >= backX && mouseX <= backX + backW && mouseY >= currentY + 5 && mouseY <= currentY + 25;
-
-        RenderUtil.drawRoundedRect(backX, currentY + 5, backW, 20, 4, hoverBack ? new Color(60, 60, 60).getRGB() : new Color(45, 45, 45).getRGB());
-        mc.fontRendererObj.drawStringWithShadow(backText, backX + 6, currentY + 11, -1);
-
-        // Bind Button
-        String bindText = isBinding ? "Listening..." : "Bind: " + (selectedModule.getKey() == 0 ? "NONE" : Keyboard.getKeyName(selectedModule.getKey()));
-        currentY += 45;
-        RenderUtil.drawRoundedRect(startX, currentY, 150, 20, 4, isBinding ? COL_ACCENT_START : new Color(35, 35, 35).getRGB());
-        mc.fontRendererObj.drawStringWithShadow(bindText, startX + 6, currentY + 6, -1);
-
-        currentY += 30;
-
-        if (settings.isEmpty()) {
-            mc.fontRendererObj.drawStringWithShadow("No settings for this module.", startX, currentY, 0xFFAAAAAA);
-            return;
-        }
-
-        for (Setting s : settings) {
-            if (!s.isVisible()) continue;
-
-            // Optymalizacja renderowania (poza ekranem)
-            if (currentY > frameY + frameHeight || currentY + 30 < frameY) {
-                if (s instanceof BooleanSetting) currentY += 22;
-                else if (s instanceof NumberSetting) currentY += 28;
-                else if (s instanceof ModeSetting) currentY += 30;
-                continue;
-            }
-
-            if (s instanceof BooleanSetting) {
-                BooleanSetting bool = (BooleanSetting) s;
-                float switchX = startX + 200;
-                int trackColor = bool.isEnabled() ? COL_ACCENT_START : new Color(50, 50, 50).getRGB();
-
-                RenderUtil.drawRoundedRect(switchX, currentY + 2, 24, 12, 6, trackColor);
-                if (bool.isEnabled()) RenderUtil.drawGlow(switchX, currentY + 2, 24, 12, 5, trackColor);
-                float knobX = bool.isEnabled() ? (switchX + 24 - 10) : (switchX + 2);
-                RenderUtil.drawRoundedRect(knobX, currentY + 4, 8, 8, 4, -1);
-
-                mc.fontRendererObj.drawStringWithShadow(s.name, startX, currentY + 4, -1);
-                currentY += 22;
-            }
-            else if (s instanceof NumberSetting) {
-                NumberSetting num = (NumberSetting) s;
-                mc.fontRendererObj.drawStringWithShadow(s.name, startX, currentY, -1);
-                String valStr = String.format("%.2f", num.getValue());
-                mc.fontRendererObj.drawStringWithShadow(valStr, startX + 340 - mc.fontRendererObj.getStringWidth(valStr), currentY, COL_TEXT_SEC);
-
-                float sliderX = startX;
-                float sliderY = currentY + 12;
-                float sliderW = 340;
-
-                RenderUtil.drawRoundedRect(sliderX, sliderY, sliderW, 6, 3, new Color(40, 40, 40).getRGB());
-                float fill = (float) ((num.getValue() - num.getMin()) / (num.getMax() - num.getMin()) * sliderW);
-                if (fill > sliderW) fill = sliderW;
-                if (fill < 0) fill = 0;
-
-                if (fill > 2) {
-                    RenderUtil.drawRoundedGradientRect(sliderX, sliderY, fill, 6, 3, COL_ACCENT_START, COL_ACCENT_END, COL_ACCENT_END, COL_ACCENT_START);
-                    RenderUtil.drawGlow(sliderX, sliderY, fill, 6, 5, COL_ACCENT_START);
-                }
-                if (fill > 4) RenderUtil.drawRoundedRect(sliderX + fill - 4, sliderY - 2, 8, 10, 4, -1);
-
-                // Update dragging value logic here to be precise with scroll
-                if (draggingNumber == num) {
-                    double val = num.getMin() + (Math.max(0, Math.min(sliderW, mouseX - sliderX)) / sliderW) * (num.getMax() - num.getMin());
-                    num.setValue(val);
-                }
-
-                currentY += 28;
-            }
-            else if (s instanceof ModeSetting) {
-                ModeSetting mode = (ModeSetting) s;
-                mc.fontRendererObj.drawStringWithShadow(s.name + ":", startX, currentY + 6, -1);
-                float modeX = startX + 100;
-                RenderUtil.drawRoundedRect(modeX, currentY, 150, 20, 4, new Color(40, 40, 40).getRGB());
-                RenderUtil.drawRoundedOutline(modeX, currentY, 150, 20, 4, 1.0f, new Color(60, 60, 60).getRGB());
-                String mText = mode.getMode();
-                mc.fontRendererObj.drawStringWithShadow(mText, modeX + (150/2f) - (mc.fontRendererObj.getStringWidth(mText)/2f), currentY + 6, -1);
-                currentY += 30;
-            }
+            comp.draw(startX + 20, setY, mouseX, mouseY);
+            setY += comp.height + 5;
         }
     }
 
     @Override
     protected void mouseClicked(int mouseX, int mouseY, int mouseButton) throws IOException {
-        if (showCredits) { showCredits = false; return; }
-
-        // Sidebar
-        float bottomAreaY = frameY + frameHeight - 45;
-        float startX = frameX + (sidebarWidth - (24 * 3 + 20)) / 2;
-        if (mouseY >= bottomAreaY && mouseY <= bottomAreaY + 24 && mouseX >= startX && mouseX <= startX + 100) {
-            // ... (logika przycisków sidebar - skopiowana z poprzedniego, bez zmian)
-            // Uproszczenie dla czytelności scrolla:
-            if (mouseX >= startX && mouseX <= startX+24) { showCredits=true; return; }
-            if (mouseX >= startX+34 && mouseX <= startX+58) { mc.displayGuiScreen(new GuiHudEditor()); return; }
-            if (mouseX >= startX+68 && mouseX <= startX+92) { try{Desktop.getDesktop().open(Client.INSTANCE.configManager.configDir);}catch(Exception e){} return; }
+        // Dragging Title Bar
+        if (mouseX >= frameX && mouseX <= frameX + frameWidth && mouseY >= frameY && mouseY <= frameY + 20 && mouseButton == 0) {
+            dragging = true; dragX = mouseX - frameX; dragY = mouseY - frameY; return;
         }
 
-        // Dragging window
-        if (mouseButton == 0 && mouseX >= frameX && mouseX <= frameX + frameWidth && mouseY >= frameY && mouseY <= frameY + 20) {
-            dragging = true;
-            dragX = mouseX - frameX;
-            dragY = mouseY - frameY;
-            return;
-        }
+        float clickStartY = frameY + 90;
 
-        // Category selection
-        if (selectedModule == null && mouseX > frameX && mouseX < frameX + sidebarWidth) {
-            float catY = frameY + 70;
+        // Sidebar click
+        if (mouseX >= frameX && mouseX <= frameX + sidebarWidth) {
+            float cy = clickStartY;
             for (Module.Category cat : Module.Category.values()) {
-                if (mouseY >= catY && mouseY <= catY + 20) {
-                    selectedCategory = cat;
-                    scrollY = 0; targetScrollY = 0; // Reset scrolla
-                    return;
+                if (mouseY >= cy && mouseY <= cy + 24) {
+                    selectedCategory = cat; selectedModule = null; scrollY = 0; targetScrollY = 0; return;
                 }
-                catY += 30;
+                cy += 35;
             }
         }
 
-        // Content Area Click Logic (UWZGLĘDNIAJĄCA SCROLL)
-        float contentX = frameX + sidebarWidth + 20;
-        float contentY = frameY + 20;
-        float contentW = frameWidth - sidebarWidth - 20;
-        float contentH = frameHeight - 40;
+        // Bottom buttons
+        float bottomY = frameY + frameHeight - 40;
+        float startX = frameX + 20;
+        float iconX = startX + 10;
 
-        // Ważne: Sprawdzamy czy kliknięcie jest W OBSZARZE VIDOKU
-        if (mouseX >= contentX && mouseX <= contentX + contentW && mouseY >= contentY && mouseY <= contentY + contentH) {
+        if (mouseButton == 0 && mouseY >= bottomY && mouseY <= bottomY + 24) {
+            if (mouseX >= iconX && mouseX <= iconX + 24) {
+                mc.displayGuiScreen(new GuiConfigMenu(this)); return;
+            }
+            if (mouseX >= iconX + 35 && mouseX <= iconX + 35 + 24) {
+                mc.displayGuiScreen(new GuiHudEditor()); return;
+            }
+            if (mouseX >= iconX + 70 && mouseX <= iconX + 70 + 24) {
+                mc.displayGuiScreen(new doom.ui.alt.GuiAltManager(this)); return;
+            }
+        }
 
+        // Module/Settings Content
+        float contentX = frameX + sidebarWidth;
+        float contentW = frameWidth - sidebarWidth;
+        float contentY = frameY + 40;
+
+        if (mouseX >= contentX && mouseX <= contentX + contentW && mouseY >= contentY && mouseY <= contentY + frameHeight) {
             if (selectedModule == null) {
-                // --- LOGIKA KLIKANIA W MODUŁY (GRID) ---
-                ArrayList<Module> mods = new ArrayList<>();
-                for(Module m : Client.INSTANCE.moduleManager.getModules()) {
-                    if(m.getCategory() == selectedCategory && !m.hidden) mods.add(m);
-                }
-
-                float modW = 160;
-                float modH = 28;
-                float gap = 10;
-
+                // Modules
+                java.util.List<Module> mods = Client.INSTANCE.moduleManager.getModulesByCategory(selectedCategory);
+                float padding = 20; float modW = (contentW - (padding * 3)) / 2; float modH = 40; float gap = 15;
                 int i = 0;
                 for (Module m : mods) {
-                    int col = i % 2;
-                    int row = i / 2;
-
-                    float btnX = contentX + (col * (modW + gap));
-                    float btnY = contentY + scrollY + (row * (modH + gap)); // Pamiętaj o scrollY!
-
-                    // Sprawdzamy kliknięcie
+                    int col = i % 2; int row = i / 2;
+                    float btnX = contentX + padding + (col * (modW + gap));
+                    float btnY = contentY + 10 + scrollY + (row * (modH + gap));
                     if (mouseX >= btnX && mouseX <= btnX + modW && mouseY >= btnY && mouseY <= btnY + modH) {
-                        if (mouseButton == 0) {
-                            // Lewy przycisk: Toggle
-                            m.toggle();
-                        } else if (mouseButton == 1) {
-                            // Prawy przycisk: Otwórz ustawienia
-                            selectedModule = m;
-                            isBinding = false;
-                            scrollY = 0;
-                            targetScrollY = 0; // Reset scrolla po wejściu w settingsy
+                        if (mouseButton == 0) m.toggle();
+                        else if (mouseButton == 1) {
+                            selectedModule = m; initComponents(); scrollY = 0; targetScrollY = 0;
                         }
                         return;
                     }
@@ -458,149 +364,63 @@ public class ClickGui extends GuiScreen {
                 }
             } else {
                 // Settings
-                float currY = contentY + scrollY; // Scrollujemy cały panel, łącznie z nagłówkiem
-
-                // Back button
-                if (mouseButton == 0 && mouseX >= contentX + 280 && mouseX <= contentX + 350 && mouseY >= currY + 5 && mouseY <= currY + 25) {
+                startX = contentX + 20;
+                float headY = contentY + 10 + scrollY + 15;
+                float backX = startX + contentW - 70;
+                if (mouseButton == 0 && mouseX >= backX && mouseX <= backX + 40 && mouseY >= headY - 10 && mouseY <= headY + 20) {
                     selectedModule = null; scrollY = 0; targetScrollY = 0; return;
                 }
-                // Bind button
-                if (mouseButton == 0 && mouseX >= contentX && mouseX <= contentX + 150 && mouseY >= currY + 45 && mouseY <= currY + 65) {
-                    isBinding = !isBinding; return;
-                }
-
-                currY += 75; // Offset nagłówka
-
-                for (Setting s : Client.INSTANCE.settingsManager.getSettingsByMod(selectedModule)) {
-                    if (!s.isVisible()) continue;
-
-                    if (s instanceof BooleanSetting) {
-                        float swX = contentX + 200;
-                        if (mouseButton == 0 && mouseX >= swX && mouseX <= swX + 24 && mouseY >= currY + 2 && mouseY <= currY + 14) {
-                            ((BooleanSetting)s).toggle();
-                        }
-                        currY += 22;
-                    } else if (s instanceof NumberSetting) {
-                        if (mouseButton == 0 && mouseX >= contentX && mouseX <= contentX + 340 && mouseY >= currY + 10 && mouseY <= currY + 20) {
-                            draggingNumber = (NumberSetting) s;
-                        }
-                        currY += 28;
-                    } else if (s instanceof ModeSetting) {
-                        if (mouseButton == 0 && mouseX >= contentX + 100 && mouseX <= contentX + 250 && mouseY >= currY && mouseY <= currY + 20) {
-                            ((ModeSetting)s).cycle();
-                        }
-                        currY += 30;
-                    }
+                for (Component comp : activeComponents) {
+                    if (comp.setting.isVisible()) comp.mouseClicked(mouseX, mouseY, mouseButton);
                 }
             }
         }
-
-        super.mouseClicked(mouseX, mouseY, mouseButton);
     }
 
-    // --- RESZTA (Bez zmian) ---
-    private void drawOverlayInfo() {
-        int infoX = 10; int infoY = this.height - 30;
-        String text = "Doom Client " + Client.INSTANCE.version + " | " + mc.session.getUsername();
-        float w = mc.fontRendererObj.getStringWidth(text) + 20;
-        RenderUtil.drawBlur(infoX, infoY, w, 20, 10);
-        RenderUtil.drawRoundedRect(infoX, infoY, w, 20, 6, new Color(0, 0, 0, 150).getRGB());
-        RenderUtil.drawRoundedOutline(infoX, infoY, w, 20, 6, 1.5f, COL_ACCENT_START);
-        mc.fontRendererObj.drawStringWithShadow(text, infoX + 10, infoY + 6, -1);
-    }
-
-    private void drawCategories(int mouseX, int mouseY) {
-        float catY = frameY + 70;
-        for (Module.Category cat : Module.Category.values()) {
-            boolean isSelected = (cat == selectedCategory);
-            boolean isHovered = mouseX >= frameX && mouseX <= frameX + sidebarWidth && mouseY >= catY && mouseY <= catY + 20;
-            if (isSelected) {
-                RenderUtil.drawGlow(frameX + 10, catY, sidebarWidth - 20, 20, 10, new Color(220, 20, 20, 50).getRGB());
-                RenderUtil.drawRoundedGradientRect(frameX + 10, catY, sidebarWidth - 20, 20, 6, COL_ACCENT_START, COL_ACCENT_END, COL_ACCENT_END, COL_ACCENT_START);
-                mc.fontRendererObj.drawStringWithShadow(cat.name(), frameX + 25, catY + 6, -1);
-            } else {
-                if (isHovered) RenderUtil.drawRoundedRect(frameX + 10, catY, sidebarWidth - 20, 20, 6, new Color(255, 255, 255, 10).getRGB());
-                mc.fontRendererObj.drawStringWithShadow(cat.name(), frameX + 25, catY + 6, COL_TEXT_SEC);
-            }
-            catY += 30;
+    private void initComponents() {
+        activeComponents.clear();
+        float width = (frameWidth - sidebarWidth) - 80;
+        for (Setting s : Client.INSTANCE.settingsManager.getSettingsByMod(selectedModule)) {
+            if (s instanceof BooleanSetting) activeComponents.add(new BooleanValueComponent((BooleanSetting)s, width, 28));
+            else if (s instanceof NumberSetting) activeComponents.add(new NumberValueComponent((NumberSetting)s, width, 30));
+            else if (s instanceof ModeSetting) activeComponents.add(new ModeValueComponent((ModeSetting)s, width, 32));
+            else if (s instanceof ColorSetting) activeComponents.add(new ColorValueComponent((ColorSetting)s, width, 20));
+            else if (s instanceof CategorySetting) activeComponents.add(new CategoryComponent((CategorySetting)s, width, 24));
         }
-    }
-
-    private void drawSidebarBottom(int mouseX, int mouseY) {
-        float bottomAreaY = frameY + frameHeight - 45;
-        float btnSize = 24; float gap = 10;
-        float startX = frameX + (sidebarWidth - (btnSize * 3 + gap * 2)) / 2;
-        drawIconButton(startX, bottomAreaY, btnSize, mouseX, mouseY, "credits");
-        drawIconButton(startX + btnSize + gap, bottomAreaY, btnSize, mouseX, mouseY, "editor");
-        drawIconButton(startX + (btnSize + gap) * 2, bottomAreaY, btnSize, mouseX, mouseY, "folder");
-    }
-
-    private void drawIconButton(float x, float y, float size, int mouseX, int mouseY, String type) {
-        boolean hover = mouseX >= x && mouseX <= x + size && mouseY >= y && mouseY <= y + size;
-        if (hover) {
-            RenderUtil.drawGlow(x, y, size, size, 8, new Color(220, 20, 20, 50).getRGB());
-            RenderUtil.drawRoundedRect(x, y, size, size, 6, new Color(40, 40, 40).getRGB());
-            RenderUtil.drawRoundedOutline(x, y, size, size, 6, 1.0f, COL_ACCENT_START);
-        } else {
-            RenderUtil.drawRoundedRect(x, y, size, size, 6, new Color(25, 25, 25).getRGB());
-            RenderUtil.drawRoundedOutline(x, y, size, size, 6, 1.0f, new Color(50, 50, 50).getRGB());
-        }
-        float cx = x + size / 2; float cy = y + size / 2; int iconCol = hover ? -1 : 0xFFAAAAAA;
-        if (type.equals("folder")) {
-            RenderUtil.drawRect(x + 6, y + 10, x + size - 6, y + size - 6, iconCol);
-            RenderUtil.drawRect(x + 6, y + 7, x + size/2, y + 10, iconCol);
-            RenderUtil.drawRect(x + 7, y + 11, x + size - 7, y + size - 7, COL_BG_DARK);
-        } else if (type.equals("editor")) {
-            RenderUtil.drawRect(cx - 5, cy - 5, cx - 1, cy - 1, iconCol);
-            RenderUtil.drawRect(cx + 1, cy - 5, cx + 5, cy - 1, iconCol);
-            RenderUtil.drawRect(cx - 5, cy + 1, cx - 1, cy + 5, iconCol);
-            RenderUtil.drawRect(cx + 1, cy + 1, cx + 5, cy + 5, iconCol);
-        } else {
-            RenderUtil.drawRoundedRect(cx - 1, cy - 5, 2, 2, 1, iconCol);
-            RenderUtil.drawRoundedRect(cx - 1, cy - 1, 2, 6, 1, iconCol);
-        }
-    }
-
-    private void drawCreditsPopup() {
-        RenderUtil.drawRect(0, 0, this.width, this.height, new Color(0, 0, 0, 180).getRGB());
-        float w = 250, h = 150;
-        float x = this.width / 2f - w / 2f, y = this.height / 2f - h / 2f;
-        RenderUtil.drawGlow(x, y, w, h, 20, COL_ACCENT_START);
-        RenderUtil.drawRoundedRect(x, y, w, h, 12, new Color(20, 20, 20).getRGB());
-        RenderUtil.drawRoundedOutline(x, y, w, h, 12, 2.0f, COL_ACCENT_START);
-        String title = "DOOM CLIENT";
-        mc.fontRendererObj.drawStringWithShadow("§c" + title, x + w/2 - mc.fontRendererObj.getStringWidth(title)/2f, y + 30, -1);
-        mc.fontRendererObj.drawStringWithShadow("Developed by: §cNAQSU", x + w/2 - 50, y + 70, -1);
-        mc.fontRendererObj.drawStringWithShadow("Version: §7" + Client.INSTANCE.version, x + w/2 - 30, y + 85, -1);
-        mc.fontRendererObj.drawStringWithShadow("§7(Click anywhere to close)", x + w/2 - 60, y + 120, -1);
     }
 
     @Override
     protected void mouseReleased(int mouseX, int mouseY, int state) {
         dragging = false;
-        draggingNumber = null;
-        super.mouseReleased(mouseX, mouseY, state);
+        if (selectedModule != null) for (Component c : activeComponents) if (c.setting.isVisible()) c.mouseReleased(mouseX, mouseY, state);
     }
 
     @Override
     protected void keyTyped(char typedChar, int keyCode) throws IOException {
-        if(isBinding && selectedModule != null) {
-            selectedModule.setKey((keyCode == 1 || keyCode == 211) ? 0 : keyCode);
-            isBinding = false;
-            return;
-        }
-        if(keyCode == 1) { // ESC
-            if(showCredits) { showCredits = false; return; }
-            if(selectedModule != null) { selectedModule = null; isBinding = false; scrollY = 0; targetScrollY = 0; return; }
-        }
+        if (selectedModule != null) for (Component c : activeComponents) if (c.setting.isVisible()) c.keyTyped(typedChar, keyCode);
         super.keyTyped(typedChar, keyCode);
+    }
+
+    private void handleScroll() {
+        int wheel = Mouse.getDWheel();
+        if (wheel < 0) targetScrollY -= 35; else if (wheel > 0) targetScrollY += 35;
+        if (targetScrollY > 0) targetScrollY = 0; if (targetScrollY < -maxScroll) targetScrollY = -maxScroll;
+        scrollY = RenderUtil.lerp(scrollY, targetScrollY, 0.2f);
+    }
+
+    private float getAnim(String key, float target) {
+        float current = animMap.getOrDefault(key, 0.0f);
+        float next = RenderUtil.lerp(current, target, 0.2f);
+        animMap.put(key, next);
+        return next;
     }
 
     @Override
     public void onGuiClosed() {
+        Module clickGui = Client.INSTANCE.moduleManager.getModule(ClickGuiModule.class);
+        if (clickGui != null && clickGui.isToggled()) clickGui.setToggled(false);
         Client.INSTANCE.configManager.save();
     }
 
-    @Override
-    public boolean doesGuiPauseGame() { return false; }
+    @Override public boolean doesGuiPauseGame() { return false; }
 }

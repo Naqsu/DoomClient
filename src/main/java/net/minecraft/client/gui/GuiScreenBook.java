@@ -2,9 +2,8 @@ package net.minecraft.client.gui;
 
 import com.google.common.collect.Lists;
 import com.google.gson.JsonParseException;
+import doom.ui.font.FontManager;
 import io.netty.buffer.Unpooled;
-import java.io.IOException;
-import java.util.List;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.resources.I18n;
@@ -18,14 +17,13 @@ import net.minecraft.nbt.NBTTagList;
 import net.minecraft.nbt.NBTTagString;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.network.play.client.C17PacketCustomPayload;
-import net.minecraft.util.ChatAllowedCharacters;
-import net.minecraft.util.ChatComponentText;
-import net.minecraft.util.EnumChatFormatting;
-import net.minecraft.util.IChatComponent;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.*;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.lwjgl.input.Keyboard;
+
+import java.io.IOException;
+import java.util.List;
 
 public class GuiScreenBook extends GuiScreen
 {
@@ -599,9 +597,11 @@ public class GuiScreenBook extends GuiScreen
             {
                 int k = Math.min(128 / this.fontRendererObj.FONT_HEIGHT, this.field_175386_A.size());
 
-                if (i <= 116 && j < this.mc.fontRendererObj.FONT_HEIGHT * k + k)
+                if (i <= 116 && j < FontManager.r20.getHeight()
+ * k + k)
                 {
-                    int l = j / this.mc.fontRendererObj.FONT_HEIGHT;
+                    int l = j / FontManager.r20.getHeight()
+;
 
                     if (l >= 0 && l < this.field_175386_A.size())
                     {
@@ -612,7 +612,7 @@ public class GuiScreenBook extends GuiScreen
                         {
                             if (ichatcomponent1 instanceof ChatComponentText)
                             {
-                                i1 += this.mc.fontRendererObj.getStringWidth(((ChatComponentText)ichatcomponent1).getChatComponentText_TextValue());
+                                i1 += FontManager.r20.getStringWidth(((ChatComponentText)ichatcomponent1).getChatComponentText_TextValue());
 
                                 if (i1 > i)
                                 {

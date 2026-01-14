@@ -1,12 +1,12 @@
 package doom.module.impl.render;
 
-import doom.module.Category;
 import doom.module.DraggableModule;
+import doom.ui.font.FontManager;
 import doom.util.MoveUtil;
 import doom.util.RenderUtil;
 import net.minecraft.client.Minecraft;
-import net.minecraft.util.MathHelper;
-import java.awt.Color;
+
+import java.awt.*;
 
 public class InfoHUD extends DraggableModule {
 
@@ -19,7 +19,7 @@ public class InfoHUD extends DraggableModule {
 
     @Override
     public float getWidth() {
-        return mc.fontRendererObj.getStringWidth(getInfoString()) + 8;
+        return FontManager.r20.getStringWidth(getInfoString()) + 8;
     }
 
     @Override
@@ -31,7 +31,7 @@ public class InfoHUD extends DraggableModule {
     public void render(float x, float y) {
         String text = getInfoString();
         RenderUtil.drawRoundedRect(x, y, getWidth(), getHeight(), 4, new Color(20, 20, 20, 200).getRGB());
-        mc.fontRendererObj.drawStringWithShadow(text, x + 4, y + 4, -1);
+        FontManager.r20.drawStringWithShadow(text, x + 4, y + 4, -1);
     }
 
     private String getInfoString() {

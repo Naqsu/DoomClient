@@ -3,7 +3,6 @@ package doom.module.impl.render;
 import doom.Client;
 import doom.event.EventTarget;
 import doom.event.impl.EventRender2D;
-import doom.module.Category;
 import doom.module.Module;
 import doom.settings.impl.NumberSetting;
 import doom.ui.notification.Notification;

@@ -1,5 +1,6 @@
 package net.minecraft.client.gui;
 
+import doom.ui.font.FontManager;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.resources.I18n;
 
@@ -9,8 +10,9 @@ public class ServerListEntryLanScan implements GuiListExtended.IGuiListEntry
 
     public void drawEntry(int slotIndex, int x, int y, int listWidth, int slotHeight, int mouseX, int mouseY, boolean isSelected)
     {
-        int i = y + slotHeight / 2 - this.mc.fontRendererObj.FONT_HEIGHT / 2;
-        this.mc.fontRendererObj.drawString(I18n.format("lanServer.scanning", new Object[0]), this.mc.currentScreen.width / 2 - this.mc.fontRendererObj.getStringWidth(I18n.format("lanServer.scanning", new Object[0])) / 2, i, 16777215);
+        int i = y + slotHeight / 2 - FontManager.r20.getHeight()
+ / 2;
+        FontManager.r20.drawString(I18n.format("lanServer.scanning", new Object[0]), this.mc.currentScreen.width / 2 - FontManager.r20.getStringWidth(I18n.format("lanServer.scanning", new Object[0])) / 2, i, 16777215);
         String s;
 
         switch ((int)(Minecraft.getSystemTime() / 300L % 4L))
@@ -29,7 +31,8 @@ public class ServerListEntryLanScan implements GuiListExtended.IGuiListEntry
                 s = "o o O";
         }
 
-        this.mc.fontRendererObj.drawString(s, this.mc.currentScreen.width / 2 - this.mc.fontRendererObj.getStringWidth(s) / 2, i + this.mc.fontRendererObj.FONT_HEIGHT, 8421504);
+        FontManager.r20.drawString(s, this.mc.currentScreen.width / 2 - FontManager.r20.getStringWidth(s) / 2, i + FontManager.r20.getHeight()
+, 8421504);
     }
 
     public void setSelected(int p_178011_1_, int p_178011_2_, int p_178011_3_)

@@ -14,7 +14,6 @@ public class RotationUtil {
     public static boolean shouldUseCustomPitch = false;
     public static float renderPitch = 0f;
 
-    // Podstawowa metoda
     public static float[] getRotationsToVec(Vec3 vec) {
         Vec3 eyes = mc.thePlayer.getPositionEyes(1.0f);
         double x = vec.xCoord - eyes.xCoord;
@@ -33,8 +32,7 @@ public class RotationUtil {
 
         if (entity instanceof net.minecraft.entity.EntityLivingBase) {
             net.minecraft.entity.EntityLivingBase living = (net.minecraft.entity.EntityLivingBase) entity;
-            // Celujemy w środek ciała + offset Y (żeby nie celować zawsze w stopy)
-            diffY = (living.posY + living.getEyeHeight() * 0.8 + offY) - (mc.thePlayer.posY + mc.thePlayer.getEyeHeight());
+            diffY = (living.posY + living.getEyeHeight() * 0.9 + offY) - (mc.thePlayer.posY + mc.thePlayer.getEyeHeight());
         } else {
             diffY = (entity.getEntityBoundingBox().minY + entity.getEntityBoundingBox().maxY) / 2.0D - (mc.thePlayer.posY + mc.thePlayer.getEyeHeight());
         }
@@ -47,29 +45,35 @@ public class RotationUtil {
     }
 
     /**
-     * Fix na Aim (Q) GCD.
-     * Oblicza minimalną możliwą zmianę kąta na podstawie czułości myszy
-     * i przyciąga rotację docelową do tej siatki.
+     * Wygładza rotację (imitacja ruchu ręką).
+     */
+    public static float updateRotation(float current, float target, float maxSpeed) {
+        float f = MathHelper.wrapAngleTo180_float(target - current);
+        if (f > maxSpeed) f = maxSpeed;
+        if (f < -maxSpeed) f = -maxSpeed;
+        return current + f;
+    }
+
+    /**
+     * Symulacja siatki myszki (GCD Fix).
+     * Zapobiega Aim A/Q/U poprzez konwersję kątów na "piksele" myszki i z powrotem.
      */
     public static float[] applyGCD(float[] currentRotations, float[] targetRotations) {
         float sensitivity = mc.gameSettings.mouseSensitivity * 0.6F + 0.2F;
         float gcd = sensitivity * sensitivity * sensitivity * 1.2F;
-        // Ważne: stała 0.15D jest używana w kodzie Minecrafta, mnożymy przez nią
-        // aby uzyskać dokładność jak w vanilli.
 
-        // Obliczamy deltę
+        // Delta (wymagana zmiana kąta)
         float yawDiff = targetRotations[0] - currentRotations[0];
         float pitchDiff = targetRotations[1] - currentRotations[1];
 
-        // Normalizujemy deltę (-180 do 180)
+        // Normalizacja
         yawDiff = MathHelper.wrapAngleTo180_float(yawDiff);
 
-        // Przyciągamy deltę do siatki GCD
-        // Używamy Math.round, aby znaleźć najbliższy punkt siatki
+        // Zaokrąglenie do siatki
+        // To jest kluczowe: delta musi być wielokrotnością GCD
         yawDiff -= yawDiff % gcd;
         pitchDiff -= pitchDiff % gcd;
 
-        // Zwracamy nową rotację = stara + naprawiona delta
         return new float[]{
                 currentRotations[0] + yawDiff,
                 MathHelper.clamp_float(currentRotations[1] + pitchDiff, -90.0F, 90.0F)
@@ -78,23 +82,18 @@ public class RotationUtil {
 
     public static Entity rayCast(float yaw, float pitch, double range) {
         if (mc.theWorld == null || mc.thePlayer == null) return null;
-
         Vec3 position = mc.thePlayer.getPositionEyes(1.0F);
         Vec3 lookVector = getVectorForRotation(pitch, yaw);
         Vec3 reachVector = position.addVector(lookVector.xCoord * range, lookVector.yCoord * range, lookVector.zCoord * range);
-
         Entity pointedEntity = null;
         java.util.List<Entity> entities = mc.theWorld.getEntitiesWithinAABBExcludingEntity(mc.thePlayer,
                 mc.thePlayer.getEntityBoundingBox().addCoord(lookVector.xCoord * range, lookVector.yCoord * range, lookVector.zCoord * range).expand(1.0D, 1.0D, 1.0D));
-
         double minDistance = range;
-
         for (Entity entity : entities) {
             if (entity.canBeCollidedWith()) {
                 float borderSize = entity.getCollisionBorderSize();
                 net.minecraft.util.AxisAlignedBB axisalignedbb = entity.getEntityBoundingBox().expand(borderSize, borderSize, borderSize);
                 MovingObjectPosition movingobjectposition = axisalignedbb.calculateIntercept(position, reachVector);
-
                 if (axisalignedbb.isVecInside(position)) {
                     if (minDistance >= 0.0D) {
                         pointedEntity = entity;

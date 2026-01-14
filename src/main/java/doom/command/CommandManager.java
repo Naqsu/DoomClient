@@ -15,6 +15,10 @@ public class CommandManager {
         commands.add(new BindCommand());
         commands.add(new HelpCommand());
         commands.add(new ConfigCommand());
+        commands.add(new DetectCommand());
+        commands.add(new ConnectCommand());
+        commands.add(new ChatCommand());
+
         EventManager.register(this);
     }
 

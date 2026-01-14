@@ -3,7 +3,6 @@ package doom.module.impl.render;
 import doom.Client;
 import doom.event.EventTarget;
 import doom.event.impl.EventRender3D;
-import doom.module.Category;
 import doom.module.Module;
 import doom.module.impl.combat.Killaura;
 import doom.settings.impl.BooleanSetting;
@@ -12,10 +11,9 @@ import doom.util.ColorUtil;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.util.Vec3;
 import org.lwjgl.opengl.GL11;
 
-import java.awt.Color;
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 

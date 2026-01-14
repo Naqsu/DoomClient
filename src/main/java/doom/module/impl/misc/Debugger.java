@@ -3,10 +3,8 @@ package doom.module.impl.misc;
 import doom.Client;
 import doom.event.EventTarget;
 import doom.event.impl.EventUpdate;
-import doom.module.Category;
 import doom.module.Module;
 import doom.settings.impl.BooleanSetting;
-import net.minecraft.util.MathHelper;
 
 import java.text.DecimalFormat;
 

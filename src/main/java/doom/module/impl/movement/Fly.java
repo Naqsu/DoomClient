@@ -4,252 +4,118 @@ import doom.Client;
 import doom.event.EventTarget;
 import doom.event.impl.EventPacket;
 import doom.event.impl.EventUpdate;
-import doom.module.Category;
 import doom.module.Module;
-import doom.settings.impl.BooleanSetting;
-import doom.settings.impl.ModeSetting;
-import doom.settings.impl.NumberSetting;
 import doom.util.MoveUtil;
-import doom.util.TimerUtil; // Zakładam, że masz TimerUtil, jeśli nie - usuń linie z nim
+import doom.util.TimerUtil;
 import net.minecraft.network.Packet;
-import net.minecraft.network.play.client.C03PacketPlayer;
 import net.minecraft.network.play.server.S12PacketEntityVelocity;
-import net.minecraft.network.play.server.S27PacketExplosion;
+import net.minecraft.network.play.server.S27PacketExplosion; // Obsługa TNT/Fireballi
 import org.lwjgl.input.Keyboard;
-
-import java.util.LinkedList;
-import java.util.Queue;
 
 public class Fly extends Module {
 
-    // === SETTINGS ===
-    private final ModeSetting mode;
-    private final NumberSetting speed;
-    private final NumberSetting verticalSpeed; // Do sterowania wysokością
-    private final NumberSetting timerSpeed;
-
-    // Opcje dla efektu z filmiku
-    private final BooleanSetting waitDamage;  // Czekaj na TNT/Łuk
-    private final BooleanSetting blink;       // To powoduje ten "teleport" na końcu
-    private final BooleanSetting stopOnGround; // Auto-disable jak dotkniesz ziemi
-    private final BooleanSetting bobbing;     // Efekt wizualny machania ręką
-
-    // === STATE ===
-    private boolean isFlying = false;
-    private boolean awaitingDamage = false;
-    private int flyTicks = 0;
-    private double startY;
-
-    // Bufor pakietów dla Blinka (Desync)
-    private final Queue<Packet<?>> packetBuffer = new LinkedList<>();
+    private boolean active = false;
+    private int ticks = 0;
+    private double targetSpeed = 0.0;
 
     public Fly() {
         super("Fly", Keyboard.KEY_F, Category.MOVEMENT);
-
-        mode = new ModeSetting("Mode", this, "Damage", "Damage", "Vanilla", "Motion", "Grim");
-        speed = new NumberSetting("Speed", this, 2.0, 0.1, 9.5, 0.1);
-        verticalSpeed = new NumberSetting("Vertical", this, 0.0, -2.0, 2.0, 0.1);
-        timerSpeed = new NumberSetting("Timer", this, 1.0, 0.1, 3.0, 0.1);
-
-        waitDamage = new BooleanSetting("Wait Damage", this, true);
-        blink = new BooleanSetting("Blink (Desync)", this, true);
-        stopOnGround = new BooleanSetting("Stop on Ground", this, true);
-        bobbing = new BooleanSetting("View Bobbing", this, true);
-
-        // Rejestracja ustawień
-        Client.INSTANCE.settingsManager.rSetting(mode);
-        Client.INSTANCE.settingsManager.rSetting(speed);
-        Client.INSTANCE.settingsManager.rSetting(verticalSpeed);
-        Client.INSTANCE.settingsManager.rSetting(timerSpeed);
-        Client.INSTANCE.settingsManager.rSetting(waitDamage);
-        Client.INSTANCE.settingsManager.rSetting(blink);
-        Client.INSTANCE.settingsManager.rSetting(stopOnGround);
-        Client.INSTANCE.settingsManager.rSetting(bobbing);
-
-        this.setSuffix(mode.getMode());
     }
 
     @Override
     public void onEnable() {
-        if (mc.thePlayer == null) return;
-
-        isFlying = false;
-        flyTicks = 0;
-        startY = mc.thePlayer.posY;
-        packetBuffer.clear();
-
-        // Jeśli tryb Damage jest aktywny, czekamy na uderzenie
-        if (mode.is("Damage") && waitDamage.isEnabled()) {
-            awaitingDamage = true;
-            this.setSuffix("Waiting...");
-        } else {
-            startFlight();
-        }
+        active = false;
+        ticks = 0;
+        targetSpeed = 0.0;
+        Client.addChatMessage("§e[Vulcan] Waiting for ANY damage (Bow/TNT)...");
     }
 
     @Override
     public void onDisable() {
-        if (mc.thePlayer == null) return;
-
-        // Reset timer'a
-        TimerUtil.setTimerSpeed(1.0f);
-
-        // Reset fizyki
+        TimerUtil.reset();
         mc.thePlayer.motionX = 0;
         mc.thePlayer.motionZ = 0;
-
-        // WYPUSZCZENIE PAKIETÓW (To powoduje teleport/resync)
-        if (!packetBuffer.isEmpty()) {
-            flushBuffer();
-        }
-
-        isFlying = false;
-        awaitingDamage = false;
-    }
-
-    @EventTarget
-    public void onUpdate(EventUpdate event) {
-        // Auto-disable na ziemi (przydatne przy Damage Fly)
-        if (isFlying && stopOnGround.isEnabled() && mc.thePlayer.onGround && flyTicks > 5) {
-            this.toggle();
-            return;
-        }
-
-        if (awaitingDamage) {
-            mc.thePlayer.motionX = 0;
-            mc.thePlayer.motionZ = 0;
-            // Można tu dodać zerowanie Y, żeby nie spadać czekając na TNT
-            if (mc.thePlayer.onGround) {
-                // mc.thePlayer.jump(); // Opcjonalnie podskocz
-            }
-            return;
-        }
-
-        if (isFlying) {
-            flyTicks++;
-            if (bobbing.isEnabled()) mc.thePlayer.cameraYaw = 0.1f; // Efekt ruchu
-            TimerUtil.setTimerSpeed((float) timerSpeed.getValue());
-
-            switch (mode.getMode()) {
-                case "Damage":
-                    handleDamageMode();
-                    break;
-                case "Vanilla":
-                    handleVanillaMode();
-                    break;
-                case "Motion":
-                    handleMotionMode();
-                    break;
-                case "Grim":
-                    handleGrimMode();
-                    break;
-            }
-        }
     }
 
     @EventTarget
     public void onPacket(EventPacket event) {
-        if (mc.thePlayer == null) return;
+        Packet<?> packet = event.getPacket();
 
-        // --- DETEKCJA OBRAŻEŃ ---
-        if (awaitingDamage) {
-            if (event.getPacket() instanceof S12PacketEntityVelocity) {
-                S12PacketEntityVelocity packet = (S12PacketEntityVelocity) event.getPacket();
-                if (packet.getEntityID() == mc.thePlayer.getEntityId()) {
-                    // Otrzymaliśmy knockback - START
-                    startFlight();
-
-                    // Opcjonalnie: Zwiększamy siłę startową z pakietu
-                    // Ale zazwyczaj Damage Fly ignoruje pakiet i leci sam
-                }
-            }
-            else if (event.getPacket() instanceof S27PacketExplosion) {
-                // Wybuch TNT - START
-                startFlight();
+        // Obsługa Velocity z bicia (S12)
+        if (packet instanceof S12PacketEntityVelocity) {
+            S12PacketEntityVelocity s12 = (S12PacketEntityVelocity) packet;
+            if (s12.getEntityID() == mc.thePlayer.getEntityId()) {
+                double vX = s12.getMotionX() / 8000.0;
+                double vZ = s12.getMotionZ() / 8000.0;
+                handleVelocity(vX, vZ, event);
             }
         }
-
-        // --- LOGIKA BLINK (DESYNC) ---
-        // Zatrzymuje pakiety wysyłane do serwera, tworząc desynchronizację.
-        if (isFlying && blink.isEnabled() && event.getDirection() == EventPacket.Direction.SEND) {
-            if (event.getPacket() instanceof C03PacketPlayer) { // Tylko pakiety ruchu
-                event.setCancelled(true);
-                packetBuffer.add(event.getPacket());
-            }
+        // Obsługa Velocity z wybuchów (S27 - TNT/Fireball) - WAŻNE NA SKYWARS
+        else if (packet instanceof S27PacketExplosion) {
+            S27PacketExplosion s27 = (S27PacketExplosion) packet;
+            double vX = s27.func_149149_c();
+            double vZ = s27.func_149147_e();
+            handleVelocity(vX, vZ, event);
         }
     }
 
-    // === MECHANIKI LOTU ===
+    private void handleVelocity(double vX, double vZ, EventPacket event) {
+        // Obliczamy wektor poziomy, który dał nam serwer
+        double velocityDist = Math.sqrt(vX * vX + vZ * vZ);
 
-    private void startFlight() {
-        awaitingDamage = false;
-        isFlying = true;
-        flyTicks = 0;
-        startY = mc.thePlayer.posY;
-        this.setSuffix(mode.getMode());
+        // Ignorujemy słabe popchnięcia (np. bicie ręką), szukamy łuku/tnt
+        if (velocityDist > 0.2) {
+            active = true;
+            ticks = 0;
+            event.setCancelled(true);
 
-        if (mode.is("Damage")) {
-            // Wybicie przy starcie
+            // LOGIKA NAUKOWA:
+            // Vulcan pozwala na: BaseSpeed + Velocity.
+            // Ustawiamy naszą prędkość na dokładnie tyle, ile dał serwer + mały boost
+            targetSpeed = velocityDist;
+
+            Client.addChatMessage("§a[Vulcan] Catch! V-Speed: " + String.format("%.3f", targetSpeed));
+
+            // Wymuszamy skok fizyczny, żeby zdjąć flagę 'OnGround'
             if (mc.thePlayer.onGround) {
-                mc.thePlayer.jump();
-            } else {
                 mc.thePlayer.motionY = 0.42;
             }
-            //MoveUtil.setSpeed(speed.getValue());
         }
     }
 
-    private void handleDamageMode() {
-        // Utrzymywanie poziomu (Glide)
-        mc.thePlayer.motionY = verticalSpeed.getValue();
+    @EventTarget
+    public void onUpdate(EventUpdate event) {
+        if (!active) return;
 
-        // Zresetuj prędkość, żeby się "ślizgać"
-        // Używamy Twojego MoveUtil
-        //MoveUtil.setSpeed(speed.getValue());
-    }
+        ticks++;
 
-    private void handleVanillaMode() {
-        mc.thePlayer.capabilities.isFlying = true;
-       // MoveUtil.setSpeed(speed.getValue());
+        // Vulcan velocity exemption trwa ok. 20 ticków.
+        // My lecimy przez 15, żeby być bezpiecznym.
+        if (ticks <= 15) {
 
-        if (mc.gameSettings.keyBindJump.isKeyDown()) mc.thePlayer.motionY = speed.getValue();
-        else if (mc.gameSettings.keyBindSneak.isKeyDown()) mc.thePlayer.motionY = -speed.getValue();
-        else mc.thePlayer.motionY = 0;
-    }
+            // Nadajemy prędkość równą sile uderzenia.
+            // Jeśli dostałeś mocno (TNT) -> lecisz szybko.
+            // Jeśli dostałeś słabo (Śnieżka) -> lecisz wolno (ale nie dostaniesz bana).
+            MoveUtil.setSpeed(targetSpeed);
 
-    private void handleMotionMode() {
-        mc.thePlayer.motionY = verticalSpeed.getValue();
-        if (mc.gameSettings.keyBindJump.isKeyDown()) mc.thePlayer.motionY += 1.0;
-        if (mc.gameSettings.keyBindSneak.isKeyDown()) mc.thePlayer.motionY -= 1.0;
-       // MoveUtil.setSpeed(speed.getValue());
-    }
+            // Symulacja tarcia powietrza (wymagane przez SpeedA)
+            targetSpeed *= 0.98; // Zwalniamy co tick o 2%
 
-    private void handleGrimMode() {
-        // Grim Explosion Fly - bazuje na tym, że Grim pozwala na ruch po wybuchu
-        // Ale sprawdza grawitację.
-
-        if (flyTicks <= 10) {
-            // Symulujemy duży wyrzut
-            //MoveUtil.setSpeed(speed.getValue());
-        } else {
-            // Po chwili musimy opaść, bo Grim zbanuje za Gravity Check
-            // Ale możemy opaść wolniej
-            if (mc.thePlayer.motionY < 0) {
-                mc.thePlayer.motionY *= 0.95; // Wolny spadek
+            // Podtrzymanie lotu (lekki Glide, ale nie płaski Hover)
+            // Pozwalamy na lekkie opadanie, żeby nie wkurzyć Flight(Prediction)
+            if (mc.thePlayer.motionY < -0.1) {
+                mc.thePlayer.motionY = -0.1;
             }
-            //MoveUtil.setSpeed(MoveUtil.getBaseMoveSpeed() * 1.5);
-        }
-    }
 
-    // === UTILS ===
+            // Timer dla efektu
+            TimerUtil.setTimerSpeed(1.1f);
 
-    private void flushBuffer() {
-        // Wysyłamy wszystkie zatrzymane pakiety naraz
-        // To powoduje, że serwer nagle "widzi" całą naszą trasę lub teleportuje nas do ostatniej pewnej pozycji
-        while (!packetBuffer.isEmpty()) {
-            Packet<?> packet = packetBuffer.poll();
-            // Wysyłamy bezpośrednio, omijając event system, żeby nie wpaść w pętlę
-            mc.getNetHandler().addToSendQueue(packet);
+        } else {
+            active = false;
+            TimerUtil.reset();
+            MoveUtil.setSpeed(0.0); // Stop w miejscu
+            Client.addChatMessage("§c[Vulcan] Velocity ended.");
+            this.toggle();
         }
     }
 }

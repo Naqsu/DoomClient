@@ -1,53 +1,56 @@
 package doom.module.impl.render;
 
 import doom.Client;
-import doom.module.Category;
 import doom.module.DraggableModule;
-import doom.util.ColorUtil;
+import doom.ui.font.FontManager;
 import doom.util.RenderUtil;
-import java.awt.Color;
+import net.minecraft.client.Minecraft;
+
+import java.awt.*;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class Watermark extends DraggableModule {
 
     public Watermark() {
         super("Watermark", Category.RENDER);
-        this.hidden = true;
-        this.x = 5;
-        this.y = 5;
+        this.x = 10;
+        this.y = 10;
     }
 
-    @Override
-    public float getWidth() {
-        String text = "Doom Client " + Client.INSTANCE.version;
-        return mc.fontRendererObj.getStringWidth(text) + 8;
-    }
-
-    @Override
-    public float getHeight() { return 18; }
+    @Override public float getWidth() { return 150; }
+    @Override public float getHeight() { return 24; }
 
     @Override
     public void render(float x, float y) {
-        // Pobieramy ustawienia z HUD
         HUD hud = Client.INSTANCE.moduleManager.getModule(HUD.class);
-        boolean showBg = hud.background.isEnabled();
-        boolean rainbow = hud.rainbow.isEnabled();
+        int mainColor = hud.getWatermarkColor();
 
-        String title = "D" + "\u00A7foo" + "m";
-        String ver = " \u00A77" + Client.INSTANCE.version;
-        String text = title + ver;
+        String title = "Doom";
+        String ver = Client.INSTANCE.version;
+        String fps = Minecraft.getDebugFPS() + " FPS";
 
-        // Tło (sterowane z HUD)
-        if (showBg) {
-            RenderUtil.drawRoundedRect(x, y, getWidth(), getHeight(), 4, new Color(20, 20, 20, 200).getRGB());
+        float titleW = FontManager.b20.getStringWidth(title);
+        float totalWidth = titleW + FontManager.r18.getStringWidth(" | " + ver + " | " + fps) + 12;
+        float height = 20;
+
+        // 1. BLUR (Prostokątny, ale pod zaokrąglonym tłem wygląda ok)
+        if (hud.blur.isEnabled()) {
+            RenderUtil.drawBlur(x, y, totalWidth, height, 20);
         }
 
-        // Pasek ozdobny
-        int color = rainbow ? ColorUtil.getRainbow(4.0f, 0.8f, 1.0f, 0) : new Color(200, 0, 0).getRGB();
-        // Jeśli nie ma tła, to pasek rysujemy trochę inaczej (np. pod tekstem), ale tutaj zostawmy na górze
-        if (showBg || hud.sidebar.isEnabled()) {
-            RenderUtil.drawRoundedRect(x, y, getWidth(), 2, 2, color);
-        }
+        // 2. TŁO (Zaokrąglone, Półprzezroczyste)
+        // Alpha 100/255 = widać blur pod spodem!
+        RenderUtil.drawRoundedRect(x, y, totalWidth, height, 6, new Color(10, 10, 15, 100).getRGB());
 
-        mc.fontRendererObj.drawStringWithShadow(text, x + 4, y + 6, -1);
+        // 3. LOGO (Kolor)
+        FontManager.b20.drawStringWithShadow(title, x + 5, y + 5, mainColor);
+
+        // 4. RESZTA (Szara)
+        String rest = "\u00A77 | \u00A7f" + ver + " \u00A77| \u00A7f" + fps;
+        FontManager.r18.drawStringWithShadow(rest, x + 5 + titleW, y + 6, -1);
+
+        // 5. GÓRNA LINIA (Opcjonalnie, jak w Astralis)
+        // RenderUtil.drawRoundedRect(x + 2, y, totalWidth - 4, 1, 0.5f, mainColor);
     }
 }

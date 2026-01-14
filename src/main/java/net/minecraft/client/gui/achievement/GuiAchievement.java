@@ -1,5 +1,6 @@
 package net.minecraft.client.gui.achievement;
 
+import doom.ui.font.FontManager;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.ScaledResolution;
@@ -121,8 +122,8 @@ public class GuiAchievement extends Gui
             }
             else
             {
-                this.mc.fontRendererObj.drawString(this.achievementTitle, i + 30, j + 7, -256);
-                this.mc.fontRendererObj.drawString(this.achievementDescription, i + 30, j + 18, -1);
+                FontManager.r20.drawString(this.achievementTitle, i + 30, j + 7, -256);
+                FontManager.r20.drawString(this.achievementDescription, i + 30, j + 18, -1);
             }
 
             RenderHelper.enableGUIStandardItemLighting();

@@ -6,17 +6,17 @@ saturation:0.0
 renderDistance:12
 guiScale:2
 particles:1
-bobView:true
+bobView:false
 anaglyph3d:false
 maxFps:260
 fboEnable:true
-difficulty:2
-fancyGraphics:false
+difficulty:0
+fancyGraphics:true
 ao:0
-renderClouds:true
+renderClouds:false
 resourcePacks:["! §2Sammyfault §a[16x].zip"]
 incompatibleResourcePacks:[]
-lastServer:Play.DeathZone.Net
+lastServer:centrumpvp.pl
 lang:en_US
 chatVisibility:0
 chatColors:true
@@ -25,8 +25,8 @@ chatLinksPrompt:true
 chatOpacity:1.0
 snooperEnabled:true
 fullscreen:false
-enableVsync:true
-useVbo:true
+enableVsync:false
+useVbo:false
 hideServerAddress:false
 advancedItemTooltips:false
 pauseOnLostFocus:true
@@ -52,10 +52,10 @@ streamChatEnabled:0
 streamChatUserFilter:0
 streamMicToggleBehavior:0
 forceUnicodeFont:false
-allowBlockAlternatives:true
+allowBlockAlternatives:false
 reducedDebugInfo:false
 useNativeTransport:true
-entityShadows:true
+entityShadows:false
 realmsNotifications:true
 key_key.attack:-100
 key_key.use:-99

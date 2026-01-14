@@ -1,152 +1,184 @@
 package doom.module.impl.render;
 
 import doom.Client;
-import doom.module.Category;
 import doom.module.DraggableModule;
 import doom.module.impl.combat.Killaura;
+import doom.ui.font.FontManager;
+import doom.util.ColorUtil;
 import doom.util.RenderUtil;
-import net.minecraft.client.entity.AbstractClientPlayer;
+import doom.util.StencilUtil;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.inventory.GuiInventory;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.monster.EntityPigZombie;
-import net.minecraft.entity.monster.EntitySkeleton;
-import net.minecraft.entity.monster.EntityZombie;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.util.ResourceLocation;
+import org.lwjgl.opengl.GL11;
 
-import java.awt.Color;
+import java.awt.*;
 import java.text.DecimalFormat;
 
 public class TargetHUD extends DraggableModule {
 
-    private double hpWidth = 0;
+    // Zmienne do animacji
+    private double healthBarWidth = 0;
+    private double healthAnim = 0;
+    private float hurtPercent = 0; // Do efektu czerwonego tła
 
     public TargetHUD() {
         super("TargetHUD", Category.RENDER);
-        this.setToggled(true);
+        this.x = 400;
+        this.y = 300;
     }
 
     @Override
     public float getWidth() {
-        return 140;
+        return 160;
     }
 
     @Override
     public float getHeight() {
-        return 45;
+        return 55;
     }
 
     @Override
     public void render(float x, float y) {
-        // --- OBSŁUGA EDYTORA HUD (DUMMY) ---
+        // Tryb edycji (pokazuje Fake Target)
         if (mc.currentScreen instanceof doom.ui.hudeditor.GuiHudEditor) {
-            renderDummy(x, y);
+            drawTarget(x, y, mc.thePlayer);
             return;
         }
 
+        // Pobieramy cel z Killaury
         EntityLivingBase target = null;
-        Killaura killaura = (Killaura) Client.INSTANCE.moduleManager.getModule(Killaura.class);
+        Killaura killaura = Client.INSTANCE.moduleManager.getModule(Killaura.class);
 
-        if (killaura != null) {
+        if (killaura != null && killaura.target != null) {
             target = killaura.target;
+        } else if (mc.currentScreen instanceof net.minecraft.client.gui.GuiChat) {
+            // Opcjonalnie: pokazuj siebie gdy piszesz na czacie (do testów)
+            target = mc.thePlayer;
         }
 
-        if (target != null && !target.isDead && target.getHealth() > 0) {
+        if (target != null && !target.isDead) {
             drawTarget(x, y, target);
+        } else {
+            // Reset animacji gdy brak celu
+            healthBarWidth = 0;
+            hurtPercent = 0;
         }
     }
 
-    // --- GŁÓWNA METODA RYSOWANIA ---
     private void drawTarget(float x, float y, EntityLivingBase target) {
-        // 1. TŁO
-        RenderUtil.drawRoundedRect(x, y, getWidth(), getHeight(), 6, new Color(20, 20, 20, 200).getRGB());
+        float width = getWidth();
+        float height = getHeight();
 
-        // 2. GŁOWA 2D (PIXEL ART)
-        // Resetujemy kolory, żeby głowa nie była np. czerwona od bicia
-        GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
-
-        boolean renderedFace = false;
-
-        // A. JEŚLI TO GRACZ -> POBIERZ JEGO SKINA
-        if (target instanceof AbstractClientPlayer) {
-            mc.getTextureManager().bindTexture(((AbstractClientPlayer) target).getLocationSkin());
-            renderedFace = true;
-        }
-        // B. JEŚLI TO ZOMBIE (Tak jak chciałeś na obrazku)
-        else if (target instanceof EntityZombie) {
-            mc.getTextureManager().bindTexture(new ResourceLocation("textures/entity/zombie/zombie.png"));
-            renderedFace = true;
-        }
-        // C. JEŚLI TO SZKIELET
-        else if (target instanceof EntitySkeleton) {
-            mc.getTextureManager().bindTexture(new ResourceLocation("textures/entity/skeleton/skeleton.png"));
-            renderedFace = true;
-        }
-        // D. JEŚLI TO PIGMAN
-        else if (target instanceof EntityPigZombie) {
-            mc.getTextureManager().bindTexture(new ResourceLocation("textures/entity/zombie_pigman.png"));
-            renderedFace = true;
+        // 1. BLUR TŁA
+        // Rysujemy blur tylko pod spodem
+        HUD hud = Client.INSTANCE.moduleManager.getModule(HUD.class);
+        if (hud.blur.isEnabled()) {
+            RenderUtil.drawBlur(x, y, width, height, 15);
         }
 
-        if (renderedFace) {
-            // Rysujemy wycinek tekstury (Twarz jest na koordynatach 8,8 i ma rozmiar 8x8 pikseli)
-            // Powiększamy to do rozmiaru 32x32 na ekranie
-            Gui.drawScaledCustomSizeModalRect((int)x + 6, (int)y + 6, 8.0F, 8.0F, 8, 8, 32, 32, 64.0F, 64.0F);
-
-            // Opcjonalnie: Warstwa zewnętrzna (np. hełm/włosy)
-            if (target instanceof AbstractClientPlayer) {
-                Gui.drawScaledCustomSizeModalRect((int)x + 6, (int)y + 6, 40.0F, 8.0F, 8, 8, 32, 32, 64.0F, 64.0F);
-            }
+        // 2. OBLICZANIE KOLORU TŁA (Damage Flash)
+        // Jeśli cel dostaje obrażenia, tło robi się czerwonawe
+        if (target.hurtTime > 0) {
+            hurtPercent = RenderUtil.lerp(hurtPercent, 1.0f, 0.1f);
         } else {
-            // FALLBACK: Dla Pająków, Koni itp. rysujemy stary model 3D,
-            // bo one nie mają kwadratowych głów w tym samym miejscu tekstury.
-            GuiInventory.drawEntityOnScreen((int)(x + 22), (int)(y + 40), 18, target.rotationYaw, target.rotationPitch, target);
+            hurtPercent = RenderUtil.lerp(hurtPercent, 0.0f, 0.1f);
         }
 
-        // 3. NAZWA
-        mc.fontRendererObj.drawStringWithShadow(target.getName(), x + 45, y + 6, -1);
+        int baseBg = new Color(20, 20, 25, 180).getRGB();
+        int hurtBg = new Color(100, 0, 0, 180).getRGB();
+        int finalBg = interpolateColor(baseBg, hurtBg, hurtPercent);
 
-        // 4. HP (Liczbowo)
+        // 3. RYSOWANIE TŁA
+        RenderUtil.drawRoundedRect(x, y, width, height, 8, finalBg);
+
+        // Subtelny Glow dookoła
+        RenderUtil.drawGlow(x, y, width, height, 10, new Color(0, 0, 0, 100).getRGB());
+
+        // 4. AVATAR 3D Z MASKOWANIEM (STENCIL)
+        // Chcemy, żeby model gracza był ucięty w ładnym kółku/kwadracie po lewej
+
+        StencilUtil.initStencilToWrite();
+        // Rysujemy kształt maski (zaokrąglony kwadrat po lewej)
+        RenderUtil.drawRoundedRect(x + 5, y + 5, 45, 45, 6, -1);
+
+        StencilUtil.readStencilBuffer(1);
+
+        // Rysujemy model wewnątrz maski
+        float scale = 22;
+        // Fix rotacji (żeby patrzył na nas, albo w stronę gdzie patrzy)
+        //float yawOffset = target.prevRotationYawHead + (target.rotationYawHead - target.prevRotationYawHead) * mc.timer.renderPartialTicks;
+
+        GlStateManager.color(1, 1, 1, 1);
+        GuiInventory.drawEntityOnScreen((int)(x + 28), (int)(y + 42), (int)scale, x + 28 - mouseX(), y + 25 - mouseY(), target);
+
+        StencilUtil.uninitStencilBuffer(); // Koniec maskowania
+
+        // 5. DANE (Nazwa, HP)
+        float textX = x + 55;
+
+        // Nazwa
+        FontManager.b20.drawStringWithShadow(target.getName(), textX, y + 8, -1);
+
+        // HP (Liczbowo)
         DecimalFormat df = new DecimalFormat("##.#");
-        String hpText = df.format(target.getHealth()) + " HP";
-        mc.fontRendererObj.drawStringWithShadow(hpText, x + 45, y + 18, new Color(200, 200, 200).getRGB());
+        String hpText = df.format(target.getHealth());
+        // Kolor zależny od HP
+        int hpColor = getHealthColor(target.getHealth(), target.getMaxHealth());
+        FontManager.r18.drawStringWithShadow(hpText + " HP", textX, y + 22, -1);
 
-        // 5. PASEK ŻYCIA (HealthBar)
-        double healthPercent = Math.min(target.getHealth() / target.getMaxHealth(), 1.0);
-        double maxBarWidth = getWidth() - 50;
+        // 6. PASEK ŻYCIA (Animowany Gradient)
+        float barX = textX;
+        float barY = y + 38;
+        float barWidth = width - 65;
+        float barHeight = 8;
 
-        // Animacja paska
-        hpWidth = RenderUtil.lerp(hpWidth, maxBarWidth * healthPercent, 0.1);
+        // Tło paska (ciemne)
+        RenderUtil.drawRoundedRect(barX, barY, barWidth, barHeight, 4, new Color(40, 40, 40, 200).getRGB());
 
-        // Tło paska
-        RenderUtil.drawRoundedRect(x + 45, y + 32, (float)maxBarWidth, 6, 2, new Color(40, 40, 40).getRGB());
-        // Pasek właściwy
-        RenderUtil.drawRoundedRect(x + 45, y + 32, (float)hpWidth, 6, 2, getHealthColor(target.getHealth(), target.getMaxHealth()));
+        // Obliczanie szerokości
+        double hpPercentage = Math.min(target.getHealth() / target.getMaxHealth(), 1.0);
+        double targetWidth = barWidth * hpPercentage;
+
+        // Płynna animacja (Lerp)
+        healthBarWidth = RenderUtil.lerp(healthBarWidth, targetWidth, 0.15); // Szybkość animacji
+
+        // Zabezpieczenie przed wyjściem poza ramkę (gdyby animacja przeskoczyła)
+        if (healthBarWidth > barWidth) healthBarWidth = barWidth;
+        if (healthBarWidth < 0) healthBarWidth = 0;
+
+        // Gradient (Zielony -> Żółty -> Czerwony)
+        int color1 = getHealthColor(target.getHealth(), target.getMaxHealth());
+        int color2 = new Color(color1).darker().getRGB();
+
+        // Rysowanie paska z gradientem
+        // Używamy Scissora, żeby przyciąć gradient do zaokrąglenia
+        // Ale prościej: drawRoundedGradientRect
+        RenderUtil.drawRoundedGradientRect(barX, barY, (float)healthBarWidth, barHeight, 4, color1, color2);
+
+        // Glow paska (daje efekt neonu)
+        RenderUtil.drawGlow(barX, barY, (float)healthBarWidth, barHeight, 5, new Color(color1).getRGB());
     }
 
-    private void renderDummy(float x, float y) {
-        RenderUtil.drawRoundedRect(x, y, getWidth(), getHeight(), 6, new Color(20, 20, 20, 200).getRGB());
-
-        // Rysujemy głowę Steve'a w edytorze
-        if (mc.thePlayer != null && mc.thePlayer.getLocationSkin() != null) {
-            mc.getTextureManager().bindTexture(mc.thePlayer.getLocationSkin());
-            Gui.drawScaledCustomSizeModalRect((int)x + 6, (int)y + 6, 8.0F, 8.0F, 8, 8, 32, 32, 64.0F, 64.0F);
-        } else {
-            // Fallback (kolorowy kwadrat)
-            RenderUtil.drawRect(x + 6, y + 6, x + 38, y + 38, -1);
-        }
-
-        mc.fontRendererObj.drawStringWithShadow("Target Name", x + 45, y + 6, -1);
-        mc.fontRendererObj.drawStringWithShadow("20.0 HP", x + 45, y + 18, new Color(200, 200, 200).getRGB());
-
-        RenderUtil.drawRoundedRect(x + 45, y + 32, getWidth() - 50, 6, 2, new Color(40, 40, 40).getRGB());
-        RenderUtil.drawRoundedRect(x + 45, y + 32, (getWidth() - 50) * 0.8f, 6, 2, new Color(0, 255, 0).getRGB());
-    }
+    // --- HELPERY ---
 
     private int getHealthColor(float health, float maxHealth) {
-        float percentage = health / maxHealth;
-        return Color.getHSBColor(percentage / 3f, 1f, 1f).getRGB();
+        float percentage = Math.max(0, Math.min(health, maxHealth) / maxHealth);
+        // HSB Color: 0.33 (Zielony) -> 0.0 (Czerwony)
+        return Color.getHSBColor(percentage * 0.33f, 0.9f, 1.0f).getRGB();
     }
+
+    private int interpolateColor(int start, int end, float fraction) {
+        if(fraction > 1) fraction = 1; if(fraction < 0) fraction = 0;
+        int a1 = (start >> 24) & 0xFF, r1 = (start >> 16) & 0xFF, g1 = (start >> 8) & 0xFF, b1 = start & 0xFF;
+        int a2 = (end >> 24) & 0xFF, r2 = (end >> 16) & 0xFF, g2 = (end >> 8) & 0xFF, b2 = end & 0xFF;
+        int a = (int)(a1+(a2-a1)*fraction), r = (int)(r1+(r2-r1)*fraction), g = (int)(g1+(g2-g1)*fraction), b = (int)(b1+(b2-b1)*fraction);
+        return (a<<24)|(r<<16)|(g<<8)|b;
+    }
+
+    // Pomocnicze do obracania modelu za myszką (opcjonalne, tutaj statyczne 0)
+    private int mouseX() { return 0; }
+    private int mouseY() { return 0; }
 }
