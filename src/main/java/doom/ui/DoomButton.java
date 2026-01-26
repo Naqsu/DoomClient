@@ -1,6 +1,6 @@
 package doom.ui;
 
-import doom.module.impl.render.ClickGuiModule; // Import
+import doom.module.impl.render.ClickGuiModule;
 import doom.ui.font.FontManager;
 import doom.util.RenderUtil;
 import net.minecraft.client.Minecraft;
@@ -9,7 +9,7 @@ import net.minecraft.client.audio.SoundHandler;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.util.ResourceLocation;
 
-import java.awt.Color;
+import java.awt.*;
 
 public class DoomButton extends GuiButton {
 

@@ -1,6 +1,5 @@
 package doom.ui.clickgui.components;
 
-import doom.module.impl.render.ClickGuiModule;
 import doom.settings.impl.ColorSetting;
 import doom.ui.font.FontManager;
 import doom.util.RenderUtil;
@@ -8,9 +7,8 @@ import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.WorldRenderer;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
-import org.lwjgl.opengl.GL11;
 
-import java.awt.Color;
+import java.awt.*;
 
 public class ColorValueComponent extends Component {
 

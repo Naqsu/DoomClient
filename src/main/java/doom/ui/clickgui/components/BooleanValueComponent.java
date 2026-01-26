@@ -1,10 +1,11 @@
 package doom.ui.clickgui.components;
 
-import doom.module.impl.render.ClickGuiModule; // IMPORT
+import doom.module.impl.render.ClickGuiModule;
 import doom.settings.impl.BooleanSetting;
 import doom.ui.font.FontManager;
 import doom.util.RenderUtil;
-import java.awt.Color;
+
+import java.awt.*;
 
 public class BooleanValueComponent extends Component {
 

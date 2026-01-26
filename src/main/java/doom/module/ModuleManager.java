@@ -4,6 +4,7 @@ import doom.event.EventManager;
 import doom.event.EventTarget;
 import doom.event.impl.EventKey;
 import doom.module.impl.combat.HitLag;
+import doom.module.impl.combat.Killaura;
 import doom.module.impl.player.AntiVoid;
 import doom.module.impl.player.NoFall;
 
@@ -24,7 +25,7 @@ public class ModuleManager {
         modules.add(new doom.module.impl.render.TargetHUD());
         modules.add(new doom.module.impl.render.Animations());
         modules.add(new doom.module.impl.render.HUD());
-        modules.add(new doom.module.impl.combat.Killaura());
+        modules.add(new Killaura());
         modules.add(new doom.module.impl.render.ClickGuiModule());
         modules.add(new doom.module.impl.movement.Speed());
         modules.add(new doom.module.impl.render.NotificationsMod());
@@ -40,6 +41,7 @@ public class ModuleManager {
         modules.add(new doom.module.impl.render.SpiritAura());
         modules.add(new doom.module.impl.render.BlockOverlay());
         modules.add(new doom.module.impl.render.ChinaHat());
+        modules.add(new doom.module.impl.render.Rotations());
         modules.add(new doom.module.impl.render.Wings());
         modules.add(new doom.module.impl.player.BedBreaker());
         modules.add(new doom.module.impl.misc.Debugger());

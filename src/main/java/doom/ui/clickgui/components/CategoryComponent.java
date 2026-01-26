@@ -4,7 +4,8 @@ import doom.module.impl.render.ClickGuiModule;
 import doom.settings.impl.CategorySetting;
 import doom.ui.font.FontManager;
 import doom.util.RenderUtil;
-import java.awt.Color;
+
+import java.awt.*;
 
 public class CategoryComponent extends Component {
 

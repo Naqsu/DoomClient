@@ -2,7 +2,8 @@ package doom.settings.impl;
 
 import doom.module.Module;
 import doom.settings.Setting;
-import java.awt.Color;
+
+import java.awt.*;
 
 public class ColorSetting extends Setting {
     private int color;

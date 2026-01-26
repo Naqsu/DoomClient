@@ -25,39 +25,37 @@ public class ConnectCommand extends Command {
         String code = args[1];
         String hwid = HWIDUtil.getHWID();
 
-        Client.addChatMessage("§eConnecting to Doom Cloud...");
+        Client.addChatMessage("§eConnecting to Atamanco Cloud...");
 
         new Thread(() -> {
             try {
-                // Budowanie JSONa
                 JsonObject json = new JsonObject();
                 json.addProperty("code", code);
                 json.addProperty("hwid", hwid);
 
-                // ZMIEŃ IP NA SWOJEGO DEDYKA
-                String response = HttpUtil.post("http://127.0.0.1:3000/api/client/link", json.toString());
+                // ZMIANA: HTTPS + Domena
+                String response = HttpUtil.post("https://atamanco.eu/api/client/link", json.toString());
 
                 JsonObject respObj = new JsonParser().parse(response).getAsJsonObject();
 
-                if (respObj.get("success").getAsBoolean()) {
+                if (respObj.has("success") && respObj.get("success").getAsBoolean()) {
                     String token = respObj.get("token").getAsString();
                     String username = respObj.get("username").getAsString();
 
-                    // Zapisujemy token
                     DoomAccountManager.INSTANCE.saveToken(token);
 
                     Client.addChatMessage("§aSuccessfully linked account: §e" + username);
-                    Client.addChatMessage("§7Connecting to IRC...");
+                    Client.addChatMessage("§7Connecting to Services...");
 
-                    // Łączymy z IRC
                     IRCClient.INSTANCE.connect();
                 } else {
-                    Client.addChatMessage("§cError: " + respObj.get("message").getAsString());
+                    String msg = respObj.has("message") ? respObj.get("message").getAsString() : "Unknown error";
+                    Client.addChatMessage("§cError: " + msg);
                 }
 
             } catch (Exception e) {
                 e.printStackTrace();
-                Client.addChatMessage("§cConnection failed! Check console.");
+                Client.addChatMessage("§cConnection failed! Server might be offline.");
             }
         }).start();
     }

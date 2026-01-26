@@ -7,6 +7,7 @@ import doom.settings.impl.ColorSetting;
 import doom.settings.impl.ModeSetting;
 import doom.settings.impl.NumberSetting;
 import doom.ui.clickgui.ClickGui;
+import doom.ui.clickgui.FluxGui;
 import doom.ui.clickgui.dashboard.DashboardGui;
 import doom.ui.clickgui.dropdown.DropdownClickGui;
 import doom.util.ColorUtil;
@@ -80,10 +81,9 @@ public class ClickGuiModule extends Module {
                     mc.displayGuiScreen(dropdownGui);
                     break;
 
-                case "Dashboard":
-                    if (dashboardGui == null) dashboardGui = new DashboardGui();
-                    dashboardGui.resetAnimation(); // This is safe because it only resets a float
-                    mc.displayGuiScreen(dashboardGui);
+                case "Dashboard": // Możesz nazwać to "Modern" w ustawieniach ModeSetting
+                    if (mc.currentScreen instanceof FluxGui) return;
+                    mc.displayGuiScreen(new FluxGui());
                     break;
             }
         } catch (Exception e) {

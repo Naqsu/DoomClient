@@ -12,12 +12,19 @@ public class SettingsManager {
         this.settings = new ArrayList<>();
     }
 
-    // Dodawanie ustawienia
+    // Dodawanie pojedynczego ustawienia
     public void rSetting(Setting setting) {
         this.settings.add(setting);
     }
 
-    // Pobieranie listy ustawień dla konkretnego modułu (np. tylko dla Killaury)
+    // 🔥 NOWA METODA: Dodawanie wielu ustawień naraz
+    public void addSettings(Setting... settingsToAdd) {
+        for (Setting setting : settingsToAdd) {
+            rSetting(setting); // korzystamy z istniejącej logiki
+        }
+    }
+
+    // Pobieranie listy ustawień dla konkretnego modułu
     public ArrayList<Setting> getSettingsByMod(Module mod) {
         ArrayList<Setting> out = new ArrayList<>();
         for (Setting s : settings) {
@@ -28,7 +35,7 @@ public class SettingsManager {
         return out;
     }
 
-    // Pobieranie konkretnego ustawienia po nazwie
+    // Pobieranie konkretnego ustawienia po nazwie i module
     public Setting getSettingByName(Module mod, String name) {
         for (Setting s : settings) {
             if (s.parent.equals(mod) && s.name.equalsIgnoreCase(name)) {

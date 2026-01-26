@@ -11,6 +11,7 @@ public class Module {
     public Category category;
     public boolean hidden = false;
     public String suffix = "";
+    private boolean favorite = false;
     // --- NOWE POLA DLA HUD ---
     public float x = 10, y = 10; // Pozycja
     public float width = 0, height = 0; // Wymiary
@@ -78,6 +79,9 @@ public class Module {
     public void setKey(int key) { this.key = key; }
     public boolean isToggled() { return toggled; }
     public Category getCategory() { return category; }
+    public boolean isFavorite() { return favorite; }
+    public void toggleFavorite() { this.favorite = !this.favorite; }
+    public void setFavorite(boolean favorite) { this.favorite = favorite; }
 
     public enum Category {
         COMBAT, MOVEMENT, PLAYER, RENDER, MISC

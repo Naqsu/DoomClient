@@ -6,6 +6,7 @@ import doom.event.impl.EventPacket;
 import doom.event.impl.EventRender3D;
 import doom.event.impl.EventUpdate;
 import doom.module.Module;
+import doom.module.impl.combat.Killaura;
 import doom.settings.impl.BooleanSetting;
 import doom.settings.impl.NumberSetting;
 import doom.util.RenderUtil;

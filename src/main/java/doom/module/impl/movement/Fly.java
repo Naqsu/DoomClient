@@ -1,22 +1,23 @@
 package doom.module.impl.movement;
 
-import doom.Client;
 import doom.event.EventTarget;
 import doom.event.impl.EventPacket;
 import doom.event.impl.EventUpdate;
 import doom.module.Module;
-import doom.util.MoveUtil;
-import doom.util.TimerUtil;
+import net.minecraft.init.Blocks;
 import net.minecraft.network.Packet;
-import net.minecraft.network.play.server.S12PacketEntityVelocity;
-import net.minecraft.network.play.server.S27PacketExplosion; // Obsługa TNT/Fireballi
+import net.minecraft.network.play.INetHandlerPlayClient;
+import net.minecraft.util.BlockPos;
 import org.lwjgl.input.Keyboard;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class Fly extends Module {
 
-    private boolean active = false;
-    private int ticks = 0;
-    private double targetSpeed = 0.0;
+    // Używamy nazwy i typu listy jak w Ethane
+    private final List<Packet<INetHandlerPlayClient>> packets = new ArrayList<>();
+    private long test;
 
     public Fly() {
         super("Fly", Keyboard.KEY_F, Category.MOVEMENT);
@@ -24,98 +25,62 @@ public class Fly extends Module {
 
     @Override
     public void onEnable() {
-        active = false;
-        ticks = 0;
-        targetSpeed = 0.0;
-        Client.addChatMessage("§e[Vulcan] Waiting for ANY damage (Bow/TNT)...");
+        // Logika z Ethane: czyszczenie i reset czasu
+        packets.clear();
+        test = System.currentTimeMillis();
+        super.onEnable();
     }
 
     @Override
     public void onDisable() {
-        TimerUtil.reset();
-        mc.thePlayer.motionX = 0;
-        mc.thePlayer.motionZ = 0;
-    }
+        // Logika z Ethane: bezpieczne zwalnianie pakietów w głównym wątku (mc.execute)
+        if (mc.getNetHandler() != null && !packets.isEmpty()) {
+            final List<Packet<INetHandlerPlayClient>> packetsToRelease = new ArrayList<>(packets);
+            packets.clear();
 
-    @EventTarget
-    public void onPacket(EventPacket event) {
-        Packet<?> packet = event.getPacket();
-
-        // Obsługa Velocity z bicia (S12)
-        if (packet instanceof S12PacketEntityVelocity) {
-            S12PacketEntityVelocity s12 = (S12PacketEntityVelocity) packet;
-            if (s12.getEntityID() == mc.thePlayer.getEntityId()) {
-                double vX = s12.getMotionX() / 8000.0;
-                double vZ = s12.getMotionZ() / 8000.0;
-                handleVelocity(vX, vZ, event);
-            }
+            // mc.execute z Ethane to w 1.8 addScheduledTask
+            mc.addScheduledTask(() -> {
+                if (mc.getNetHandler() != null) {
+                    for (Packet<INetHandlerPlayClient> p : packetsToRelease) {
+                        try {
+                            // p.handle() w 1.8 to processPacket()
+                            p.processPacket(mc.getNetHandler());
+                        } catch (Exception ignored) {
+                        }
+                    }
+                }
+            });
         }
-        // Obsługa Velocity z wybuchów (S27 - TNT/Fireball) - WAŻNE NA SKYWARS
-        else if (packet instanceof S27PacketExplosion) {
-            S27PacketExplosion s27 = (S27PacketExplosion) packet;
-            double vX = s27.func_149149_c();
-            double vZ = s27.func_149147_e();
-            handleVelocity(vX, vZ, event);
-        }
-    }
-
-    private void handleVelocity(double vX, double vZ, EventPacket event) {
-        // Obliczamy wektor poziomy, który dał nam serwer
-        double velocityDist = Math.sqrt(vX * vX + vZ * vZ);
-
-        // Ignorujemy słabe popchnięcia (np. bicie ręką), szukamy łuku/tnt
-        if (velocityDist > 0.2) {
-            active = true;
-            ticks = 0;
-            event.setCancelled(true);
-
-            // LOGIKA NAUKOWA:
-            // Vulcan pozwala na: BaseSpeed + Velocity.
-            // Ustawiamy naszą prędkość na dokładnie tyle, ile dał serwer + mały boost
-            targetSpeed = velocityDist;
-
-            Client.addChatMessage("§a[Vulcan] Catch! V-Speed: " + String.format("%.3f", targetSpeed));
-
-            // Wymuszamy skok fizyczny, żeby zdjąć flagę 'OnGround'
-            if (mc.thePlayer.onGround) {
-                mc.thePlayer.motionY = 0.42;
-            }
-        }
+        super.onDisable();
     }
 
     @EventTarget
     public void onUpdate(EventUpdate event) {
-        if (!active) return;
+        if (mc.thePlayer == null || mc.theWorld == null) {
+            this.toggle(); // Odpowiednik module.setEnabled(false)
+            return;
+        }
 
-        ticks++;
+        // Logika z Ethane: stawianie TNT pod graczem
+        // W 1.8 używamy (posX, posY - 1, posZ)
+        BlockPos pos = new BlockPos(mc.thePlayer.posX, mc.thePlayer.posY - 1, mc.thePlayer.posZ);
+        mc.theWorld.setBlockState(pos, Blocks.tnt.getDefaultState());
+    }
 
-        // Vulcan velocity exemption trwa ok. 20 ticków.
-        // My lecimy przez 15, żeby być bezpiecznym.
-        if (ticks <= 15) {
+    @EventTarget
+    public void onPacket(EventPacket event) {
+        // Logika z Ethane: tylko pakiety przychodzące (ReceivePacket)
+        if (event.getDirection() == EventPacket.Direction.RECEIVE) {
 
-            // Nadajemy prędkość równą sile uderzenia.
-            // Jeśli dostałeś mocno (TNT) -> lecisz szybko.
-            // Jeśli dostałeś słabo (Śnieżka) -> lecisz wolno (ale nie dostaniesz bana).
-            MoveUtil.setSpeed(targetSpeed);
-
-            // Symulacja tarcia powietrza (wymagane przez SpeedA)
-            targetSpeed *= 0.98; // Zwalniamy co tick o 2%
-
-            // Podtrzymanie lotu (lekki Glide, ale nie płaski Hover)
-            // Pozwalamy na lekkie opadanie, żeby nie wkurzyć Flight(Prediction)
-            if (mc.thePlayer.motionY < -0.1) {
-                mc.thePlayer.motionY = -0.1;
+            // Timer z Ethane (750ms)
+            if (System.currentTimeMillis() - test <= 750) {
+                return;
             }
 
-            // Timer dla efektu
-            TimerUtil.setTimerSpeed(1.1f);
-
-        } else {
-            active = false;
-            TimerUtil.reset();
-            MoveUtil.setSpeed(0.0); // Stop w miejscu
-            Client.addChatMessage("§c[Vulcan] Velocity ended.");
-            this.toggle();
+            // Dodawanie do listy i anulowanie
+            // noinspection unchecked
+            packets.add((Packet<INetHandlerPlayClient>) event.getPacket());
+            event.setCancelled(true);
         }
     }
 }

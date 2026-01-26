@@ -4,15 +4,11 @@ import doom.Client;
 import doom.module.DraggableModule;
 import doom.module.impl.combat.Killaura;
 import doom.ui.font.FontManager;
-import doom.util.ColorUtil;
 import doom.util.RenderUtil;
 import doom.util.StencilUtil;
-import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.inventory.GuiInventory;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.player.EntityPlayer;
-import org.lwjgl.opengl.GL11;
 
 import java.awt.*;
 import java.text.DecimalFormat;

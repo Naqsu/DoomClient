@@ -24,6 +24,8 @@ public class Client {
     // Ta metoda odpali się przy starcie gry
     public void startup() {
         System.out.println("Starting " + name + " " + version + "...");
+
+
         Display.setTitle(name + " " + version); // Zmienia nazwę okna
 
         EventManager.register(this);

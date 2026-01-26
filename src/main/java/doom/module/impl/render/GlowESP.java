@@ -18,7 +18,7 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import org.lwjgl.BufferUtils;
 import org.lwjgl.opengl.GL11;
-import org.lwjgl.opengl.GL12; // <--- WAŻNY IMPORT DLA GL_CLAMP_TO_EDGE
+import org.lwjgl.opengl.GL12;
 import org.lwjgl.opengl.GL20;
 
 import java.awt.*;

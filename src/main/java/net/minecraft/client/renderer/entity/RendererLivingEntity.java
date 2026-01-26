@@ -122,7 +122,15 @@ public abstract class RendererLivingEntity<T extends EntityLivingBase> extends R
                 }
             }
 
-            float f7 = entity.prevRotationPitch + (entity.rotationPitch - entity.prevRotationPitch) * partialTicks;
+            float f7;
+            if (entity == Minecraft.getMinecraft().thePlayer && doom.util.RotationUtil.shouldUseCustomPitch) {
+                System.out.println("test");
+                // Jeśli to gracz i aura działa -> bierzemy nasz gładki Pitch
+                f7 = doom.util.RotationUtil.renderPitch;
+            } else {
+                // Standardowe obliczanie dla reszty
+                f7 = entity.prevRotationPitch + (entity.rotationPitch - entity.prevRotationPitch) * partialTicks;
+            }
             this.renderLivingAt(entity, x, y, z);
             float f8 = this.handleRotationFloat(entity, partialTicks);
             this.rotateCorpse(entity, f8, f, partialTicks);
@@ -188,6 +196,7 @@ public abstract class RendererLivingEntity<T extends EntityLivingBase> extends R
         GlStateManager.setActiveTexture(OpenGlHelper.defaultTexUnit);
         GlStateManager.enableCull();
         GlStateManager.popMatrix();
+
 
         if (!this.renderOutlines)
         {

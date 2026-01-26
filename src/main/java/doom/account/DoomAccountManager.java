@@ -1,6 +1,5 @@
 package doom.account;
 
-import doom.Client;
 import net.minecraft.client.Minecraft;
 
 import java.io.*;

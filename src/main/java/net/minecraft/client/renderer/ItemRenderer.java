@@ -1,6 +1,7 @@
 package net.minecraft.client.renderer;
 
 import doom.Client;
+import doom.module.impl.combat.Killaura;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
@@ -368,7 +369,7 @@ public class ItemRenderer
         if (this.itemToRender != null)
         {
             // --- MODUŁY ---
-            doom.module.impl.combat.Killaura killaura = (doom.module.impl.combat.Killaura) Client.INSTANCE.moduleManager.getModule(doom.module.impl.combat.Killaura.class);
+            Killaura killaura = (Killaura) Client.INSTANCE.moduleManager.getModule(Killaura.class);
             doom.module.impl.render.Animations anim = (doom.module.impl.render.Animations) Client.INSTANCE.moduleManager.getModule(doom.module.impl.render.Animations.class);
 
             // LOGIKA BLOKOWANIA (Killaura lub Prawy Przycisk)

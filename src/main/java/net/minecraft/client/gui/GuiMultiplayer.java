@@ -77,6 +77,7 @@ public class GuiMultiplayer extends GuiScreen implements GuiYesNoCallback
         {
             this.serverListSelector.setDimensions(this.width, this.height, 32, this.height - 64);
         }
+        this.buttonList.add(new GuiButton(999, 5, 5, 100, 20, "ViaVersion"));
 
         this.createButtons();
     }
@@ -188,6 +189,10 @@ public class GuiMultiplayer extends GuiScreen implements GuiYesNoCallback
             else if (button.id == 8)
             {
                 this.refreshServerList();
+            }
+            if (button.id == 999) {
+                // Otwórz menu wyboru wersji
+                //this.mc.displayGuiScreen(new GuiProtocolSelector(this));
             }
         }
     }

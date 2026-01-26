@@ -7,6 +7,7 @@ import doom.settings.Setting;
 import doom.settings.impl.*;
 import doom.ui.font.FontManager;
 import doom.util.RenderUtil;
+
 import java.awt.*;
 
 public class ModuleButton {

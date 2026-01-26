@@ -142,54 +142,74 @@ public class Speed extends Module {
             }
         }
 
-        // Diagonal Speed Fix
-        moveSpeed = MoveUtil.getDiagonalSpeed(moveSpeed);
-
         // Zabezpieczenie przed cofnięciem
         moveSpeed = Math.max(moveSpeed, MoveUtil.getBaseMoveSpeed());
 
         MoveUtil.setSpeed(moveSpeed);
     }
 
+
     /**
-     * VULCAN
-     * Logika: Ground Simulation + Low Hop + Timer 1.004
+     * VULCAN 2.7.6 "Balance-Fix" Strategy
+     * Naprawia: Timer (Balance) poprzez zwalnianie w powietrzu.
+     * Naprawia: Speed (Prediction) poprzez zmniejszenie Speeda na rzecz stabilności.
      */
     private void handleVulcan(EventUpdate event) {
-        if (!MoveUtil.isMoving()) return;
-
-        // Timer Manipulation (Subtle)
-        if (timerBoost.isEnabled()) TimerUtil.setTimerSpeed(1.004f);
-
-        if (mc.thePlayer.onGround) {
-            if (autoJump.isEnabled()) {
-                mc.thePlayer.jump();
-
-                // Vulcan Ground Mode Logic:
-                // Udajemy, że jesteśmy na ziemi (potykamy się)
-                if (stage % 2 == 0) {
-                    event.setOnGround(true);
-                    mc.thePlayer.motionY = 0.0125; // Bardzo niski skok (prawie ground)
-                } else {
-                    mc.thePlayer.motionY = 0.42f; // Normalny skok co drugi raz
-                }
-
-                moveSpeed = MoveUtil.getBaseMoveSpeed() * 1.6;
-                stage++;
-            }
-        } else {
-            // W powietrzu: Szybkie lądowanie
-            if (airTicks > 0) {
-                mc.thePlayer.motionY = -0.1; // Force down
-            }
-
-            // Standardowe zwalnianie
-            moveSpeed = lastDist - lastDist / 140.0;
+        // 1. Reset, jeśli stoimy
+        if (!MoveUtil.isMoving()) {
+            mc.thePlayer.motionX = 0;
+            mc.thePlayer.motionZ = 0;
+            TimerUtil.reset();
+            return;
         }
 
-        MoveUtil.setSpeed(moveSpeed);
-    }
+        // --- ON GROUND (Wybicie) ---
+        if (mc.thePlayer.onGround) {
+            mc.thePlayer.jump();
 
+            // ZMNIEJSZONO do 1.42.
+            // To jest bezpieczna wartość. Poprzednie 1.46 było "na styk" i przy lagach wywalało Prediction.
+            double speed = MoveUtil.getBaseMoveSpeed() * 1.42;
+
+            if (mc.thePlayer.isPotionActive(1)) {
+                // Z potką Speed lekko szybciej
+                speed = MoveUtil.getBaseMoveSpeed() * 1.48;
+            }
+
+            MoveUtil.setSpeed(speed);
+
+            // Timer normalny przy wybiciu, żeby serwer dobrze policzył predykcję startu
+            if (timerBoost.isEnabled()) {
+                TimerUtil.setTimerSpeed(1.0f);
+            }
+
+            airTicks = 0;
+        }
+        // --- IN AIR (Regeneracja) ---
+        else {
+            // KLUCZOWA POPRAWKA DLA TIMER (BALANCE):
+            // Musimy ustawić timer PONIŻEJ 1.0.
+            // 0.9f sprawia, że gra działa 10% wolniej w powietrzu.
+            // To "spłaca" pakiety i zeruje licznik TimerD w Vulcanie.
+            if (timerBoost.isEnabled()) {
+                TimerUtil.setTimerSpeed(0.9f);
+            }
+
+            // Fix dla Speed (Prediction) - Strafe
+            // Pozwalamy na lekkie sterowanie, ale nie narzucamy całej prędkości.
+            // Tylko aktualizujemy kierunek (Yaw), zachowując obecną magnitudę (pęd).
+            if (mc.thePlayer.moveForward != 0 || mc.thePlayer.moveStrafing != 0) {
+                // Pobieramy obecną prędkość (która naturalnie maleje przez tarcie)
+                double currentSpeed = Math.hypot(mc.thePlayer.motionX, mc.thePlayer.motionZ);
+                // I aplikujemy ją w stronę, w którą patrzymy
+                MoveUtil.setSpeed(currentSpeed);
+            } else {
+                // Jeśli nic nie klikamy, hamujemy naturalnie
+                mc.thePlayer.motionX *= 0.91;
+                mc.thePlayer.motionZ *= 0.91;
+            }
+        }
+    }
     /**
      * VERUS
      * Logika: Y-Port (Packet Spam) + Low MotionY

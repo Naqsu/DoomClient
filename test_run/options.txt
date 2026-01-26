@@ -10,13 +10,13 @@ bobView:false
 anaglyph3d:false
 maxFps:260
 fboEnable:true
-difficulty:0
+difficulty:2
 fancyGraphics:true
 ao:0
 renderClouds:false
 resourcePacks:["! §2Sammyfault §a[16x].zip"]
 incompatibleResourcePacks:[]
-lastServer:centrumpvp.pl
+lastServer:craftmc.pl
 lang:en_US
 chatVisibility:0
 chatColors:true

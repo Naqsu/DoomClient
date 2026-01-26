@@ -24,4 +24,5 @@ public class Icons {
     // Stare (zostawiamy dla kompatybilności, jeśli gdzieś używasz)
     public static final String HOME = "\uf015";
     public static final String INFO = "\uf129";
+    public static final String STAR = "\uf005"; // Solid Star
 }

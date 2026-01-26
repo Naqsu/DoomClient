@@ -6,6 +6,7 @@ import com.google.common.collect.Maps;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.client.Minecraft;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.ai.attributes.*;
 import net.minecraft.entity.item.EntityItem;
@@ -1556,48 +1557,18 @@ public abstract class EntityLivingBase extends Entity
 
         if (this.isSprinting())
         {
+            // --- VANILLA MINECRAFT LOGIC ---
+            // Serwer ZAWSZE używa rotationYaw (Targetu) do obliczenia kierunku boosta.
+            // Jeśli spróbujesz to zmienić (użyć MoveUtil.getDirection), dostaniesz flagę Simulation,
+            // bo Twoja pozycja rozjedzie się z przewidywaniami serwera.
+
             float f = this.rotationYaw * 0.017453292F;
-
-            // --- GRIM SIMULATION FIX ---
-            // Jeśli mamy włączony MoveFix (RotationUtil.isRotating), to "this.rotationYaw" w tym momencie
-            // jest równe TargetYaw (serwerowemu).
-            // Jeśli po prostu dodamy boost w stronę TargetYaw, ale idziemy w bok (strafe),
-            // to wektor wyjdzie krzywy i Grim nas cofnie.
-            // Musimy obliczyć boost sprintu w oparciu o KIERUNEK RUCHU (yaw ruchu).
-
-            if (this instanceof net.minecraft.client.entity.EntityPlayerSP) {
-                if (doom.util.RotationUtil.isRotating) {
-                    // Odczytujemy inputy, które właśnie obliczył MoveFlying
-                    net.minecraft.client.entity.EntityPlayerSP player = (net.minecraft.client.entity.EntityPlayerSP) this;
-                    float moveYaw = doom.util.RotationUtil.targetYaw;
-
-                    float forward = player.movementInput.moveForward;
-                    float strafe = player.movementInput.moveStrafe;
-
-                    // Obliczamy kąt wynikający z inputów
-                    // forward = 1 -> 0 deg
-                    // strafe = 1 -> -90 deg
-                    if (forward != 0 || strafe != 0) {
-                        // Magia matematyczna, żeby zamienić forward/strafe na kąt w radianach
-                        // (strafe, forward) - kolejność ważna dla atan2
-                        float inputAngle = (float) Math.atan2(strafe, forward) * (180.0F / (float) Math.PI);
-
-                        // Odejmujemy kąt inputu od kąta Killaury (TargetYaw)
-                        // Żeby uzyskać faktyczny kierunek, w który leci gracz
-                        moveYaw -= inputAngle;
-                        f = moveYaw * 0.017453292F;
-                    }
-                }
-            }
-            // ---------------------------
-
             this.motionX -= (double)(MathHelper.sin(f) * 0.2F);
             this.motionZ += (double)(MathHelper.cos(f) * 0.2F);
         }
 
         this.isAirBorne = true;
     }
-
     /**
      * main AI tick function, replaces updateEntityActionState
      */
@@ -1876,7 +1847,10 @@ public abstract class EntityLivingBase extends Entity
 
         this.onGroundSpeedFactor += (f3 - this.onGroundSpeedFactor) * 0.3F;
         this.worldObj.theProfiler.startSection("headTurn");
-        f2 = this.updateDistance(f1, f2);
+// DODANO WARUNEK: Jeśli to nie gracz lokalny LUB jeśli nie rotujemy (Silent), to wykonaj standardową logikę
+        if (!(this instanceof net.minecraft.client.entity.EntityPlayerSP) || !doom.util.RotationUtil.isRotating) {
+            f2 = this.updateDistance(f1, f2);
+        }
         this.worldObj.theProfiler.endSection();
         this.worldObj.theProfiler.startSection("rangeChecks");
 

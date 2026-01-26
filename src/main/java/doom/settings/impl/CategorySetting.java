@@ -2,6 +2,7 @@ package doom.settings.impl;
 
 import doom.module.Module;
 import doom.settings.Setting;
+
 import java.util.Arrays;
 import java.util.List;
 

@@ -6,7 +6,7 @@ import doom.module.impl.render.ClickGuiModule;
 import doom.ui.font.FontManager;
 import doom.util.RenderUtil;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.ScaledResolution; // Ważny import
+import net.minecraft.client.gui.ScaledResolution;
 
 import java.awt.*;
 import java.util.ArrayList;

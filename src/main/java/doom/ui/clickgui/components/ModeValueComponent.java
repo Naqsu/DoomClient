@@ -4,7 +4,8 @@ import doom.module.impl.render.ClickGuiModule;
 import doom.settings.impl.ModeSetting;
 import doom.ui.font.FontManager;
 import doom.util.RenderUtil;
-import java.awt.Color;
+
+import java.awt.*;
 
 public class ModeValueComponent extends Component {
 

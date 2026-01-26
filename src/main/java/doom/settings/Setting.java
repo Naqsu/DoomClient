@@ -1,6 +1,7 @@
 package doom.settings;
 
 import doom.module.Module;
+
 import java.util.function.Supplier;
 
 public class Setting {

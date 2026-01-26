@@ -10,7 +10,6 @@ import doom.ui.font.FontManager;
 import doom.util.NetworkUtil;
 import doom.util.RenderUtil;
 import net.minecraft.client.gui.GuiScreen;
-import net.minecraft.client.gui.ScaledResolution;
 import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.GL11;
 
@@ -23,7 +22,7 @@ import java.util.List;
 public class GuiConfigMenu extends GuiScreen {
 
     private final GuiScreen parent;
-    private final String API_URL = "http://127.0.0.1:3000/api/client";
+    private final String API_URL = "https://atamanco.eu/api/client";
 
     private boolean isOnlineTab = false;
     private final List<ConfigEntry> localConfigs = new ArrayList<>();

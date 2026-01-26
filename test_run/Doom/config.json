@@ -77,21 +77,20 @@
       "posX": 10.0,
       "posY": 10.0,
       "Settings": {
+        "Mode": "Single",
         "Range": 3.0,
-        "Scan Range": 4.0,
-        "Min APS": 20.0,
-        "Max APS": 20.0,
+        "Target Range": 5.0,
+        "CPS": 20.0,
         "Turn Speed": 20.0,
         "FOV": 360.0,
-        "KeepSprint": true,
         "AutoBlock": false,
+        "Block Mode": "Fake",
+        "KeepSprint": true,
         "RayCast": true,
         "Players": true,
         "Mobs": true,
         "Animals": true,
-        "Invisibles": true,
-        "Ignore Teams": true,
-        "Cracked/NoRules": true
+        "Invisibles": true
       }
     },
     "ClickGui": {
@@ -100,7 +99,7 @@
       "posX": 10.0,
       "posY": 10.0,
       "Settings": {
-        "Style": "Window",
+        "Style": "Dashboard",
         "Theme": "Gradient",
         "Open Anim": "SlideUp",
         "Easing": "Linear",
@@ -164,17 +163,17 @@
       "posX": 10.0,
       "posY": 10.0,
       "Settings": {
-        "Rotation": "Normal",
+        "Rot Mode": "Grim",
+        "Tower": "None",
+        "Lock to Block": true,
         "Sprint": false,
-        "Tower": false,
-        "Tower Move": false,
-        "Jump": false,
         "Swing": true,
-        "Silent": true,
-        "RayCast": true,
-        "Sneak": true,
-        "Sneak Every": 2.0,
-        "Delay": 1.0
+        "SafeWalk": false,
+        "Strict RayCast": true,
+        "Line Align": true,
+        "Rot Speed": 130.0,
+        "Expand": 0.0,
+        "Place Delay": 50.0
       }
     },
     "BlockCounter": {
@@ -299,6 +298,13 @@
         "Outline": false
       }
     },
+    "Rotations": {
+      "toggled": true,
+      "key": 0,
+      "posX": 10.0,
+      "posY": 10.0,
+      "Settings": {}
+    },
     "Wings": {
       "toggled": true,
       "key": 0,
@@ -326,7 +332,7 @@
       }
     },
     "Debugger": {
-      "toggled": true,
+      "toggled": false,
       "key": 0,
       "posX": 10.0,
       "posY": 10.0,
@@ -384,7 +390,7 @@
       }
     },
     "AnticheatDetector": {
-      "toggled": true,
+      "toggled": false,
       "key": 0,
       "posX": 10.0,
       "posY": 10.0,

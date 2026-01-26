@@ -7,8 +7,6 @@ import doom.util.RenderUtil;
 import net.minecraft.client.Minecraft;
 
 import java.awt.*;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
 public class Watermark extends DraggableModule {
 
